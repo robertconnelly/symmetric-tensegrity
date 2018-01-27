@@ -1,0 +1,100 @@
+<html>
+  <title>Highly Symmetric Tensegrity Structures</title>
+<body>
+<table width="800" border="0">
+ <tbody>     
+  <tr>
+   <td colspan="2" bgcolor="#ccccbb"> 
+    <div align="center">                     
+     <h1>Highly Symmetric Tensegrity Structures</h1>
+     <p align="right">by Bob Connelly and Bob Terrell </p>
+    </div>
+   </td>
+  </tr>
+  <tr>
+   <td width="150" height="20" bgcolor="#ccccbb">              
+    <div align="center">Home</div>
+   </td>
+   <td width="660" rowspan="7">
+    <p>
+     This is access to a catalog of several hundred tensegrity
+     structures that are held rigidly together with incompressible struts and
+     inextendable cables connecting point nodes. These structures are 
+     <i>highly symmetric</i> in the sense that there is a symmetry of the 
+     structure that takes any node to any other, 
+     there is a symmetry of the structure that takes
+     any strut to any other, and there are two classes of cables, where there
+     is a symmetry of the structure that takes any cable to any other 
+     in the same class. 
+    <p>
+     The picture on the left shows an example you can rotate.
+    <p align="center">
+     <applet code="tiny.class" 
+             archive="render.jar, Jama.jar" width="120" height="120">
+      <param name="grp" value="4">
+      <param name="winr" value="3">
+      <param name="c1" value="57">
+      <param name="c2" value="18">
+      <param name="s1" value="1">
+      <param name="omeg1" value="0.3055555555555556">
+      <param name="omeg_1" value="-0.12288583510073314">
+      <param name="thk" value="1.1">
+     </applet>
+     &nbsp; &nbsp; &nbsp; &nbsp;
+     &nbsp; &nbsp; &nbsp; &nbsp;
+     &nbsp; &nbsp; &nbsp; &nbsp;
+     <img src=b3.png width="160" height="120">
+    <p>
+     The picture on the right, which does not rotate,
+     was also made from output of the program.
+    <p>
+     To go to the catalog, click 
+     <a href="pro.html" target="_blank">Run Program</a>, 
+     and follow the prompts which will appear in the text area
+     in the lower right hand corner. 
+    <p>
+     For more details, see the links in the sidebar. 
+    </td>
+   </tr>
+   <tr>
+    <td width="150" height="20" bgcolor="#55ccaa">              
+     <div align="center">
+      <a href="pro.html" target="_blank">Run Program</a>
+     </div>
+    </td>
+   </tr>
+   <tr>
+    <td width="150" height="20" bgcolor="#55ccaa">            
+     <div align="center"><a href="./faq.html" fgcolor="#111111">FAQ</a></div>
+    </td>
+   </tr>
+   <tr>
+    <td width="150" height="20" bgcolor="#55ccaa">            
+     <div align="center"><a href="./ref.html">References</a></div>
+    </td>
+   </tr>
+   <tr>
+    <td>&nbsp;</td>
+   </tr>
+   <tr>
+    <td>&nbsp;</td>
+   </tr>
+   <tr>
+    <td>&nbsp;</td>
+   </tr>
+   <tr>
+    <td colspan="2" bgcolor="#ccccbb">              
+     <div align="center">
+      Any comments are welcome to 
+      <a href="mailto:connelly@math.cornell.edu">Bob Connelly</a> and 
+      <a href="mailto:ret7@cornell.edu">Bob Terrell</a> <br>
+      Last Update: 9th June 2008. <b> counter? </b> 
+     </div>
+    </td>
+   </tr>
+  </tbody>  
+ </table>
+</body>     
+</html>
+
+
