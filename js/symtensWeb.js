@@ -1,1 +1,1 @@
-../../js/symtensWeb.js
+../src/js/symtensWeb.js
