@@ -14,9 +14,92 @@
     <!-- Custom styles for this template -->
     <link href="css/dashboard.css" rel="stylesheet">
     <link href="css/jquery-ui.min.css" rel="stylesheet">
+
+    <style type='text/css'>
+
+			select.btn-mini {
+					height: auto;
+					line-height: 14px;
+			}
+
+			/* this is optional (see below) */
+			select.btn {
+					-webkit-appearance: button;
+						 -moz-appearance: button;
+									appearance: button;
+					padding-right: 16px;
+			}
+
+			select.btn-mini + .caret {
+					margin-left: -20px;
+					margin-top: 9px;
+			}
+
+    </style>
   </head>
 
   <body>
+
+<!-- modal -->
+
+<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="configModalLabel">Options</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class='row'>
+          <div class='col-sm-2'> Background </div>
+          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+        </div>
+
+        <div class='row'>
+          <div class='col-sm-2'> C1 color </div>
+          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+        </div>
+
+        <div class='row'>
+          <div class='col-sm-2'> C2 color </div>
+          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+        </div>
+
+        <div class='row'>
+          <div class='col-sm-2'> S1 color </div>
+          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+        </div>
+
+        <div class='row'>
+          <div class='col-sm-2'> Thickness </div>
+          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+        </div>
+
+        <div class='row'>
+          <div class='col-sm-2'> Vertex Size </div>
+          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+        </div>
+
+
+      </div>
+
+      <!--
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+      -->
+
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
 
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
       <a class="navbar-brand col-sm-12" href="#">Highly Symmetric Tensegrity Structures</a> 
@@ -171,8 +254,20 @@ and follow the prompts which will appear in the text area in the lower right han
 
 							<div class="tab-pane fade show active" id="program" role="tabpanel" aria-labelledby="program-tab">
 
-								<h3>Highly Symmetric Tensegrity Structure</h3>
-								<hr />
+                <div class='row'>
+                  <div class='col-sm-11'>
+                    <h3>Highly Symmetric Tensegrity Structure</h3>
+                  </div>
+
+                  <div class='col-sm-1'>
+                    <button type='button' class='btn btn-light' data-toggle='modal' data-target='#configModal'>
+                      <span data-feather='settings'></span>
+                    </button>
+
+
+                  </div>
+                </div>
+                <hr />
 
                 <!-- <a id="download"><button type="button" onClick="take_screenshot()">Download</button></a> -->
 
@@ -182,9 +277,39 @@ and follow the prompts which will appear in the text area in the lower right han
                     <div id='canvas_div' class='col-sm-8'>
                       <canvas id='canvas_id' width="400" height="400" style="width: 400px; height: 400px;"></canvas>
                       <p>
-                      <span class='badge badge-secondary' onClick='take_screenshot()' style='float:left;'>
-                        <span data-feather='camera'></span>
-                      </span>
+
+                      <div class='row'>
+
+                        <div class='col-sm-2'>
+
+                          <span class='badge badge-secondary' onClick='take_screenshot()' style='float:left;'>
+                            <span data-feather='camera'></span>
+                          </span>
+
+                        </div>
+
+                        <div class='col-sm-4'>
+                        </div>
+
+                        <div class='col-sm-1'>
+                          <small style="float:left;">style</small>
+                        </div>
+
+                        <div class='col-sm-4'>
+
+                          <!-- <select id='render_select' class='custom-select'> -->
+                          <select id='render_select' class='form-control form-control-sm' onchange='change_render_select();'>
+                            <option selected>cylinder</option>
+                            <option>line</option>
+                          </select>
+
+                        </div>
+
+                        <div class='col-sm-1'> </div>
+
+                      </div>
+
+
                       </p>
                     </div>
 

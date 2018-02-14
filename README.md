@@ -7,6 +7,21 @@ Unless noted, licensed under AGPLv3
 
 See individual packages for their licenses.
 
+
+
+Running Locally
+---
+
+You can run the web application locally by starting
+a web server in the root directory of this repo.
+
+```
+$ sudo npm install http-server -g
+$ chromium-browser "http://localhost:8080" & http-server
+```
+
+
+
 Historical
 ---
 
