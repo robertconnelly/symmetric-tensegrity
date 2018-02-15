@@ -31,7 +31,32 @@ var g_render = {
   //"render_type" : "line", // "line", "cylinder", "other"
   "render_type" : "cylinder", // "line", "cylinder", "other"
 
+  "canvas_width" : 400,
+  "canvas_height" : 400,
+
   "detgraph" : g_detgraph
+}
+
+
+function demo_resize(renderer, camera){
+	var callback	= function(){
+		// notify the renderer of the size change
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		// update the camera
+		camera.aspect	= window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+	}
+	// bind the resize event
+	window.addEventListener('resize', callback, false);
+	// return .stop() the function to stop watching window resize
+	return {
+		/**
+		 * Stop watching window resize
+		*/
+		stop	: function(){
+			window.removeEventListener('resize', callback);
+		}
+	};
 }
 
 function animate() {
@@ -54,7 +79,7 @@ function animate() {
 function display_init() {
   var scene = new THREE.Scene();
   var canvas_ele = document.getElementById("canvas_id");
-  var renderer = new THREE.WebGLRenderer( { canvas: canvas_ele });
+  var renderer = new THREE.WebGLRenderer( { canvas: canvas_ele, antialias: true });
 
   var innerWidth = 400;
   var innerHeight = innerWidth;
@@ -344,10 +369,14 @@ function render_cylinder_symmetric_tensegrity(tenz) {
 
     //var cgeom = new THREE.CylinderGeometry( cthk, cthk, len, 10 );
     var cgeom = new THREE.CylinderGeometry( cthk, cthk, 1, 10 );
+		cgeom.computeFaceNormals();
+    cgeom.mergeVertices();
 
-    var v_material = new THREE.MeshPhongMaterial( {color: c1_color, specular: 0, shininess: 0, flatShading: true } );
+		cgeom.computeVertexNormals();
+
+
+    var v_material = new THREE.MeshPhongMaterial( {color: c1_color, specular: 0, shininess: 0, flatShading: false } );
     var mesh = new THREE.Mesh( cgeom, v_material );
-
     var axis = new THREE.Vector3(0,1,0);
     var lvec = new THREE.Vector3( lookat[0], lookat[1], lookat[2] );
 
@@ -379,7 +408,7 @@ function render_cylinder_symmetric_tensegrity(tenz) {
 
     //var cgeom = new THREE.CylinderGeometry( cthk, cthk, len, 10 );
     var cgeom = new THREE.CylinderGeometry( cthk, cthk, 1, 10 );
-    var v_material = new THREE.MeshPhongMaterial( {color: c2_color, specular: 0, shininess: 0, flatShading: true } );
+    var v_material = new THREE.MeshPhongMaterial( {color: c2_color, specular: 0, shininess: 0, flatShading: false } );
     var mesh = new THREE.Mesh( cgeom, v_material );
 
     var axis = new THREE.Vector3(0,1,0);
@@ -412,7 +441,7 @@ function render_cylinder_symmetric_tensegrity(tenz) {
 
     //var cgeom = new THREE.CylinderGeometry( cthk, cthk, len, 10 );
     var cgeom = new THREE.CylinderGeometry( cthk, cthk, 1, 10 );
-    var v_material = new THREE.MeshPhongMaterial( {color: s1_color, specular: 0, shininess: 0, flatShading: true } );
+    var v_material = new THREE.MeshPhongMaterial( {color: s1_color, specular: 0, shininess: 0, flatShading: false } );
     var mesh = new THREE.Mesh( cgeom, v_material );
 
     var axis = new THREE.Vector3(0,1,0);
@@ -436,7 +465,7 @@ function render_cylinder_symmetric_tensegrity(tenz) {
 
   for (var ii=0; ii<tenz.V.length; ii++) {
     var sgeom = new THREE.SphereGeometry(vert_rad, 32,32);
-    var v_material = new THREE.MeshPhongMaterial( {color: v_color, specular: 0, shininess: 0, flatShading: true } );
+    var v_material = new THREE.MeshPhongMaterial( {color: v_color, specular: 0, shininess: 0, flatShading: false } );
     var sphere = new THREE.Mesh( sgeom, v_material );
     sphere.position.x = tenz.V[ii][0];
     sphere.position.y = tenz.V[ii][1];
@@ -523,7 +552,7 @@ function render_line_symmetric_tensegrity(tenz) {
 
   for (var ii=0; ii<tenz.V.length; ii++) {
     var sgeom = new THREE.SphereGeometry(vert_rad, 32,32);
-    var v_material = new THREE.MeshPhongMaterial( {color: 0xdddddd, specular: 0, shininess: 0, flatShading: true } );
+    var v_material = new THREE.MeshPhongMaterial( {color: 0xdddddd, specular: 0, shininess: 0, flatShading: false } );
     var sphere = new THREE.Mesh( sgeom, v_material );
     sphere.position.x = tenz.V[ii][0];
     sphere.position.y = tenz.V[ii][1];
@@ -864,6 +893,52 @@ function setup_detgraph() {
 
 }
 
+var g_fullscreen = false;
+
+
+function resizeCanvas() {
+  if (g_fullscreen) {
+    var cam = g_render.camera;
+    cam.aspect = window.innerWidth / window.innerHeight;
+    cam.updateProjectionMatrix();
+    g_render.renderer.setSize( window.innerWidth, window.innerHeight );
+  }
+  else {
+    var cam = g_render.camera;
+    var w = g_render.canvas_width;
+    var h = g_render.canvas_height;
+    cam.aspect = w / h;
+    cam.updateProjectionMatrix();
+    g_render.renderer.setSize( w, h );
+  }
+}
+
+
+
+function fullscreenEvent() {
+
+  //toggle
+  //
+  g_fullscreen = ( g_fullscreen ? false : true );
+  resizeCanvas();
+}
+
+function setup_fs() {
+  var ele = document.getElementById("canvas_id");
+
+	if (ele.addEventListener) {
+		ele.addEventListener('webkitfullscreenchange', fullscreenEvent, false);
+		ele.addEventListener('mozfullscreenchange', fullscreenEvent, false);
+		ele.addEventListener('fullscreenchange', fullscreenEvent, false);
+		ele.addEventListener('MSFullscreenChange', fullscreenEvent, false);
+	}
+}
+
+function go_fullscreen() {
+  var ele = document.getElementById("canvas_id");
+  THREEx.FullScreen.request(ele);
+}
+
 function init() {
   display_init();
 
@@ -877,4 +952,5 @@ function init() {
       $('#myInput').trigger('focus')
   });
 
+  setup_fs();
 }
