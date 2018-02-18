@@ -31,32 +31,32 @@ var g_render = {
   //"render_type" : "line", // "line", "cylinder", "other"
   "render_type" : "cylinder", // "line", "cylinder", "other"
 
-  "canvas_width" : 400,
-  "canvas_height" : 400,
+  "canvas_width" : 412,
+  "canvas_height" : 412,
 
   "detgraph" : g_detgraph
 }
 
 
 function demo_resize(renderer, camera){
-	var callback	= function(){
-		// notify the renderer of the size change
-		renderer.setSize( window.innerWidth, window.innerHeight );
-		// update the camera
-		camera.aspect	= window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-	}
-	// bind the resize event
-	window.addEventListener('resize', callback, false);
-	// return .stop() the function to stop watching window resize
-	return {
-		/**
-		 * Stop watching window resize
-		*/
-		stop	: function(){
-			window.removeEventListener('resize', callback);
-		}
-	};
+  var callback  = function(){
+    // notify the renderer of the size change
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    // update the camera
+    camera.aspect  = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+  }
+  // bind the resize event
+  window.addEventListener('resize', callback, false);
+  // return .stop() the function to stop watching window resize
+  return {
+    /**
+     * Stop watching window resize
+    */
+    stop  : function(){
+      window.removeEventListener('resize', callback);
+    }
+  };
 }
 
 function animate() {
@@ -80,6 +80,11 @@ function display_init() {
   var scene = new THREE.Scene();
   var canvas_ele = document.getElementById("canvas_id");
   var renderer = new THREE.WebGLRenderer( { canvas: canvas_ele, antialias: true });
+
+  // trying to cut down on extraneous console output.
+  // see: https://github.com/mrdoob/three.js/issues/9716
+  //
+  renderer.context.getShaderInfoLog = function () { return '' };
 
   var innerWidth = 400;
   var innerHeight = innerWidth;
@@ -129,7 +134,6 @@ function display_init() {
   g_render["prev_tenz"] = tenz;
 
   render(tenz);
-  //if (g_render.render_type == "line") { render_line_symmetric_tensegrity(tenz); }
 
   animate();
 }
@@ -163,16 +167,14 @@ function render(tenz) {
 }
 
 function render_update(tenz) {
+
   if (g_render.render_type == "line") {
     render_line_symmetric_tensegrity_update(tenz);
   }
   else if (g_render.render_type == "cylinder") {
-
     render_cylinder_symmetric_tensegrity_update(tenz);
-
-    //clear_scene();
-    //render_cylinder_symmetric_tensegrity(tenz);
   }
+
 }
 
 function render_cylinder_symmetric_tensegrity_update(tenz) {
@@ -369,10 +371,10 @@ function render_cylinder_symmetric_tensegrity(tenz) {
 
     //var cgeom = new THREE.CylinderGeometry( cthk, cthk, len, 10 );
     var cgeom = new THREE.CylinderGeometry( cthk, cthk, 1, 10 );
-		cgeom.computeFaceNormals();
+    cgeom.computeFaceNormals();
     cgeom.mergeVertices();
 
-		cgeom.computeVertexNormals();
+    cgeom.computeVertexNormals();
 
 
     var v_material = new THREE.MeshPhongMaterial( {color: c1_color, specular: 0, shininess: 0, flatShading: false } );
@@ -855,11 +857,11 @@ function setup_detgraph() {
 
   var detgraph_size = 200;
 
-	// Make an instance of two and place it on the page.
+  // Make an instance of two and place it on the page.
   //
-	var elem = document.getElementById('detgraph');
-	var params = { width: detgraph_size, height: detgraph_size};
-	var two = new Two(params).appendTo(elem);
+  var elem = document.getElementById('detgraph');
+  var params = { width: detgraph_size, height: detgraph_size};
+  var two = new Two(params).appendTo(elem);
 
   var vl = two.makeLine(0, 0, 0, two.height);
   vl.visible = false;
@@ -867,11 +869,11 @@ function setup_detgraph() {
   g_render.detgraph.two = two;
   g_render.detgraph.vert_line = vl;
 
-	elem = document.getElementById('detgraph');
+  elem = document.getElementById('detgraph');
   var canvas_detgraph = elem.children[0];
   canvas_detgraph.setAttribute("id", "detgraph_canvas");
 
-	two.update();
+  two.update();
 
   var win_det = $("#detgraph_canvas");
   win_det.bind('mousedown', function(e) {
@@ -897,6 +899,7 @@ var g_fullscreen = false;
 
 
 function resizeCanvas() {
+
   if (g_fullscreen) {
     var cam = g_render.camera;
     cam.aspect = window.innerWidth / window.innerHeight;
@@ -924,14 +927,22 @@ function fullscreenEvent() {
 }
 
 function setup_fs() {
-  var ele = document.getElementById("canvas_id");
+  var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-	if (ele.addEventListener) {
-		ele.addEventListener('webkitfullscreenchange', fullscreenEvent, false);
-		ele.addEventListener('mozfullscreenchange', fullscreenEvent, false);
-		ele.addEventListener('fullscreenchange', fullscreenEvent, false);
-		ele.addEventListener('MSFullscreenChange', fullscreenEvent, false);
-	}
+  if (!isFirefox) {
+    var ele = document.getElementById("canvas_id");
+
+    if (ele.addEventListener) {
+      ele.addEventListener('webkitfullscreenchange', fullscreenEvent, false);
+      ele.addEventListener('mozfullscreenchange', fullscreenEvent, false);
+      ele.addEventListener('fullscreenchange', fullscreenEvent, false);
+      ele.addEventListener('MSFullscreenChange', fullscreenEvent, false);
+    }
+  }
+  else {
+    document.addEventListener('mozfullscreenchange', fullscreenEvent, false);
+  }
+
 }
 
 function go_fullscreen() {
