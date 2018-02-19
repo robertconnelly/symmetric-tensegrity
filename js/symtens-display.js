@@ -1105,6 +1105,7 @@ function vertex_radius_change(v) {
 function restore_defaults() {
 
   var c = g_render.default_color.background;
+  g_render.color.background = c;
   g_render.scene.background = new THREE.Color(c);
   $("#background_color_id").spectrum("set", c.toString(16));
 
