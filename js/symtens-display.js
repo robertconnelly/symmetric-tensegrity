@@ -25,8 +25,48 @@ var g_render = {
   "material_color" : [ [ 0xffffff, 0xffaa00, 0xff00aa, 0xdddddd ],
                        [ 0x3333e6, 0xcc3333, 0xb2994c, 0xdddddd ] ],
 
-  "vertex_thickness": [ 0.025, 0.05 ],
+  "default_color" : {
+    "background" : 0xffffff,
+    "c1" : 0x3333e6,
+    "c2" : 0xcc3333,
+    "s1" : 0xb2994c,
+    "v" : 0xdddddd
+  },
+
+  "color" : {
+    "background" : 0xffffff,
+    "c1" : 0x3333e6,
+    "c2" : 0xcc3333,
+    "s1" : 0xb2994c,
+    "v" : 0xdddddd
+  },
+
+  "vertex_radius" : {
+    "scale_min": 0.125,
+    "scale_max" : 5,
+    "scale_value" : 1,
+    "scale_default": 1,
+    "cylinder": 0.05,
+    "line" : 0.025
+  },
+
+  "default_vertex_radius" : {
+    "cylinder": 0.05,
+    "line" : 0.025
+  },
+
+  //"vertex_thickness": [ 0.025, 0.05 ],
   "cylinder_thickness": 0.025,
+  "default_cylinder_thickness": 0.025,
+
+  "cylinder_values" : {
+    "scale_default": 1,
+    "c1_scale_thick" : 1,
+    "c2_scale_thick" : 1,
+    "s1_scale_thick" : 1,
+    "scale_min" : 0.125,
+    "scale_max" : 5
+  },
 
   //"render_type" : "line", // "line", "cylinder", "other"
   "render_type" : "cylinder", // "line", "cylinder", "other"
@@ -115,7 +155,8 @@ function display_init() {
   g_render.scene.add( lights[ 1 ] );
   g_render.scene.add( lights[ 2 ] );
 
-  g_render.scene.background = new THREE.Color( 0xffffff );
+  //g_render.scene.background = new THREE.Color( 0xffffff );
+  g_render.scene.background = new THREE.Color( g_render.default_color.background );
 
   var tens = new symtensWeb.symtens;
   tens.init();
@@ -161,7 +202,8 @@ function render(tenz) {
     render_line_symmetric_tensegrity(tenz);
   }
   else if (g_render.render_type == "cylinder") {
-    g_render.scene.background = new THREE.Color( 0xffffff );
+    //g_render.scene.background = new THREE.Color( 0xffffff );
+    g_render.scene.background = new THREE.Color( g_render.color.background );
     render_cylinder_symmetric_tensegrity(tenz);
   }
 }
@@ -202,6 +244,8 @@ function render_cylinder_symmetric_tensegrity_update(tenz) {
     mesh.position.set(0,0,0);
 
     mesh.scale.y = len;
+    mesh.scale.x = g_render.cylinder_values.c1_scale_thick;
+    mesh.scale.z = g_render.cylinder_values.c1_scale_thick;
 
     mesh.translateX( midpoint[0] );
     mesh.translateY( midpoint[1] );
@@ -234,6 +278,8 @@ function render_cylinder_symmetric_tensegrity_update(tenz) {
     mesh.position.set(0,0,0);
 
     mesh.scale.y = len;
+    mesh.scale.x = g_render.cylinder_values.c2_scale_thick;
+    mesh.scale.z = g_render.cylinder_values.c2_scale_thick;
 
     mesh.translateX( midpoint[0] );
     mesh.translateY( midpoint[1] );
@@ -265,6 +311,8 @@ function render_cylinder_symmetric_tensegrity_update(tenz) {
     mesh.position.set(0,0,0);
 
     mesh.scale.y = len;
+    mesh.scale.x = g_render.cylinder_values.s1_scale_thick;
+    mesh.scale.z = g_render.cylinder_values.s1_scale_thick;
 
     mesh.translateX( midpoint[0] );
     mesh.translateY( midpoint[1] );
@@ -274,6 +322,10 @@ function render_cylinder_symmetric_tensegrity_update(tenz) {
   }
 
   for (var ii=0; ii<tenz.V.length; ii++) {
+    g_render["geom_v"][ii].scale.x = g_render.vertex_radius.scale_value;
+    g_render["geom_v"][ii].scale.y = g_render.vertex_radius.scale_value;
+    g_render["geom_v"][ii].scale.z = g_render.vertex_radius.scale_value;
+
     g_render["geom_v"][ii].position.x = tenz.V[ii][0];
     g_render["geom_v"][ii].position.y = tenz.V[ii][1];
     g_render["geom_v"][ii].position.z = tenz.V[ii][2];
@@ -351,10 +403,10 @@ function render_cylinder_symmetric_tensegrity(tenz) {
   //cthk = 0.025;
   var cthk = g_render.cylinder_thickness;
 
-  c1_color = g_render.material_color[1][0];
-  c2_color = g_render.material_color[1][1];
-  s1_color = g_render.material_color[1][2];
-  v_color  = g_render.material_color[1][3];
+  c1_color = g_render.default_color.c1;
+  c2_color = g_render.default_color.c2;
+  s1_color = g_render.default_color.s1;
+  v_color  = g_render.default_color.v;
 
   for (var ii=0; ii<tenz.C1.length; ii++) {
 
@@ -463,7 +515,8 @@ function render_cylinder_symmetric_tensegrity(tenz) {
   }
 
   //var vert_rad = 0.025;
-  var vert_rad = g_render.vertex_thickness[1];
+  //var vert_rad = g_render.vertex_thickness[1];
+  var vert_rad = g_render.vertex_radius.cylinder;
 
   for (var ii=0; ii<tenz.V.length; ii++) {
     var sgeom = new THREE.SphereGeometry(vert_rad, 32,32);
@@ -926,7 +979,7 @@ function fullscreenEvent() {
   resizeCanvas();
 }
 
-function setup_fs() {
+function setup_fullscreen() {
   var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
   if (!isFirefox) {
@@ -950,6 +1003,199 @@ function go_fullscreen() {
   THREEx.FullScreen.request(ele);
 }
 
+function bg_color_change(e,c) {
+  g_render.color.background = parseInt("0x" + c.toHex());
+  g_render.scene.background = new THREE.Color( g_render.color.background );
+}
+
+function c1_color_change(e,c) {
+  g_render.color.c1 = parseInt("0x" + c.toHex());
+
+  for (var ii=0; ii<g_render.geom_c1.length; ii++) {
+    g_render.geom_c1[ii].material.color.setHex( g_render.color.c1 );
+  }
+}
+
+function c2_color_change(e,c) {
+  g_render.color.c2 = parseInt("0x" + c.toHex());
+
+  for (var ii=0; ii<g_render.geom_c2.length; ii++) {
+    g_render.geom_c2[ii].material.color.setHex( g_render.color.c2 );
+  }
+}
+
+function s1_color_change(e,c) {
+  g_render.color.s1 = parseInt("0x" + c.toHex());
+
+  for (var ii=0; ii<g_render.geom_s1.length; ii++) {
+    g_render.geom_c2[ii].material.color.setHex( g_render.color.s1 );
+  }
+}
+
+function c1_thickness_change(v) {
+  var thick_min = g_render.cylinder_values.scale_min;
+  var thick_max = g_render.cylinder_values.scale_max;
+  var range = (thick_max - thick_min);
+  var val = ((v/100)*range) + thick_min;
+
+  var text_val = val.toString().substr(0,4);
+
+  $("#c1_thickness_slider_val_id").text(text_val);
+
+  g_render.cylinder_values.c1_scale_thick = val;
+  render_update(g_render.prev_tenz);
+}
+
+function c2_thickness_change(v) {
+  var thick_min = g_render.cylinder_values.scale_min;
+  var thick_max = g_render.cylinder_values.scale_max;
+  var range = (thick_max - thick_min);
+  var val = ((v/100)*range) + thick_min;
+
+  var text_val = val.toString().substr(0,4);
+
+  $("#c2_thickness_slider_val_id").text(text_val);
+
+  g_render.cylinder_values.c2_scale_thick = val;
+  render_update(g_render.prev_tenz);
+}
+
+function s1_thickness_change(v) {
+  var thick_min = g_render.cylinder_values.scale_min;
+  var thick_max = g_render.cylinder_values.scale_max;
+  var range = (thick_max - thick_min);
+  var val = ((v/100)*range) + thick_min;
+
+  var text_val = val.toString().substr(0,4);
+
+  $("#s1_thickness_slider_val_id").text(text_val);
+
+  g_render.cylinder_values.s1_scale_thick = val;
+  render_update(g_render.prev_tenz);
+}
+
+function thickness_change(v) {
+  var thick_min = g_render.cylinder_values.scale_min;
+  var thick_max = g_render.cylinder_values.scale_max;
+  var range = (thick_max - thick_min);
+  var val = ((v/100)*range) + thick_min;
+
+  var text_val = val.toString().substr(0,4);
+
+  $("#thickness_slider_val_id").text(text_val);
+
+  g_render.cylinder_values.scale_thick = val;
+  render_update(g_render.prev_tenz);
+}
+
+function vertex_radius_change(v) {
+  var mn = g_render.vertex_radius.scale_min;
+  var mx = g_render.vertex_radius.scale_max;
+  var range = (mx - mn);
+  var val = ((v/100)*range) + mn;
+
+  var text_val = val.toString().substr(0,4);
+
+  $("#vertex_radius_slider_val_id").text(text_val);
+
+  g_render.vertex_radius.scale_value = val;
+  render_update(g_render.prev_tenz);
+}
+
+function restore_defaults() {
+
+  var c = g_render.default_color.background;
+  g_render.scene.background = new THREE.Color(c);
+  $("#background_color_id").spectrum("set", c.toString(16));
+
+  for (var ii=0; ii<g_render.geom_c1.length; ii++) {
+  c = g_render.default_color.c1;
+    g_render.geom_c1[ii].material.color.setHex( c );
+  }
+  $("#c1_color_id").spectrum("set", c.toString(16));
+
+  c = g_render.default_color.c2;
+  for (var ii=0; ii<g_render.geom_c2.length; ii++) {
+    g_render.geom_c2[ii].material.color.setHex( c );
+  }
+  $("#c2_color_id").spectrum("set", c.toString(16));
+
+  c = g_render.default_color.s1;
+  for (var ii=0; ii<g_render.geom_s1.length; ii++) {
+    g_render.geom_s1[ii].material.color.setHex( c );
+  }
+  $("#s1_color_id").spectrum("set", c.toString(16));
+
+  $("#thickness_slider_id").slider("value", g_render.cylinder_values.scale_default );
+  $("#vertex_radius_slider_id").slider("value", g_render.vertex_radius.scale_default );
+
+  $("#thickness_id").val( g_render.cylinder_values.scale_default );
+
+  g_render.cylinder_values.c1_scale_thick = g_render.cylinder_values.scale_default;
+  g_render.cylinder_values.c2_scale_thick = g_render.cylinder_values.scale_default;
+  g_render.cylinder_values.s1_scale_thick = g_render.cylinder_values.scale_default;
+  var t = g_render.cylinder_values.scale_default;
+  var mn = g_render.cylinder_values.scale_min;
+  var mx = g_render.cylinder_values.scale_max;
+  var range = (mx - mn);
+  $("#c1_thickness_slider_val_id").text( t );
+  $("#c1_thickness_slider_id").slider("value", Math.floor( ((t-mn)/(range))*100) );
+
+  $("#c2_thickness_slider_val_id").text( t );
+  $("#c2_thickness_slider_id").slider("value", Math.floor( ((t-mn)/(range))*100) );
+
+  $("#s1_thickness_slider_val_id").text( t );
+  $("#s1_thickness_slider_id").slider("value", Math.floor( ((t-mn)/(range))*100) );
+
+  g_render.vertex_radius.scale_value = g_render.vertex_radius.scale_default;
+  var t = g_render.vertex_radius.scale_default;
+  var mn = g_render.vertex_radius.scale_min;
+  var mx = g_render.vertex_radius.scale_max;
+  var range = (mx - mn);
+  $("#vertex_radius_slider_val_id").text( t );
+  $("#vertex_radius_slider_id").slider("value", Math.floor( ((t-mn)/(range))*100) );
+
+  render_update(g_render.prev_tenz);
+}
+
+function setup_color_picker() {
+  $("#background_color_id").spectrum({ color: g_render.color.background.toString(16) });
+  $("#c1_color_id").spectrum({ color: g_render.color.c1.toString(16) });
+  $("#c2_color_id").spectrum({ color: g_render.color.c2.toString(16) });
+  $("#s1_color_id").spectrum({ color: g_render.color.s1.toString(16) });
+
+  $("#background_color_id").on('change.spectrum', bg_color_change);
+  $("#c1_color_id").on('change', c1_color_change);
+  $("#c2_color_id").on('change', c2_color_change);
+  $("#s1_color_id").on('change', s1_color_change);
+}
+
+function setup_config() {
+  var t = g_render.cylinder_values.scale_default;
+  var mn = g_render.cylinder_values.scale_min;
+  var mx = g_render.cylinder_values.scale_max;
+  var range = (mx - mn);
+  $("#c1_thickness_slider_id").slider({ slide: function(e,ui) { c1_thickness_change(ui.value); } });
+  $("#c1_thickness_slider_val_id").text( t );
+  $("#c1_thickness_slider_id").slider("value", Math.floor( ((t-mn)/(range))*100) );
+
+  $("#c2_thickness_slider_id").slider({ slide: function(e,ui) { c2_thickness_change(ui.value); } });
+  $("#c2_thickness_slider_val_id").text( t );
+  $("#c2_thickness_slider_id").slider("value", Math.floor( ((t-mn)/(range))*100) );
+
+  $("#s1_thickness_slider_id").slider({ slide: function(e,ui) { s1_thickness_change(ui.value); } });
+  $("#s1_thickness_slider_val_id").text( t );
+  $("#s1_thickness_slider_id").slider("value", Math.floor( ((t-mn)/(range))*100) );
+
+  var t = g_render.vertex_radius.scale_default;
+  var mn = g_render.vertex_radius.scale_min;
+  var mx = g_render.vertex_radius.scale_max;
+  var range = (mx - mn);
+  $("#vertex_radius_slider_id").slider({ slide: function(e,ui) { vertex_radius_change(ui.value); } } );
+  $("#vertex_radius_slider_val_id").text( t );
+  $("#vertex_radius_slider_id").slider("value", Math.floor( ((t-mn)/(range))*100) );
+}
+
 function init() {
   display_init();
 
@@ -963,5 +1209,10 @@ function init() {
       $('#myInput').trigger('focus')
   });
 
-  setup_fs();
+  setup_fullscreen();
+  setup_color_picker();
+
+  setup_config();
+
+  restore_defaults();
 }

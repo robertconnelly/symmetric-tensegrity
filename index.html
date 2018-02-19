@@ -14,6 +14,7 @@
     <!-- Custom styles for this template -->
     <link href="css/dashboard.css" rel="stylesheet">
     <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/spectrum.css" rel="stylesheet">
 
     <style type='text/css'>
 
@@ -57,43 +58,73 @@
 
         <div class='row'>
           <div class='col-sm-2'> Background </div>
-          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+          <div class='col-sm-10'> <input class='form-control' type='text' id='background_color_id'> </div>
         </div>
+
+        <div class='row'> <hr /> </div>
 
         <div class='row'>
           <div class='col-sm-2'> C1 color </div>
-          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+          <div class='col-sm-10'> <input class='form-control' type='text' id='c1_color_id'> </div>
         </div>
+
+        <div class='row'> <hr /> </div>
 
         <div class='row'>
           <div class='col-sm-2'> C2 color </div>
-          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+          <div class='col-sm-10'> <input class='form-control' type='text' id='c2_color_id'> </div>
         </div>
+
+        <div class='row'> <hr /> </div>
 
         <div class='row'>
           <div class='col-sm-2'> S1 color </div>
-          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+          <div class='col-sm-10'> <input class='form-control' type='text' id='s1_color_id'> </div>
         </div>
+
+        <div class='row'> <hr /> </div>
 
         <div class='row'>
-          <div class='col-sm-2'> Thickness </div>
-          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+          <div class='col-sm-2'> C1 Thickness </div>
+          <div class='col-sm-2' id="c1_thickness_slider_val_id"> val </div>
+          <div class='col-sm-8'> <div id='c1_thickness_slider_id'> </div> </div>
         </div>
+
+        <div class='row'> <hr /> </div>
 
         <div class='row'>
-          <div class='col-sm-2'> Vertex Size </div>
-          <div class='col-sm-10'> <input class='form-control' type='text'> </div>
+          <div class='col-sm-2'> C2 Thickness </div>
+          <div class='col-sm-2' id="c2_thickness_slider_val_id"> val </div>
+          <div class='col-sm-8'> <div id='c2_thickness_slider_id'> </div> </div>
+        </div>
+
+        <div class='row'> <hr /> </div>
+
+        <div class='row'>
+          <div class='col-sm-2'> S1 Thickness </div>
+          <div class='col-sm-2' id="s1_thickness_slider_val_id"> val </div>
+          <div class='col-sm-8'> <div id='s1_thickness_slider_id'> </div> </div>
+        </div>
+
+        <div class='row'> <hr /> </div>
+
+        <div class='row'>
+          <div class='col-sm-2'> Vertex Radius </div>
+          <div class='col-sm-2' id="vertex_radius_slider_val_id"> val </div>
+          <div class='col-sm-8'> <div id='vertex_radius_slider_id'> </div> </div>
         </div>
 
 
-      </div>
+        <div class='row'> <hr /> </div>
+        <div class='row'>
+          <div class='col-sm-1'></div>
+          <div class='col-sm-2'> <button type="button" class="btn btn-secondary" onclick='restore_defaults();' >Restore Defaults</button> </div>
+          <div class='col-sm-5'> </div>
+          <div class='col-sm-2'> <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button> </div>
+          <div class='col-sm-1'></div>
+        </div>
 
-      <!--
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
-      -->
 
     </div>
   </div>
@@ -101,17 +132,27 @@
 
 <!-- modal -->
 
+    <!-- <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0"> -->
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
       <a class="navbar-brand col-sm-12" href="#">Highly Symmetric Tensegrity Structures</a> 
     </nav>
 
+
     <div class="container-fluid">
+
       <div class="row">
 
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <!-- 
+        firefox is having some rendering issues with choppin goff the first nav and hiding
+        it under the toolbar nav.  This is the hack to get around that for now.
+        -->
+        <!-- <nav class="col-md-2 d-none d-md-block bg-light sidebar"> -->
+        <!-- <nav class='col-md-2 d-none d-md-block bg-light'> -->
+        <nav class='nav flex-column'>
           <div class="sidebar-sticky">
 
-						<div class='nav flex-column nav-tabs' id='myTab' role='tablist' aria-orientation='vertical'>
+            <!-- <div class='nav flex-column nav-tabs' id='myTab' role='tablist' aria-orientation='vertical'> -->
+            <div class='nav flex-column' id='myTab' role='tablist' aria-orientation='vertical'>
 
 							<a class="nav-link"
 								id='home-tab'
@@ -1030,6 +1071,8 @@ the group you chose in the first window.
 
     <script src="js/two.min.js"></script>
     <script src="js/THREEx.FullScreen.js"></script>
+
+    <script src="js/spectrum.js"></script>
 
     <script> init() </script>
 
