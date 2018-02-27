@@ -46,6 +46,11 @@ body {
   color: #007bff;
 }
 
+.nav-link.active {
+  color: #007bff;
+  background-color: #eeeeee;
+}
+
 .sidebar .nav-link:hover .feather,
 .sidebar .nav-link.active .feather {
   color: inherit;
