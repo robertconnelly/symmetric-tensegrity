@@ -2,8 +2,7 @@ Frequently Asked Questions (F.A.Q.)
 ===
 
 
-1. What is a tensegrity? 
----
+## 1. What is a tensegrity? 
 
 
  It is a structure that joins nodes (points) with inextendibile
@@ -13,7 +12,7 @@ See [Wikipedia](http://en.wikipedia.org/wiki/Tensegrity)
 for a reasonable definition.
 
 
-2. What is the mathematical definition of a tensegrity?
+## 2. What is the mathematical definition of a tensegrity?
 
 It is a finite configuration of points, the nodes, in space or
 the plane where some pairs of the nodes are designated cables,
@@ -23,7 +22,7 @@ not to get closer together. Note with this definition cables and
 struts are allowed to intersect and cross.
 
 
-3. Who first created a tensegrity?
+## 3. Who first created a tensegrity?
 
 If you don't count spider webs and constructions in nature, an
 artist Kenneth Snelson is usually credited with the first
@@ -31,13 +30,13 @@ creations. He has an
 interesting website [here](http://www.kennethsnelson.net/).
 
 
-4. Who thought of the name tensegrity?
+## 4. Who thought of the name tensegrity?
 
 Buckminster Fuller. It combines the notion of "tension"
 with "integrity", creating "tensional integrity. You can see Bucky's musings
 [here](http://www.rwgrayprojects.com/rbfnotes/fpapers/tensegrity/tenseg01.html).
 
-5. Where can I read more about this catalog and tensegrities?
+## 5. Where can I read more about this catalog and tensegrities?
 
 
 * Allen Back and Bob Connelly have an article [here](http://www.math.cornell.edu/%7Econnelly/tensegrity.copy.pdf)
@@ -52,7 +51,7 @@ with "integrity", creating "tensional integrity. You can see Bucky's musings
   It is available [here](http://www-iri.upc.es/people/ros/StructuralTopology/).
 * For engineering background see "Theory of Structures" by Timoshenko and Young.
 
-6. What are some links to other sites that show tensegrities?
+## 6. What are some links to other sites that show tensegrities?
 
 * There is the older catalog created by Allen Back and Bob
   Connelly [here](http://mathlab.cit.cornell.edu/visualization/tenseg/in_progress/short_top.html).
@@ -63,7 +62,7 @@ with "integrity", creating "tensional integrity. You can see Bucky's musings
   This seems to be a kind virtual tensegrity, where the configuration
   minimizes an energy functional on the cables.<br>
 
-7. Can I build these tensegrities?
+## 7. Can I build these tensegrities?
 
 
 Why not? Once you have chosen a particular example, you
@@ -78,7 +77,7 @@ or René Motro's book
 "[Tensegrity: Structural Systems for the Future](http://www.amazon.com/Tensegrity-Structural-Systems-Ren%E9-Motro/dp/1903996376)".
 
 
-8. Can I look at the source code for the applet? 
+## 8. Can I look at the source code for the applet? 
 
 Yes. It is <a href="ap.java"> here </a>. If you want to modify
 the program and recompile, then you will also need to get the <i>render</i>
@@ -96,7 +95,7 @@ the example from
 our Home page.
 
 
-9. What is the "tracecode" button? 
+## 9. What is the "tracecode" button? 
 
 It has two uses: a) If you want the coordinates of all the
 vertices of the tensegrity currently displayed, those show up as the
@@ -110,13 +109,13 @@ change the colors and textures, and run [povray](http://www.povray.org) on it.
 The nonrotatable picture on the Home page was made in this manner.
 
 
-10. Will the structures shown in this catalog hold together?
+## 10. Will the structures shown in this catalog hold together?
 
 Yes. They are all rigid, but not all choices give
 interesting tensegrities. Some are very degenerate.
 
 
-11. How are the structures chosen?
+## 11. How are the structures chosen?
 
 They must satisfy the following list of criteria: They
 must have the <span style="font-style: italic;">symmetries</span> of one of the
@@ -131,7 +130,7 @@ The cables are connected as a set; The whole tensegrity structure must be <span
  style="font-style: italic;">super stable</span>.<br>
 
 
-12. What does it mean that a tensegrity is super stable?
+## 12. What does it mean that a tensegrity is super stable?
 
 This is a very strong condition on the geometry of the
 structure.   There is a particular calculation that can be made in terms of
@@ -148,8 +147,7 @@ these tensegrities, since the stiffness of the cables especially tends to be ver
 
 
 
-13. If I have a tensegrity where all the nodes are the same,
-and it holds together, will it be in this catalog? 
+## 13. If I have a tensegrity where all the nodes are the same, and it holds together, will it be in this catalog? 
 
 
 Not necessarily. It could be rigid, but not super
@@ -159,7 +157,7 @@ in this catalog. For example, the symmetric tensegrids described
 symmetry group isomorphic a dihedral group.<br>
 
 
-14. What is a group?
+## 14. What is a group?
 
 
 It is a set where any two elements g<sub>1</sub> and g<sub>2</sub>
@@ -176,7 +174,7 @@ Birkhoff and Maclane for a nice introduction.) This approach greatly
 simplifies the cataloging of the tensegrities we consider.
 
 
-15. What is a permutation group?
+## 15. What is a permutation group?
 
 
 This is a set of functions, called <i>permutations</i>, that
@@ -192,7 +190,7 @@ the product of such disjoint cycles. For example, (12)(345) means 1 and 2 are
 switched, and 3 goes to 4, which goes to 5, which goes to three.
 
 
-16. What are the groups A<sub>4</sub> and A<sub>5</sub>?
+## 16. What are the groups A<sub>4</sub> and A<sub>5</sub>?
 
 
 These are the alternating groups on 4 symbols and 5 symbols,
@@ -203,14 +201,13 @@ there are an even number of cycles of even length. For example,
 (12) is not even, but (12)(34) and (123) are even permutations. The group
 A<sub>4</sub> has 12 elements, and the group A<sub>5</sub> has 60 elements.
 
-17. What is the group S<sub>4</sub>?
+## 17. What is the group S<sub>4</sub>?
 
 
 This is the group of all permutations of 4 symbols and has 24 elements.
 
 
-18. What are the groups A<sub>4</sub> x Z<sub>2</sub>,
-  S<sub>4</sub> x Z<sub>2</sub>, A<sub>5</sub> x Z<sub>2</sub>?
+## 18. What are the groups A<sub>4</sub> x Z<sub>2</sub>, S<sub>4</sub> x Z<sub>2</sub>, A<sub>5</sub> x Z<sub>2</sub>?
 
 
 The G x Z<sub>2</sub> notation denotes the <i>cross product</i>
@@ -222,7 +219,7 @@ elements as G. So A<sub>4</sub> x Z<sub>2</sub> has 24 elements, S<sub>4</sub>
 x Z<sub>2</sub> has 48 elements, and A<sub>5</sub> x Z<sub>2</sub> has 120 elements.
 
 
-19. Why are these groups chosen?
+## 19. Why are these groups chosen?
 
 
 These are isomorphic to groups of symmetries of the cube, regular
@@ -237,7 +234,7 @@ subscripts and the cross "x" are suppressed.
 
 
 
-20. What does isomorphic mean?
+## 20. What does isomorphic mean?
 
 
   If G<sub>1</sub> and G<sub>2</sub> are two groups, an <i>isomorphism</i>
@@ -251,7 +248,7 @@ must have the same number of elements, but, for example, A<sub>4</sub>
 x Z<sub>2</sub> and S<sub>4</sub> both have 24 elements, yet they are not isomorphic.
 
 
-21. What is a symmetry group?
+## 21. What is a symmetry group?
 
 
 It is a collection of rigid distance preserving functions of
@@ -262,14 +259,13 @@ is also in the group. For example the rotations of regular
 tetrahedron, cube or regular dodecahedron are symmetry groups.
 
 
-22. Does the tensegrity always have a group of
-symmetries isomorphic to the group in the group window?
+## 22. Does the tensegrity always have a group of symmetries isomorphic to the group in the group window?
 
 
 Yes, but the tensegrity itself may have other larger groups of symmetries.
 
 
-23. What is the order of a group element?
+## 23. What is the order of a group element?
 
 
 If g is a group element, then g<sup>n</sup> is g multiplied by
@@ -283,7 +279,7 @@ permutation when
 it is written in disjoint cycle notation.<br>
 
 
-24. What does the group inverse mean?
+## 24. What does the group inverse mean?
 
 
 One of the defining properties of a group is that if g is a
@@ -294,8 +290,7 @@ If g is of order 2, then
 g = g<sup>-1</sup>.
 
 
-25. When I choose a group elements in the cable and
-strut windows, what does that mean?
+## 25. When I choose a group elements in the cable and strut windows, what does that mean?
 
 
 When the situation is not degenerate, there is a one-to-one
@@ -308,8 +303,7 @@ Note that if g is a group element corresponding to a strut or cable, then the
 inverse element g<sup>-1</sup> also corresponds to the same cable or strut.
 
 
-26. I want the struts not to touch each other.
-How can I find examples where that happens?
+## 26. I want the struts not to touch each other.  How can I find examples where that happens?
 
 
 If the order of a strut is greater than 2, then there are two
@@ -326,8 +320,7 @@ to use the "thinner" button and "zoom in" to decide whether there is
 really an intersection or not.
 
 
-27. What do those funny lines in the window on the
-right in the program mean?
+## 27. What do those funny lines in the window on the right in the program mean?
 
 
  Each curved line, or lines, of a given color corresponds to a
@@ -344,7 +337,7 @@ first representation
 the <i>winner</i>.
 
 
-28. What is a representation of a group?
+## 28. What is a representation of a group?
 
 
 It is a function that assigns to each element g in the group G a
