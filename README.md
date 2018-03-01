@@ -7,6 +7,8 @@ Unless noted, licensed under AGPLv3
 
 See individual packages for their licenses.
 
+[Live page](https://robertconnelly.github.io/symmetric-tensegrity/)
+
 
 
 Running Locally
