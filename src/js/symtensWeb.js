@@ -65910,12 +65910,28 @@ numeric.svd= function svd(A) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],3:[function(require,module,exports){
-//   file ap.java                                    Bob Connelly and Bob Terrell
-//     6/16/08 
-//   This applet is based on the earlier tensegrity catalogue by Bob Connelly and
-//   Allen Back, and contains the 'render' software    
-//   package from http://mrl.nyu.edu/~perlin and the 'Jama.Matrix' package 
-//   from http://math.nist.gov/javanumerics/jama.
+//
+//  Copyright (C) 2018 Robert Connelly and Simon D. Guest
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+//  ---
+//
+//  This program is a port of a Java applet that was based on the earlier
+//  tensegrity catalogue by Bob Connelly and developed by Bob Connelly, Bob Terrell
+//  Allen Back.
+//
 
 // a listing of the group elements as products of cycles
 
@@ -67117,29 +67133,12 @@ function symtens() {
   this.many = this.grpname.length;  // number of groups implemented
   this.grp = 0;                // which group we are using
 
-  //RenderPanel       rp;                     // to rotate the tensegrity
-  //Geometry[]        Gp, gc1, gc2, gs1;      // vertex, cable, cable, strut
-  //Material          join, cab1, cab2, str1; // vertex, cable, cable, strut
-  //double            fov;                    // camera field of view
-
-  //graf              detplotter;
-  //int               nsaved;                 // number of detplot lines saved
-  //double[][]        lines;
-  //TextArea          txt;
-  //bpanel            bpan;                   // holds group, cable, strut choices
-  //apanel            apan;                   // holds text area, thicker slider
-
 
   this.nsaved = 0;
   this.lines = [];
   this.txt = "";
 
   this.thk = 0.65;             // thickness coefficient
-
-  //double            omeg1, omeg_1;          // cable stress ratio, strut stress
-  //int               c1,c2,s1;       // group element numbers of cables and strut
-  //int               c;              // cable class number as listed in the bpanel
-  //int               winr, S, rk;    // size and rank of winr
 
   this.omeg1 = .35; 
 
@@ -67155,77 +67154,17 @@ function symtens() {
   this.S = 0;
   this.rk = 0;
 
-
-  //this.wasMouseRelease = true; // then print lengths in rpset()
-
   this.Jp1 = [];
   this.JOM = [];
   this.Jom = [];
   this.Jg  = [];
   this.Jmx = [];
 
-  /*
-  Jama.Matrix       Jp1,            // first vertex
-                    JOM;            // stress matrix
-  Jama.Matrix[][][] Jom,    // loc stress mat index by group, rep, element number
-                    Jg,     // group elements  "
-                    Jmx;    // generators indexed by group, rep, generator number
-  Color             acolor =  new Color(220,220,200);
-
-  String            tracer; // keep coords in povray code
-  NumberFormat      nf;     // used when we output a povray file
-  Dialog            di;     // for povray code
-  TextArea          ditxt; 
-  Button            dibut;
-  */
-
 }
 
 symtens.prototype.init = function() {
   this.makematrices(); 
-
-  /*
-  setLayout(new BorderLayout(5,5));
-  setBackground(Color.darkGray);
-  rp = new RenderPanel();
-   rp.setSize(getSize().width*2/3,getSize().height*5/6);
-   rp.init();
-   rp.setFOV(fov=1.0);
-   add("Center",rp);
-  bpan = new bpanel(this);
-   add("North",bpan);
-  rpsetup();
-  rp.start();
-  apan = new apanel(this);
-   apan.setSize(getSize().width,getSize().height*1/6);
-   add("South",apan);
-  detplotter = new graf(this);
-   detplotter.setSize(getSize().width*1/3,getSize().height*5/6);
-   lines = new double[11][1+detplotter.pts]; // 11 = 1+max#reps
-   add("East",detplotter);
-  nf = new DecimalFormat("#0.000");
-
-  di = new Dialog(new Frame(),"povray code");
-   di.setModal(false);
-   di.setSize(600,750);
-   di.setResizable(true);
-   ditxt = new TextArea("",60,80,TextArea.SCROLLBARS_VERTICAL_ONLY);
-   ditxt.setBackground(Color.white);
-   di.setLayout(new BorderLayout());
-  di.add("Center",ditxt);
-   dibut = new Button("close");
-   dibut.setBackground(Color.yellow);
-   dibut.addActionListener(apan);
-  di.add("South",dibut);
-  */
 }
-
-
-// vestigial?
-//
-symtens.prototype.start = function() { }
-symtens.prototype.stop = function()  { }
-
 
 symtens.prototype.makematrices = function() {
 
@@ -67244,50 +67183,28 @@ symtens.prototype.makematrices = function() {
     }
 
     // make generators; turn the mx arrays into Jama matrices
+    //
     for( var gn = 0; gn < this.gens[G]; gn++) {
       for( var rp = 0; rp < this.reps[G]; rp++) {
-        //this.Jmx[G][rp][gn] = numeric.pow(this.mx[G][rp][gn], 1);  // easy copy
         this.Jmx[G][rp][gn] = math.pow(this.mx[G][rp][gn], 1);  // easy copy
-
-        //DEBUG
-        //console.log("this.Jmx[", G, "][", rp, "][", gn, "]");
-        //console.log(this.Jmx[G][rp][gn]);
-        //DEBUG
-
       }
     }
 
-    //DEBUG
-    //console.log("\n\ncp0 -------------\n\n");
-    //DEBUG
-
     // make group elements; use the products of generators to powers
+    //
     for( var j = 0; j < this.order[G]; j++) {
       for( var rp = 0; rp < this.reps[G]; rp++) {
-        //this.Jg[G][rp][j] = numeric.pow(this.Jmx[G][rp][0], this.to[G][j][0]);
         this.Jg[G][rp][j] = math.pow(this.Jmx[G][rp][0], this.to[G][j][0]);
-
-        //console.log("...", "G:", G, "rp:", rp, "j:", j, this.Jmx[G][rp][0], this.to[G][j][0]);
 
         for( var ngen = 1; ngen < this.gens[G]; ngen++) {
           this.Jg[G][rp][j] =
             numeric.dot( this.Jg[G][rp][j], math.pow(this.Jmx[G][rp][ngen], this.to[G][j][ngen]) );
-            //numeric.dot( this.Jg[G][rp][j], numeric.pow(this.Jmx[G][rp][ngen], this.to[G][j][ngen]) );
-
-          //DEBUG
-          //console.log("this.Jg[", G, "][", rp, "][", j, "]");
-          //console.log(this.Jg[G][rp][j]);
-          //DEBUG
-
         }
       }
     }
 
-    //DEBUG
-    //console.log("\n\ncp1 -------------\n\n");
-    //DEBUG
-
     // make local stress matrices; I-g or 2I-g-g^{-1} 
+    //
     for (var rep = 0; rep < this.reps[G]; rep++) {
       var sz = this.deg[G][rep];
       var eye = numeric.identity(sz);
@@ -67296,14 +67213,10 @@ symtens.prototype.makematrices = function() {
           var trans = numeric.transpose(this.Jg[G][rep][j]);
           this.Jom[G][rep][j] = numeric.sub( numeric.sub( numeric.mul(eye, 2), this.Jg[G][rep][j]), trans );
         }
-        else { // it is involution
+        // it is involution
+        else {
           this.Jom[G][rep][j] = numeric.sub(eye, this.Jg[G][rep][j]);
         }
-
-        //DEBUG
-        //console.log("Jom[" , G , "][", rep, "][", j, "]:");
-        //console.log(this.Jom[G][rep][j]);
-        //DEBUG
 
       }
     }
@@ -67311,84 +67224,7 @@ symtens.prototype.makematrices = function() {
 
 }
 
-// Display setup?
-//
-symtens.prototype.rpsetup = function() {
-
-  /*
-    join = new Material();
-    join.setColor(.8,.8,.8,.2,.2,.2,.4);
-    cab1 = new Material();
-    cab2 = new Material();
-    str1 = new Material();
-
-     cab1.setColor(.2,.2,.9,.2,.2,.2,.4); 
-     cab2.setColor(.8,.2,.2,.2,.2,.2,.4);
-     str1.setColor(.7,.6,.3,.2,.2,.2,.4); // wood dowels at first  
-     rp.setBgColor( 0,.4,.4);             
-
-    rp.addLight( 1, 1,1, 1, 1,1);
-    rp.addLight(-1,-1,0,.6,.6,1);
-    rp.addLight(-2,-3,1, 1, 1,1);
-    
-    Gp = new Geometry[order[grp]]; 
-    for( int k = 0; k < order[grp]; ++k)
-    { Gp[k] = rp.world.add().ball(3);
-      Gp[k].setMaterial(join);
-    }
-    gc1 = new Geometry[order[grp]];
-    gc2 = new Geometry[order[grp]];
-    gs1 = new Geometry[order[grp]];
-    */
-}
-
-// not needed?
-//
-symtens.prototype.cleanup = function() {
-  /*
-    tracer =      "#include \"colors.inc\"\n"
-                 +"#include \"shapes.inc\"\n"
-                 +"#include \"textures.inc\"\n" 
-    +"#declare c1txr = Ruby_Glass \n"
-    +"#declare c2txr = texture{NBglass pigment{Sapphire_Agate}} \n"
-    +"#declare s1txr = Tinny_Brass \n"
-    +"#declare vertxr = Soft_Silver \n"
-    +"#declare c1rad = .03;\n"
-    +"#declare c2rad = .03;\n"
-    +"#declare s1rad = .03;\n"
-    +"#declare vrad = .05;\n"
-    +"light_source { <-10,8,-3> color White }\n"
-    +"light_source { <5, 2,-4> color White }\n"
-    +"light_source { <0, 2,-5> color White }\n"
-    +"plane { y,-1 pigment { colour White }}\n" 
-    +"camera {location<1,.1,-3> look_at<0,-.5,.4>}\n";
-
-    for( int i = 0; i < gc1.length; ++i) 
-    { rp.world.delete(gc1[i]); 
-      rp.world.delete(gc2[i]); 
-      rp.world.delete(gs1[i]);
-    }  
-    for( int k = 0; k < Gp.length; ++k)
-    {  // rp traces vertex path as you slide, if not:
-       rp.world.delete(Gp[k]);
-    }
-    Gp = null; 
-    Gp = new Geometry[order[grp]]; 
-    for( int k = 0; k < order[grp]; ++k)
-    { 
-      Gp[k] = rp.world.add().ball(3);
-      Gp[k].setMaterial(join);
-    }
-    gc1 = null; gc1 = new Geometry[order[grp]];
-    gc2 = null; gc2 = new Geometry[order[grp]];
-    gs1 = null; gs1 = new Geometry[order[grp]];
-    */
-}
-
-// TODO
-// IN PROGRESS
-//
-// rp is render panel...so set render panel? aka render?
+// Return realization of tensegrity.
 //
 symtens.prototype.realize_symmetric_tensegrity = function() {
 
@@ -67576,9 +67412,11 @@ symtens.prototype.getdet = function(rep, om1, y) {
 }
 
 
-// determinant plotter?
+// Construct lines for determinant plot.
+// Return array of lines with the last element
+// being the representation number.
 //
-// TODO?
+
 
 symtens.prototype.getlines = function() {
   var n_sample = 18;
@@ -67598,10 +67436,7 @@ symtens.prototype.getlines = function() {
 
       var deter  = this.getdet(rep, (0.5+x)/n_sample, y);
       var dtest1 = this.getdet(rep, (0.5+x)/n_sample, y-dy);
-      //var dtest2 = this.getdet(rep, (0.5+x)/n_sample, y - 17*dy);
       var dtest2 = this.getdet(rep, (0.5+x)/n_sample, y - (n_sample-1)*dy);
-
-      //console.log(rep, x, y, dy, "...", deter, dtest1, dtest2);
 
       var changes = false;
       if (Math.abs(dtest1-dtest2) > eps) { changes = true; }
@@ -67613,7 +67448,7 @@ symtens.prototype.getlines = function() {
         //
         if ( numeric.sum(numeric.abs(this.Jom[this.grp][rep][this.s1])) > eps ) { }
 
-				// if decreasing y does not affect deter, then there is no root
+        // if decreasing y does not affect deter, then there is no root
         // so omit drawing nonexistent curve for that rep.
         // out of the for x loop
         omit = true;
@@ -67636,21 +67471,15 @@ symtens.prototype.getlines = function() {
       // the sign of determinant. If so record approximate root. If not
       // check for sign change in the slope suggesting double root
       // try 180 times
-			//
+      //
       for (var k=0; k< 180; k++) {
         dtest1 = this.getdet(rep, (0.5+x)/n_sample, y-dy);
 
-        //console.log("## dtest1: ", dtest1, ", rep:", rep, ", x:", x, ", y:", y, ", dy:", dy);
-        //console.log("### getdet( ", rep, ",", (0.5+x)/n_sample, ",", y-dy, ")");
-
-				// imperfect first 0 of det, for visual only
+        // imperfect first 0 of det, for visual only
         // out of the for
-				//
+        //
         if (dtest1 <= 0.0) {
           found = true;
-
-          //DEBUG
-          //console.log("a: ", y);
 
           cur_lines.push(y);
           break;
@@ -67658,11 +67487,6 @@ symtens.prototype.getlines = function() {
           dtest2 = this.getdet(rep, (0.5+x)/n_sample, y-(2*dy));
           if ((deter > dtest1) && (dtest2 > dtest1)) {
             found = true;
-            //lines[nsaved][x] = y;
-
-            //DEBUG
-            //console.log("b: ", y);
-
             cur_lines.push(y);
             break;
           }
@@ -67677,11 +67501,9 @@ symtens.prototype.getlines = function() {
 
     if (omit) { continue; }
     else {
-      //lines[nsaved][n_sample] = rep;
       cur_lines.push(rep);
       lines.push(cur_lines);
       cur_lines = [];
-      //lines[nsaved].push([-1, rep]);
       nsaved++;
     }
 
@@ -67770,383 +67592,6 @@ symtens.prototype.bisect = function(rep, om1, y1, y2) {
 //-----------------------------
 //-----------------------------
 
-// graf -> graphic?  graph?
-//
-/*
-class graf extends Canvas 
-           implements MouseListener, MouseMotionListener
-{ ap d;
-  double  om1;
-  int     grayline = (30+210)/2;
-  int     pts = 18; 
- 
-  public graf(ap d)
-  { super();
-    this.d = d;
-    addMouseListener(this);
-    addMouseMotionListener(this);
-    setVisible(true);
-    setSize(d.getSize().width/3,360);
-    setBackground(Color.white);
-  }
-
-  public void draw()
-  {
-    // run x from 31 to 210, y <= 0 is 100 down to about 150
-    int xra[] = {30,40,50,60,
-                 70,80,90,100,
-                 110,120,130,140,
-                 150,160,170,180,
-                 190,200}; // array of x values for pts = 18
-    Graphics gg = getGraphics();
-    gg.clearRect(0,0,getSize().width,getSize().height);
-    gg.drawLine(30,10,30,250);    // vert 
-    gg.drawLine(210,10,210,250);  // vert
-    gg.drawLine(25,20,215,20);    // axis
-    gg.drawString("0",17,20);     // label axis
-
-    for( int arep = 0; arep < d.nsaved; ++arep) 
-    {
-      int[]   ilines = new int[pts];
-
-      for( int x = 0; x < pts; ++x)
-      { ilines[x] = 20-(int)(173*d.lines[arep][x]); 
-      }
-      int rep = (int)d.lines[arep][pts]; // getlines() saved rep number in last slot
-
-      String faith = "faithful";
-      if( d.is3dfaithful[d.grp][rep] == false)
-      { faith = " ";
-        gg.setColor(new Color( 25*rep,250-30*(rep-2),0));
-      }
-      else
-      { gg.setColor(Color.black);
-      }
-      gg.drawString(
-                    " rep " + Integer.toString(rep)
-                            + " deg " +Integer.toString(d.deg[d.grp][rep])
-                            + "  " + faith,
-                    3,260+18*rep
-                   );
-      for( int i = 0; i < pts-1; ++i)
-      { // drawLine(a,b,c,d) runs from what you would normally call
-        // point (a,-b) to point (c, -d), with origin at upper left
-        // So to plot y = f(x) normally with axis shown at (..,100)
-        // and f scaled by say 30 pixels, you put points at (x,100-30*f(x))
-        gg.drawLine(5+xra[i], ilines[i], 5+xra[i+1], ilines[i+1]);
-      }
-    }
-  }
-
-  public void mouseClicked(MouseEvent ev) { mouseDragged(ev); }
-  public void mouseReleased(MouseEvent ev) 
-  { d.wasMouseRelease = true;
-  }
-  public void mousePressed(MouseEvent ev) 
-  { //mouseDragged(ev);
-  }
-  public void mouseEntered(MouseEvent ev){}
-  public void mouseExited(MouseEvent ev){}
-
-  public void mouseMoved(MouseEvent ev)
-  { d.wasMouseRelease = false; }
-  public void mouseDragged(MouseEvent ev)
-  { 
-    draw(); 
-    // show user the determinants
-    Graphics g = getGraphics();
-
-    int clickx = ev.getX();
-    if( clickx < 31) {return;}
-    if( clickx > 209) {return;}
-
-    int clicky = ev.getY();
-    double om1tmp  = (clickx-30.0)/180.0,
-           om_1tmp = (20.0-clicky)/173.0; // cf 20-173y in detplot
-  
-    for( int rep = 2; rep < d.reps[d.grp]; ++rep) 
-    { 
-      g.clearRect(145,250+18*rep,280,13);
-      g.drawString(" det " 
-          +d.nf.format( d.getdet(rep,om1tmp,om_1tmp)),150,260+18*rep);
-    }
-    g.setColor(Color.white);
-    g.drawLine(grayline,10,grayline,220);
-    // draw vertical line and print to show omeg1 
-    int click = ev.getX();
-    if( click < 31) return;
-    if( click > 209) return;
-    grayline = click;
-    g.setColor(Color.gray);
-    g.drawLine(grayline,10,grayline,220);
-
-    om1 = (clickx-30.0)/180.0;
-    g.clearRect(30,250,140,30); 
-    if( d.find0(om1) == false)
-    { g.drawString("  winner not found", 30, 230);
-    }
-    else
-    { // finally you can draw a tensegrity
-      d.rpset();
-    }
-  }
-} // end class graf
-*/
-
-
-/*
-class apanel extends Panel
-             implements ActionListener, ItemListener
-{
-  ap           d;
-  TextArea     txt;
-  Button       zoomin, zoomout,
-               thinner, thicker,
-               tracecode;
-  Choice       col;
- 
-  public apanel(ap d)
-  { super();
-    this.d = d;
-    setLayout(new BorderLayout(5,5));
-
-    String info = new String(
-       "Symmetric Tensegrities      6/2008    based on the forthcoming\n"
-     + "book 'Frameworks, Tensegrities, and Symmetries', by R.Connelly\n"
-     + "and S.D.Guest.                                                \n" 
-     + "    Choose a group, a cable class, then a strut, then click in\n"
-     + "the determinant plot to select a cable stress ratio.          \n");
-     txt = new TextArea(info,6,50,TextArea.SCROLLBARS_VERTICAL_ONLY);
-     txt.setBackground(d.acolor);
-     add("East",txt);
-
-    Panel p = new Panel(new GridLayout(5,4));
-      zoomin = new Button("zoom in");
-       zoomin.setBackground(d.acolor); zoomin.addActionListener(this);
-      zoomout = new Button("zoom out");
-       zoomout.setBackground(d.acolor); zoomout.addActionListener(this);
-      thinner = new Button("thinner");
-       thinner.setBackground(d.acolor); thinner.addActionListener(this);
-      thicker= new Button("thicker");
-       thicker.setBackground(d.acolor); thicker.addActionListener(this);
-      p.add(new Label(" ")); p.add(new Label(" ")); p.add(new Label(" ")); p.add(new Label(" ")); 
-      p.add(zoomin);  p.add(new Label(" ")); p.add(thinner); p.add(new Label(" "));      
-      p.add(zoomout); p.add(new Label(" ")); p.add(thicker); p.add(new Label(" "));
-      p.add(new Label(" ")); p.add(new Label(" ")); p.add(new Label(" ")); p.add(new Label(" "));
-      tracecode = new Button("tracecode");
-       tracecode.setBackground(new Color(140,140,120)); 
-       tracecode.addActionListener(this);
-      col = new Choice();
-       col.addItemListener(this);
-       col.setBackground(new Color(140,140,120)); 
-       col.removeAll();
-       col.addItem("colors"); // as a title, ignore selection
-       col.addItem("blue/red/green");
-       col.addItem("wood dowels");
-       col.addItem("contrast");
-      p.add(tracecode); p.add(new Label(" ")); p.add(col); p.add(new Label(" ")); 
-     add("West",p);
-
-     add("Center",new Panel());
-  }
-
-  public void actionPerformed(ActionEvent e)
-  { if(((String)e.getActionCommand()).equals("zoom in"))
-    {
-      d.rp.setFOV(d.fov = Math.max(.2,d.fov-.2));
-      d.rp.damage();
-    }
-    else if(((String)e.getActionCommand()).equals("zoom out"))
-    {
-      d.rp.setFOV(d.fov = Math.min(2.2,d.fov+.2));
-      d.rp.damage();
-    }
-    else if(((String)e.getActionCommand()).equals("thinner"))
-    {
-      d.thk *= .625;
-      d.rpset();
-    }
-    else if(((String)e.getActionCommand()).equals("thicker"))
-    {
-      if( d.thk < 2.0)
-      { d.thk *= 1.6;
-        d.rpset();
-      }
-    }
-    else if(((String)e.getActionCommand()).equals("tracecode"))
-    {
-      d.ditxt.setText(d.tracer);
-      d.di.setVisible(true);
-    }
-    else if(((String)e.getActionCommand()).equals("close"))
-    {
-      d.di.setVisible(false);
-    }
-  }
-
-  void debug(double d) { txt.append(Double.toString(d)); }
-  void debug(int j) { txt.append(Integer.toString(j)); }
-  void debug(String s) { txt.append(s); }
-
-
-  public void itemStateChanged( ItemEvent e)
-  {
-    if( e.getSource() == col)
-    {
-      int i = col.getSelectedIndex();
-      if( i == 0)
-      { // ignore the title space
-      }
-      else if( i == 1) // red/blue/green
-      { d.cab1.setColor(.2,.2,.9,.2,.2,.2,.4); // blue
-        d.cab2.setColor(.8,.2,.2,.2,.2,.2,.4); // red
-        d.str1.setColor(.0,.7,.3,.2,.2,.2,.4); // green
-        d.rp.setBgColor(1,1,1);                // white
-        d.rp.damage();
-      }
-      else if( i == 2) // wood dowels
-      { d.cab1.setColor(.2,.2,.9,.2,.2,.2,.4);
-        d.cab2.setColor(.8,.2,.2,.2,.2,.2,.4);
-        d.str1.setColor(.7,.6,.3,.2,.2,.2,.4); // wood  
-        d.rp.setBgColor( 0,.4,.4);
-        d.rp.damage();
-      }
-      else if( i == 3) // contrast
-      { d.cab1.setColor(.6,.3, 0,.2,.2,.2,.4);
-        d.cab2.setColor(.7,.1, 0,.2,.2,.2,.4);
-        d.str1.setColor(.2, 0,.3,.2,.2,.2,.5);
-        d.rp.setBgColor(.1,.1,.1);
-        d.rp.damage();
-      }
-   }
- }
-
-} // end class apanel
-*/
-
-
-/*
-class bpanel extends Panel
-             implements ItemListener
-{ ap d;
-  Choice grplis,
-         cablis,
-         strlis;
-
-  public bpanel(ap d)
-  { super();
-    this.d = d;
- 
-    setLayout(new GridLayout(1,7));
-    setBackground(d.acolor);
-
-    grplis = new Choice();
-     for( int k = 0; k < d.grpname.length; ++k)
-     { grplis.addItem(d.grpname[k]);
-     }
-     grplis.select(0);
-     grplis.addItemListener(this);
-     add(new Label("group:",Label.RIGHT));
-     add(grplis);
-
-    cablis = new Choice();
-     cablis.addItemListener(this);
-     add(new Label("cables:",Label.RIGHT));
-     add(cablis);
-    
-    listcabchoices();
-    
-    strlis = new Choice();
-     strlis.addItemListener(this); 
-     add(new Label("struts:",Label.RIGHT));
-     add(strlis);
-  }
- 
-  void listcabchoices()
-  {
-     cablis.removeAll();
-     for( int k = 0; k < d.cables[d.grp].length; ++k)
-     { cablis.addItem(d.cables[d.grp][k]); 
-     }
-  }
-  
-  void liststrchoices()
-  {
-      strlis.removeAll();
-      for( int k = 0; k < d.struts[d.grp][d.c].length; ++k)
-      { strlis.addItem(d.struts[d.grp][d.c][k]);
-      }
-  }
-
-  public void itemStateChanged( ItemEvent e)
-  { 
-    d.omeg1 = .35; 
-  
-    if( e.getSource() == grplis)
-    {
-      d.grp = grplis.getSelectedIndex();
-      if( d.grp == -1) { d.grp = 0;}
-
-      d.c = 0;
-      d.c1 = d.cablnumb3rs[d.grp][d.c][0];
-      d.c2 = d.cablnumb3rs[d.grp][d.c][1];
-      d.s1 = d.strutnumb3rs[d.grp][d.c][0];
-
-      listcabchoices();
-      d.rp.damage(); 
-      //if(( d.grp == 0)||( d.grp == 1)) {
-      //  d.apan.txt.append("Some unfaithful reps are winners for A4 and A4Z2\n");
-      //}
-      return;
-    }
-    else if( e.getSource() == cablis)
-    {
-      d.c = cablis.getSelectedIndex();
-      if( d.c == -1) { d.c = 0;}
-
-      d.grp = grplis.getSelectedIndex();
-      if( d.grp == -1) { d.grp = 0;}
-      
-      d.c1 = d.cablnumb3rs[d.grp][d.c][0];
-      d.c2 = d.cablnumb3rs[d.grp][d.c][1];
-
-      // safety:
-      d.s1 = d.strutnumb3rs[d.grp][d.c][0];
-
-      liststrchoices();
-      d.rp.damage(); 
-      return;
-    }
-    else if( e.getSource() == strlis)
-    { 
-      int s = strlis.getSelectedIndex();
-      if( s == -1) { s = 0;}
-
-      d.c = cablis.getSelectedIndex();
-      if( d.c == -1) { d.c = 0;}
-
-      d.grp = grplis.getSelectedIndex();
-      if( d.grp == -1) { d.grp = 0;}
-
-      d.c1 = d.cablnumb3rs[d.grp][d.c][0];
-      d.c2 = d.cablnumb3rs[d.grp][d.c][1];
-      d.s1 = d.strutnumb3rs[d.grp][d.c][s];
-    
-      d.apan.txt.repaint();
-      
-      d.getlines();
-      d.rp.damage();
-    }
-  }
-}
-
-*/
-
-// end ap.java
-//
-
-
-
 
 //DEBUG
 
@@ -68178,27 +67623,13 @@ function debug_print(st) {
 
 }
 
+/*
 // testing
 //
 function main() {
 
   var tens = new symtens;
   tens.init();
-
-  //console.log("...");
-  //console.log(JSON.stringify(tens));
-
-
-  //TESTING
-  /*
-  tens.omeg1=0.5611111111111111;
-  tens.omeg_1=-0.2808588346992693;
-  tens.c1 = 8;
-  tens.c2 = 9;
-  tens.s1 = 6;
-  tens.grp = 0;
-  tens.winr = 4;
-  */
 
   //testing
   //
@@ -68209,64 +67640,23 @@ function main() {
   tens.s1 = 1;
   tens.grp = 0;
   tens.c = 0;
-  //tens.winr = 4;
 
   var l =  tens.getlines();
   console.log(l);
   return;
 
-
   var st = tens.realize_symmetric_tensegrity();
-
-  /*
-  var grp = 0;
-  var rep = 4;
-  var c1 = 4;
-  var c2 = 7;
-  var s1 = 3;
-
-  console.log("Jom", tens.Jom);
-
-  console.log("Jom c1", tens.Jom[grp][rep][c1]);
-  console.log("Jom c2", tens.Jom[grp][rep][c2]);
-  console.log("Jom s1", tens.Jom[grp][rep][s1]);
-
-  tens.grp = 4;
-  tens.rep = 4;
-  tens.c1 = 4;
-  tens.c2 = 7;
-  tens.s1 = 3;
-  var xx = tens.getdet(4, 0.5, -0.323071);
-
-  console.log("???", xx);
-
-  return;
-  */
-
-
-  //debug_print(st);
-
-  //console.log(">>>>");
-  //var d = tens.getdet(3, 0.5, -0.6044189999999995);
-  //console.log("------");
-
-  //console.log("...");
-  //var t = tens.find0(0.5);
-  //console.log(">>>", t);
 
   var lines = tens.getlines();
 
   console.log(lines);
 
 }
+*/
 
 module.exports = {
   symtens : symtens
 }
-//exports.symtens = symtens;
-
-//main();
-
 
 },{"./lib/math.js":1,"./lib/numeric.js":2}]},{},[3])(3)
 });
