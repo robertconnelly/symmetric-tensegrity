@@ -68,9 +68,6 @@ var g_render = {
     "scale_max" : 5
   },
 
-  //"render_type" : "line", // "line", "cylinder", "other"
-  "render_type" : "cylinder", // "line", "cylinder", "other"
-
   "canvas_width" : 412,
   "canvas_height" : 412,
 
@@ -184,26 +181,12 @@ function clear_scene() {
 }
 
 function render(tenz) {
-  if (g_render.render_type == "line") {
-    g_render.scene.background = new THREE.Color( 0x000000 );
-    render_line_symmetric_tensegrity(tenz);
-  }
-  else if (g_render.render_type == "cylinder") {
-    //g_render.scene.background = new THREE.Color( 0xffffff );
-    g_render.scene.background = new THREE.Color( g_render.color.background );
-    render_cylinder_symmetric_tensegrity(tenz);
-  }
+  g_render.scene.background = new THREE.Color( g_render.color.background );
+  render_cylinder_symmetric_tensegrity(tenz);
 }
 
 function render_update(tenz) {
-
-  if (g_render.render_type == "line") {
-    render_line_symmetric_tensegrity_update(tenz);
-  }
-  else if (g_render.render_type == "cylinder") {
-    render_cylinder_symmetric_tensegrity_update(tenz);
-  }
-
+  render_cylinder_symmetric_tensegrity_update(tenz);
 }
 
 function render_cylinder_symmetric_tensegrity_update(tenz) {
@@ -313,43 +296,6 @@ function render_cylinder_symmetric_tensegrity_update(tenz) {
     g_render["geom_v"][ii].scale.y = g_render.vertex_radius.scale_value;
     g_render["geom_v"][ii].scale.z = g_render.vertex_radius.scale_value;
 
-    g_render["geom_v"][ii].position.x = tenz.V[ii][0];
-    g_render["geom_v"][ii].position.y = tenz.V[ii][1];
-    g_render["geom_v"][ii].position.z = tenz.V[ii][2];
-  }
-
-}
-
-function render_line_symmetric_tensegrity_update(tenz) {
-
-  for (var ii=0; ii<tenz.C1.length; ii++) {
-    for (var jj=0; jj<tenz.C1[ii].length; jj++) {
-      g_render["geom_c1"][ii].geometry.vertices[jj].x = tenz.C1[ii][jj][0];
-      g_render["geom_c1"][ii].geometry.vertices[jj].y = tenz.C1[ii][jj][1];
-      g_render["geom_c1"][ii].geometry.vertices[jj].z = tenz.C1[ii][jj][2];
-    }
-    g_render["geom_c1"][ii].geometry.verticesNeedUpdate = true;
-  }
-
-  for (var ii=0; ii<tenz.C2.length; ii++) {
-    for (var jj=0; jj<tenz.C2[ii].length; jj++) {
-      g_render["geom_c2"][ii].geometry.vertices[jj].x = tenz.C2[ii][jj][0];
-      g_render["geom_c2"][ii].geometry.vertices[jj].y = tenz.C2[ii][jj][1];
-      g_render["geom_c2"][ii].geometry.vertices[jj].z = tenz.C2[ii][jj][2];
-    }
-    g_render["geom_c2"][ii].geometry.verticesNeedUpdate = true;
-  }
-
-  for (var ii=0; ii<tenz.S1.length; ii++) {
-    for (var jj=0; jj<tenz.S1[ii].length; jj++) {
-      g_render["geom_s1"][ii].geometry.vertices[jj].x = tenz.S1[ii][jj][0];
-      g_render["geom_s1"][ii].geometry.vertices[jj].y = tenz.S1[ii][jj][1];
-      g_render["geom_s1"][ii].geometry.vertices[jj].z = tenz.S1[ii][jj][2];
-    }
-    g_render["geom_s1"][ii].geometry.verticesNeedUpdate = true;
-  }
-
-  for (var ii=0; ii<tenz.V.length; ii++) {
     g_render["geom_v"][ii].position.x = tenz.V[ii][0];
     g_render["geom_v"][ii].position.y = tenz.V[ii][1];
     g_render["geom_v"][ii].position.z = tenz.V[ii][2];
@@ -510,93 +456,6 @@ function render_cylinder_symmetric_tensegrity(tenz) {
 
 }
 
-function render_line_symmetric_tensegrity(tenz) {
-
-  var lights = [ {}, {}, {} ];
-  lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-  lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-  lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-
-  lights[ 0 ].position.set( 0, 4, 0 );
-  lights[ 1 ].position.set( 2, 4, 2);
-  lights[ 2 ].position.set( -2, -4, -2);
-
-  g_render.scene.add( lights[ 0 ] );
-  g_render.scene.add( lights[ 1 ] );
-  g_render.scene.add( lights[ 2 ] );
-
-  g_render["geom_c1"] = [];
-  g_render["geom_c2"] = [];
-  g_render["geom_s1"] = [];
-  g_render["geom_v"] = [];
-
-  var dash_gap = 1/10;
-
-  for (var ii=0; ii<tenz.C1.length; ii++) {
-    var geom_c1 = new THREE.Geometry();
-    for (var jj=0; jj<tenz.C1[ii].length; jj++) {
-      geom_c1.vertices.push(
-        new THREE.Vector3( tenz.C1[ii][jj][0], tenz.C1[ii][jj][1], tenz.C1[ii][jj][2] )
-      );
-
-
-    }
-
-    geom_c1.computeLineDistances();
-    var obj = new THREE.Line( geom_c1, new THREE.LineDashedMaterial( { color: 0xffffff, dashSize: dash_gap, gapSize: dash_gap} ) );
-    g_render.scene.add(obj);
-    g_render["geom_c1"].push(obj);
-  }
-
-
-  for (var ii=0; ii<tenz.C2.length; ii++) {
-    var geom_c2 = new THREE.Geometry();
-    for (var jj=0; jj<tenz.C2[ii].length; jj++) {
-      geom_c2.vertices.push(
-        new THREE.Vector3( tenz.C2[ii][jj][0], tenz.C2[ii][jj][1], tenz.C2[ii][jj][2] )
-      );
-
-    }
-
-    geom_c2.computeLineDistances();
-    var obj = new THREE.Line( geom_c2, new THREE.LineDashedMaterial( { color: 0xffaa00, dashSize: dash_gap, gapSize: dash_gap} ) );
-    g_render.scene.add(obj);
-
-    g_render["geom_c2"].push(obj);
-  }
-
-  for (var ii=0; ii<tenz.S1.length; ii++) {
-    var geom_s1 = new THREE.Geometry();
-    for (var jj=0; jj<tenz.S1[ii].length; jj++) {
-      geom_s1.vertices.push(
-        new THREE.Vector3( tenz.S1[ii][jj][0], tenz.S1[ii][jj][1], tenz.S1[ii][jj][2] )
-      );
-
-    }
-
-    geom_s1.computeLineDistances();
-    var obj = new THREE.Line( geom_s1, new THREE.LineDashedMaterial( { color: 0xff00aa, dashSize: dash_gap, gapSize: dash_gap} ) );
-    g_render.scene.add(obj);
-
-    g_render["geom_s1"].push(obj);
-  }
-
-  var vert_rad = 0.025;
-
-  for (var ii=0; ii<tenz.V.length; ii++) {
-    var sgeom = new THREE.SphereGeometry(vert_rad, 32,32);
-    var v_material = new THREE.MeshPhongMaterial( {color: 0xdddddd, specular: 0, shininess: 0, flatShading: false } );
-    var sphere = new THREE.Mesh( sgeom, v_material );
-    sphere.position.x = tenz.V[ii][0];
-    sphere.position.y = tenz.V[ii][1];
-    sphere.position.z = tenz.V[ii][2];
-    g_render.scene.add( sphere );
-
-    g_render["geom_v"].push(sphere);
-  }
-
-}
-
 function take_screenshot() {
   g_render.takeScreenshot = true;
 }
@@ -614,15 +473,6 @@ function download(){
 //
 //----------------------------------------
 //----------------------------------------
-
-function change_render_select() {
-  var render_type = document.getElementById("render_select").value;
-  g_render["render_type"] = render_type;
-  clear_scene();
-
-  var tenz = g_render.symtens.realize_symmetric_tensegrity();
-  render(tenz);
-}
 
 function change_group_select() {
 
@@ -737,7 +587,6 @@ function change_strut_select() {
   g_render["prev_tenz"] = tenz;
 
   render(tenz);
-  //if (g_render.render_type == "line") { render_line_symmetric_tensegrity(tenz); }
 
   process_detgraph_update();
 }
@@ -861,8 +710,6 @@ function update_detgraph_intercept(mouse_x, mouse_y) {
   g_render["prev_tenz"] = tenz;
 
   render_update(tenz);
-  //if (g_render.render_type == "line") { render_line_symmetric_tensegrity_update(tenz); }
-
 }
 
 function detgraph_mouse_drag(e) {
