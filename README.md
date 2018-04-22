@@ -24,15 +24,6 @@ $ chromium-browser "http://localhost:8080" & http-server
 
 
 
-Historical
----
-
-```
-$ cd old
-$ javac -classpath Jama.jar:render.jar ap.java
-$ appletviewer pro.html
-```
-
 notes
 ---
 
