@@ -142,19 +142,6 @@ function display_init() {
   g_render.camera = camera;
   g_render.controls = controls;
 
-  var lights = [ {}, {}, {} ];
-  lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-  lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-  lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-
-  lights[ 0 ].position.set( 0, 4, 0 );
-  lights[ 1 ].position.set( 2, 4, 2);
-  lights[ 2 ].position.set( -2, -4, -2);
-
-  g_render.scene.add( lights[ 0 ] );
-  g_render.scene.add( lights[ 1 ] );
-  g_render.scene.add( lights[ 2 ] );
-
   //g_render.scene.background = new THREE.Color( 0xffffff );
   g_render.scene.background = new THREE.Color( g_render.default_color.background );
 
@@ -379,18 +366,9 @@ function render_line_symmetric_tensegrity_update(tenz) {
 //----------------------------------------
 
 function render_cylinder_symmetric_tensegrity(tenz) {
-  var lights = [ {}, {}, {} ];
-  lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-  lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-  lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-
-  lights[ 0 ].position.set( 0, 4, 0 );
-  lights[ 1 ].position.set( 2, 4, 2);
-  lights[ 2 ].position.set( -2, -4, -2);
-
-  g_render.scene.add( lights[ 0 ] );
-  g_render.scene.add( lights[ 1 ] );
-  g_render.scene.add( lights[ 2 ] );
+  var light = new THREE.PointLight( 0xffffff );
+  g_render.camera.add( light );
+  g_render.scene.add( g_render.camera );
 
   var geom_c2 = new THREE.Geometry();
   var geom_s1 = new THREE.Geometry();
