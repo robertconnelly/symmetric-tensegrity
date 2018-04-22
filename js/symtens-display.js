@@ -173,7 +173,11 @@ function display_init() {
 
 function clear_scene() {
   var scene = g_render.scene;
+  var camera = g_render.camera;
   if (typeof(scene) !== "undefined") {
+    while(camera.children.length > 0){
+      camera.remove(camera.children[0]);
+    }
     while(scene.children.length > 0){ 
       scene.remove(scene.children[0]); 
     }
@@ -568,7 +572,11 @@ function change_strut_select() {
 
 
   var scene = g_render.scene;
+  var camera = g_render.camera;
   if (typeof(scene) !== "undefined") {
+    while(camera.children.length > 0){
+      camera.remove(camera.children[0]);
+    }
     while(scene.children.length > 0){ 
       scene.remove(scene.children[0]); 
     }
