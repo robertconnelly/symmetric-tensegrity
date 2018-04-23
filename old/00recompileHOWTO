@@ -1,1 +1,0 @@
-javac -classpath Jama.jar:render.jar ap.java
