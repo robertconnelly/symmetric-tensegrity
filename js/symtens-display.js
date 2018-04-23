@@ -316,7 +316,7 @@ function render_cylinder_symmetric_tensegrity_update(tenz) {
 //----------------------------------------
 
 function render_cylinder_symmetric_tensegrity(tenz) {
-  var light = new THREE.PointLight( 0xffffff );
+  var light = new THREE.PointLight( 0xffffff, 2 );
   g_render.camera.add( light );
   g_render.scene.add( g_render.camera );
 
