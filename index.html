@@ -132,7 +132,6 @@
 
 <!-- modal -->
 
-    <!-- <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0"> -->
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
       <a class="navbar-brand col-sm-12" href="#">Highly Symmetric Tensegrity Structures</a> 
     </nav>
@@ -146,12 +145,9 @@
         firefox is having some rendering issues with choppin goff the first nav and hiding
         it under the toolbar nav.  This is the hack to get around that for now.
         -->
-        <!-- <nav class="col-md-2 d-none d-md-block bg-light sidebar"> -->
-        <!-- <nav class='col-md-2 d-none d-md-block bg-light'> -->
         <nav class='nav flex-column'>
           <div class="sidebar-sticky">
 
-            <!-- <div class='nav flex-column nav-tabs' id='myTab' role='tablist' aria-orientation='vertical'> -->
             <div class='nav flex-column' id='myTab' role='tablist' aria-orientation='vertical'>
 
 							<a class="nav-link"
@@ -222,16 +218,9 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
-          <!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom"> -->
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
 
 						<div class="tab-content" id="myTabContent">
-
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
 
 							<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
 
@@ -249,49 +238,15 @@ where there is a symmetry of the structure that takes any cable to any
 other in the same class.
 </p>
 
-<p> The picture on the left shows an example you can rotate. </p>
-
 <p align="center">
-	<applet code="tiny.class" archive="render.jar, Jama.jar" width="120" height="120">
-    <param name="grp" value="4">
-	  <param name="winr" value="3">
-    <param name="c1" value="57">
-	  <param name="c2" value="18">
-    <param name="s1" value="1">
-    <param name="omeg1" value="0.3055555555555556">
-	  <param name="omeg_1" value="-0.12288583510073314">
-    <param name="thk" value="1.1">
-  </applet>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
  <img src="img/b3.png" width="160" height="120">
 </p>
 
-<p> The picture on the right, which does not rotate, was also made from output of the program. </p>
-
-<p>
-To go to the catalog, click <a href="pro.html" target="_blank">Run Program</a>,
-and follow the prompts which will appear in the text area in the lower right hand corner.
-</p>
+<p> The picture was made from output of the program. </p>
 
 <p> For more details, see the links in the sidebar. </p>
 
 							</div>
-
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
-
-              <!--
-								 _ __  _ __ ___   __ _ _ __ __ _ _ __ ___  
-								| '_ \| '__/ _ \ / _` | '__/ _` | '_ ` _ \ 
-								| |_) | | | (_) | (_| | | | (_| | | | | | |
-								| .__/|_|  \___/ \__, |_|  \__,_|_| |_| |_|
-								|_|              |___/                     
-
-              -->
 
 							<div class="tab-pane fade show active" id="program" role="tabpanel" aria-labelledby="program-tab">
 
@@ -310,14 +265,11 @@ and follow the prompts which will appear in the text area in the lower right han
                 </div>
                 <hr />
 
-                <!-- <a id="download"><button type="button" onClick="take_screenshot()">Download</button></a> -->
-
                 <div class='container'>
                   <div class='row'>
 
                     <div id='canvas_div' class='col-sm-8'>
-                      <!-- <canvas id='canvas_id' width="400" height="400" style="width: 398px; height: 398px;"></canvas> -->
-                      <!-- <canvas id='canvas_id'  style="width: 400px; height: 400px;"></canvas> -->
+
                       <canvas id='canvas_id' width="400" height="400"  ></canvas>
                       <p>
 
@@ -410,403 +362,6 @@ and follow the prompts which will appear in the text area in the lower right han
 
 							</div>
 
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
-
-
-
-              <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="faq-tab">
-
-		<h3>Frequently Asked Questions (F.A.Q.)</h3>
-		<hr />
-
-<h5>1. What is a tensegrity? </h5>
-<p>
- It is a structure that joins nodes (points) with inextendibile
-cables and incompressible struts. The cable can be made from string,
-wire, or rope, and struts can be made from tubes, dowel rods, or just sticks.
-See <a href="http://en.wikipedia.org/wiki/Tensegrity" target="_blank">wikipedia</a>
-for a reasonable definition.
-</p>
-
-<h5>2.&nbsp; What is the mathematical definition of a tensegrity?</h5>
-<p>
-It is a finite configuration of points, the nodes, in space or
-the plane where some pairs of the nodes are designated cables,
-constrained not to get further apart, and some pairs are designated
-struts, constrained
-not to get closer together.&nbsp; Note with this definition cables and
-struts are allowed to intersect and cross.
-</p>
-
-<h5>3.&nbsp; Who first created a tensegrity?</h5>
-<p>
-If you don't count spider webs and constructions in nature, an
-artist Kenneth Snelson is usually credited with the first
-creations.&nbsp; He has an
-interesting website <a href="http://www.kennethsnelson.net/">here</a>.
-</p>
-
-<h5>4.&nbsp; Who thought of the name tensegrity?</h5>
-<p>
-Buckminster Fuller.&nbsp; It combines the notion of "tension"
-with "integrity", creating "tensional integrity.&nbsp; You can see Bucky's musings
-<a href="http://www.rwgrayprojects.com/rbfnotes/fpapers/tensegrity/tenseg01.html">here</a>.
-
-<h5>5. &nbsp;Where can I read more about this catalog and tensegrities?</h5>
-
-<p>
-<ul>
-  <li>Allen Back and Bob Connelly have an article
-	  <a href="http://www.math.cornell.edu/%7Econnelly/tensegrity.copy.pdf">here</a>
-		in the March-April 1998 issue of the American Scientist that explains a
-		lot of what goes into this catalog. &nbsp;</li>
-  <li>There is the paper by Bob Connelly and Walter Whiteley
-	  <a href="http://www.math.cornell.edu/%7Econnelly/second.order.pdf">here</a>
-		that that discusses some of the basic geometric principles for the
-		stability of tensegrity structure.</li>
-  <li>Bob Connelly and Maria Terrell have a paper, 1995.
-		Globally rigid symmetric tensegrities. Structural Topology, 21, 59--78,
-		that classifies a collection of super stable symmetric tensegrities.
-		&nbsp;It is available
-		 <a href="http://www-iri.upc.es/people/ros/StructuralTopology/">here</a>.</li>
-  <li>For engineering background see "Theory of Structures" by
-		Timoshenko and Young. &nbsp;</li>
-</ul>
-</p>
-
-<h5>6. &nbsp;What are some links to other sites that show tensegrities?</h5>
-
-<p>
-<ul>
-  <li>There is the older catalog created by Allen Back and Bob
-		Connelly <a href="http://mathlab.cit.cornell.edu/visualization/tenseg/in_progress/short_top.html">here</a>.</li>
-  <li>There is a catalog created by Jingyao Zhang and Simon Guest
-		of symmetric prismatic tensegrity structures
-		 <a href="http://tensegrity.aistructure.com/prismatic/">here</a>. &nbsp;</li>
-  <li>There is a site
-		<a href="http://complexity.xozzox.de/tensegrity.html">here</a>, where a
-		few symmetric and non-symmetric tensegrities can be viewed and rotated.
-		&nbsp;This seems to be a kind virtual tensegrity, where the configuration
-		minimizes an energy functional on the cables.<br>
-  </li>
-</ul>
-</p>
-
-<h5>7. &nbsp;Can I build these tensegrities?</h5>
-
-<p>
-Why not? &nbsp;Once you have chosen a particular example, you
-can read off the lengths of the cable relative to the strut lengths in the lower
-right window. &nbsp;The picture should help you thread the cables and struts.
-&nbsp;There is only one way to make the structure with those lengths if everything
-is hooked up right. &nbsp;There are various materials that you can use.
-&nbsp;Dowl rods with nails in them are popular as in
-<a href="http://www.amazon.com/Introduction-Tensegrity-Anthony-Pugh/dp/0520030559">Pugh's book</a>
-or George Hart's <a href="http://www.georgehart.com/virtual-polyhedra/straw-tensegrity.html">page</a>,
-or Hugh Kenner, Geodesic Math and How to Use It, Univ. Cal Pr., 1976,
-&nbsp;or René Motro's book
-"<a href="http://www.amazon.com/Tensegrity-Structural-Systems-Ren%E9-Motro/dp/1903996376">Tensegrity: Structural Systems for the Future</a>".
-</p>
-
-<h5>8. Can I look at the source code for the applet? </h5>
-<p>
-Yes. It is <a href="ap.java"> here </a>. If you want to modify
-the program and recompile, then you will also need to get the <i>render</i>
-and <i>jama</i> packages listed in the references, or at least grab
-the <a href="render.jar">render.jar</a> and <a href="Jama.jar">Jama.jar</a>
-archives.
-</p>
-
-<p>
-There is also a modified version of the applet which is used
-to make the rotatable icons. For this you will need the source
-<a href="tiny.java"> code </a>. For each rotatable icon you want to
-make, run the main applet until you find an example you like, then read
-the required parameters from the applet and its source code, copying
-the example from
-our Home page.
-</p>
-
-<h5>9. What is the "tracecode" button? </h5>
-<p>
-It has two uses: a) If you want the coordinates of all the
-vertices of the tensegrity currently displayed, those show up as the
-centers of the "sphere" commands. You might need those if you are
-planning to build it
-three stories high, for example. b) If you want to make a really sharp
-raytraced picture of the displayed tensegrity, copy and paste the
-displayed code into a file. (This works best on some platforms if you
-click at the bottom and drag upward.) Edit the file if you want to
-change the colors and textures, and run
-<a href="http://www.povray.org" target="_blank">povray</a> on it.
-The nonrotatable picture on the Home page was made in this manner.
-</p>
-
-<h5>10.&nbsp; Will the structures shown in this catalog hold together?</h5>
-<p>
-Yes.&nbsp; They are all rigid, but not all choices give
-interesting tensegrities.&nbsp; Some are very degenerate.&nbsp;
-</p>
-
-<h5>11.&nbsp; How are the structures chosen?</h5>
-<p>
-They must satisfy the following list of criteria:&nbsp; They
-must have the <span style="font-style: italic;">symmetries</span> of one of the
-six <span style="font-style: italic;">groups</span> A<sub>4</sub>, S<sub>4</sub>,
-A<sub>5</sub>, A<sub>4</sub> x Z<sub>2</sub>, S<sub>4</sub> x Z<sub>2</sub>,
-A<sub>5</sub> x Z<sub>2</sub>;&nbsp; There are two classes (each class
-is designated by its own color, usually red and blue) of cables such that there is a
-symmetry of the structure that takes takes any cable of one class to any other
-cable of the same class;&nbsp; For any two struts (colored brown or green),
-there is a symmetry of the structure that takes any strut onto any other;&nbsp;
-The cables are connected as a set; The whole tensegrity structure must be <span
- style="font-style: italic;">super stable</span>.<br>
-</p>
-
-<h5>12. &nbsp;What does it mean that a tensegrity is super stable?</h5>
-<p>
-This is a very strong condition on the geometry of the
-structure.  &nbsp; There is a particular calculation that can be made in terms of
-the stress that exists in the structure. &nbsp;Certain numbers, called eigen
-values, calculated.  &nbsp;If they are positive with altogether only 4 of them being 0, the
-structure will be super stable. &nbsp;A consequence of this is that the structure
-is <i>globally rigid</i> in all dimensions. &nbsp;This means that if there is any
-other placement of the nodes satisfying the cable and strut conditions, then this
-placement will be congruent to the original. &nbsp;It will be the same
-configuration, possibly rotated or reflected and then rotated. &nbsp;Another consequence is
-that if you build this structure it will stay stable and rigid, even when the
-stress is increased relative to the stiffness. &nbsp;This is very handy for
-these tensegrities, since the stiffness of the cables especially tends to be very soft.
-&nbsp;
-</p>
-
-<h5>13. &nbsp;If I have a tensegrity where all the nodes are the same,
-and it holds together, will it be in this catalog? </h5>
-
-<p>
-Not necessarily. &nbsp;It could be rigid, but not super
-stable. &nbsp;Or it could have a different symmetry than one of the one of the six groups
-in this catalog. &nbsp;For example, the symmetric tensegrids described <a
- href="http://tensegrity.aistructure.com/prismatic/">here</a> have a
-symmetry group isomorphic a dihedral group.<br>
-</p>
-
-<h5>14.&nbsp; What is a group?</h5>
-
-<p>
-It is a set where any two elements g<sub>1</sub> and g<sub>2</sub>
-of the set can be multiplied together to get another element g<sub>2</sub>g<sub>1</sub>of
-the set.&nbsp; The multiplication operation (or group operation) must
-satisfy the rules of associativity, inverses, and identity.&nbsp; See <a
- href="http://en.wikipedia.org/wiki/Group_mathematics">wikipedia</a>
-for more details.&nbsp; Presented this way, this is a definition of an
-abstract group.&nbsp; There are tons and tons of many different kinds
-of examples of groups.&nbsp; Here
-we concentrate on, permutation groups, symmetry groups, and groups of
-matrices.  (You can look at a book such as "Introduction to Modern Algebra" by
-Birkhoff and Maclane for a nice introduction.)&nbsp; This approach greatly
-simplifies the cataloging of the tensegrities we consider.
-</p>
-
-<h5>15. &nbsp;What is a permutation group?</h5>
-
-<p>
-This is a set of functions, called <i>permutations</i>, that
-permute the elements of some set. &nbsp;To be a group, any composition
-of these permutations in the group is another permutation in the group.
-&nbsp;We use the disjoint cycle
-notation for permutation groups considered here. &nbsp;Our groups
-permute the symbols 1, 2, 3, ..., n. &nbsp;The symbol (a, b, c, ..., d) means a
--&gt; b -&gt;c -&gt; ... -&gt; d -&gt; a. &nbsp;In other words these symbols are
-permuted cyclicly.  &nbsp;The product of these cycles means the composition of the
-corresponding cycles. &nbsp;It is easy to see that any permutation can be written as
-the product of such disjoint cycles. &nbsp;For example, (12)(345) means 1 and 2 are
-switched, and 3 goes to 4, which goes to 5, which goes to three.
-</p>
-
-<h5>16. &nbsp;What are the groups A<sub>4</sub> and A<sub>5</sub>?</h5>
-
-<p>
-These are the alternating groups on 4 symbols and 5 symbols,
-respectively. &nbsp;These are all the even permutations of 4 symbols
-and 5 symbols, respectively. &nbsp;A permutation is <i>even</i> if
-when it is written in disjoint cycle notation,
-there are an even number of cycles of even length. &nbsp;For example,
-(12) is not even, but (12)(34) and (123) are even permutations. &nbsp;The group
-A<sub>4</sub> has 12 elements, and the group A<sub>5</sub> has 60 elements.</p>
-
-<h5>17. &nbsp;What is the group S<sub>4</sub>?</h5>
-
-<p>
-This is the group of all permutations of 4 symbols and has 24 elements.
-</p>
-
-<h5>18. &nbsp;What are the groups A<sub>4</sub> x Z<sub>2</sub>,
-  S<sub>4</sub> x Z<sub>2</sub>, A<sub>5</sub> x Z<sub>2</sub>?</h5>
-
-<p>
-The G x Z<sub>2</sub> notation denotes the <i>cross product</i>
-which means that you take two copies of the group G, where one copy has
-a - sign attached. &nbsp;The group operation on the - acts like
-multiplication by -1. &nbsp;For example, -(12) times -(34) in S<sub>4</sub>
-x Z<sub>2</sub> is (12)(34). &nbsp;The G x Z<sub>2</sub> groups have twice as many groups
-elements as G. &nbsp;So A<sub>4</sub> x Z<sub>2</sub> has 24 elements, S<sub>4</sub>
-x Z<sub>2</sub> has 48 elements, and A<sub>5</sub> x Z<sub>2</sub> has 120 elements.
-</p>
-
-<h5>19. &nbsp;Why are these groups chosen?</h5>
-
-<p>
-These are isomorphic to groups of symmetries of the cube, regular
-tetrahedron, and dodecahedron. A<sub>4</sub> is isomorphic to the
-rotations of regular tetrahedron. &nbsp;S<sub>4</sub> is isomorphic to
-the rotations of a cube. &nbsp; A<sub>5</sub> is isomorphic to the rotations of the regular
-dodecahedron. &nbsp;The groups A<sub>4</sub> x Z<sub>2</sub>, S<sub>4</sub>
-x Z<sub>2</sub>, A<sub>5</sub> x Z<sub>2</sub> are the full group of
-symmetries, including reflections, of the regular tetrahedron, cube and
-regular dodecahedron, respectively. &nbsp;In the choices for the Java output in our program
-subscripts and the cross "x" are suppressed.
-</p>
-
-
-<h5>20. &nbsp;What does isomorphic mean?</h5>
-
-<p>
-  If G<sub>1</sub> and G<sub>2</sub> are two groups, an <i>isomorphism</i>
-is a <i>one-to-one</i> function f &nbsp;(when g is not h, f(g) is not
-f(h)) defined on all the elements of &nbsp;G<sub>1</sub> with values in G<sub>2</sub>
-such that for every g, h in&nbsp;G<sub>1</sub>, f(g)f(h)=f(gh), and every
-element of G<sub>2</sub> is the image of some element in G<sub>1</sub>.
-&nbsp;This means that from the point of view of formal group operations, G<sub>1</sub>
-and G<sub>2</sub> are the same. &nbsp;If two groups are isomorphic they
-must have the same number of &nbsp;elements, but, for example, A<sub>4</sub>
-x Z<sub>2</sub> and S<sub>4</sub> both have 24 elements, yet they are not isomorphic.
-</p>
-
-<h5>21. &nbsp;What is a symmetry group?</h5>
-
-<p>
-It is a collection of rigid distance preserving functions of
-all of space, where each function transforms some set to itself.
-&nbsp;The group operation is the composition of these functions, and so
-to be a group, the composition of any two such functions in the group
-is also in the group.&nbsp; For example the rotations of regular
-tetrahedron, cube or regular dodecahedron are symmetry groups.
-</p>
-
-<h5>22.&nbsp; Does the tensegrity always have a group of
-symmetries isomorphic to the group in the group window?</h5>
-
-<p>
-Yes, but the tensegrity itself may have other larger groups of symmetries.
-</p>
-
-<h5>23. &nbsp;What is the order of a group element?</h5>
-
-<p>
-If g is a group element, then g<sup>n</sup> is g multiplied by
-itself n times. &nbsp;The order of g is the smallest n = 1, 2, ... such
-that g<sup>n</sup> = e the identity element. &nbsp;For example, the
-permutation (12)(34) has order
-is 2, and the element -(12345) in A<sub>4</sub> x Z<sub>2</sub>, has
-order
-is 10. &nbsp;It is particularly easy to figure the order of a
-permutation when
-it is written in disjoint cycle notation.<br>
-</p>
-
-<h5>24. &nbsp;What does the group inverse mean?</h5>
-
-<p>
-One of the defining properties of a group is that if g is a
-group element, then there is a group element g<sup>-1</sup>, where gg<sup>-1</sup>
-= g<sup>-1</sup>g = e, the identity element. &nbsp;g<sup>-1</sup> is
-the inverse of g. &nbsp;For example, the inverse of (123) is (321).
-&nbsp;If g is of order 2, then
-g = g<sup>-1</sup>.
-</p>
-
-<h5>25. &nbsp;When I choose a group elements in the cable and
-strut windows, what does that mean?</h5>
-
-<p>
-When the situation is not degenerate, there is a one-to-one
-correspondence between the nodes of the tensegrity and the group
-elements. &nbsp;Any node can
-be identified with the identity element of the group, and the two group
-elements in the cable window and the group element in the strut window are
-identified with cables and struts that are connected to the identity node.
-&nbsp;Note that if g is a group element corresponding to a strut or cable, then the
-inverse element g<sup>-1</sup> also corresponds to the same cable or strut.
-</p>
-
-<h5>26. &nbsp;I want the struts not to touch each other.
-&nbsp;How can I find examples where that happens?</h5>
-
-<p>
-If the order of a strut is greater than 2, then there are two
-struts connected to each node. &nbsp;So you at least have to choose a
-group element in the strut window that is of order 2. &nbsp;But it
-still may happen that the
-struts will cross somewhere in their middle. &nbsp;This tends to happen
-for the groups with a Z<sub>2</sub> factor. &nbsp;(They have mirror reflection
-symmetries, and the struts will intersect their mirror image, if the mirror
-intersects the struts obliquely.) &nbsp;But in any case, you can look at the
-picture and see if they intersect. &nbsp;If you try a different stress ratio in the
-last window, that might pull some of the struts apart. In some cases, you might need
-to use the "thinner" button and "zoom in" to decide whether there is
-really an intersection or not.
-</p>
-
-<h5>27. &nbsp;What do those funny lines in the window on the
-right in the program mean?</h5>
-
-<p>
- Each curved line, or lines, of a given color corresponds to a
-particular representation of the group chosen. &nbsp;When you click in
-the right hand window, a vertical line appears through the point you clicked on. &nbsp;The
-horizontal axis corresponds to the ratio between the stresses on the two cables
-you have chosen in the cable window. &nbsp;The vertical axis corresponds to
-the stress on the strut. &nbsp;When the strut stress is below the top horizontal
-line, it is negative. &nbsp;When the strut stress crosses one of the curved
-lines, the tensegrity becomes unstable, but right at that the point on the first
-curved line, it corresponds to an equilibrium that it needs for its stability,
-but the representation that corresponds to that line. &nbsp;We call that
-first representation
-the <i>winner</i>.
-</p>
-
-<h5>28. &nbsp;What is a representation of a group?</h5>
-
-<p>
-It is a function that assigns to each element g in the group G a
-symmetry of some Euclidean space. But the Euclidean space may be of
-dimension greater than 3. &nbsp;(This can happen for A<sub>5</sub> and A<sub>5</sub>
-x Z<sub>2</sub>.) Suppose g goes to f(g), and h in G goes to f(h).
-&nbsp;Then we insist that f(g)f(h)=f(gh). &nbsp;f is called a group <i>homomorphism</i>.
-&nbsp;This is the same property as being an isomorphism, except that f may not be one-to-one
-or onto. &nbsp;The representation f(g) may be the identity, for some g not
-equal to e, the identity. If f is one-to-one, then we say f is <i>faithful</i>.
-&nbsp;The faithful three-dimensional representations are labeled in the
-right hand picture, and correspond to the black lines. &nbsp;If the winning
-representation is faithful and three-dimensional, then you should get a
-picture where the number of nodes is equal to the number of elements of
-the group you chose in the first window.
-</p>
-
-              </div>
-
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
-
-
               <div class="tab-pane fade" id="references" role="tabpanel" aria-labelledby="references-tab">
 
 		<h3>References</h3>
@@ -818,24 +373,6 @@ the group you chose in the first window.
      "Frameworks Tensegrities and Symmetry: 
        Understanding Stable Structures"
      by R.Connelly and S.D.Guest. 
-		</p>
-
-    <p>
-     The program uses the <a href="http://mrl.nyu.edu/~perlin"> render </a> 
-     package from
-     <br>
-        <i>http://mrl.nyu.edu/~perlin </i>
-     <br>
-     to display the tensegrities in a rotatable form.
-		</p>
-
-    <p> 
-     The <a href="http://math.nist.gov/javanumerics/jama">JAMA</a> 
-     matrix package from
-     <br>
-        <i>http://math.nist.gov/javanumerics/jama </i>
-     <br>
-     is used for calculations with matrix representations.
 		</p>
 
     <p>
@@ -864,12 +401,6 @@ the group you chose in the first window.
 
               </div>
 
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
-
 
               <div class="tab-pane fade" id="pictures" role="tabpanel" aria-labelledby="pictures-tab">
 
@@ -878,35 +409,13 @@ the group you chose in the first window.
                
       <h5> Photographs of real models </h5>
                
-      <p> Two examples are shown beside a rotatable version from the applet. </p>
-       
       <p>
          <img src="img/p49.jpg" width="330">
-          <applet code="tiny.class" archive="render.jar, Jama.jar" width="300" height="300">
-						<param name="grp" value="0">        
-					  <param name="winr" value="4">
-            <param name="c1" value="8">   
-       			<param name="c2" value="9">
-            <param name="s1" value="6">
-            <param name="omeg1" value="0.6111111111111112">
-            <param name="omeg_1" value="-0.26840581141705516">
-            <param name="thk" value="1.1">
-         </applet>
          Group A_4, Cables: (124), (14)(23); Strut: (13)(24).  The stress is about half.
       </p>
         
       <p>
         <img src="img/p19.jpg" width="330">
-          <applet code="tiny.class" archive="render.jar, Jama.jar" width="300" height="300">
-            <param name="grp" value="2">        
-            <param name="winr" value="4">
-            <param name="c1" value="1">   
-            <param name="c2" value="19">
-            <param name="s1" value="3">
-            <param name="omeg1" value="0.5055555555555555">
-            <param name="omeg_1" value="-0.20960878838311064">
-            <param name="thk" value="1.1">
-        </applet>
       </p>
        
       <h5> Some photographs of objects not in the catalogue: </h5>
@@ -1026,13 +535,6 @@ the group you chose in the first window.
   Last Update: 21st July 2008.
   </div>
               </div>
-
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
-
 
 						</div>
 
