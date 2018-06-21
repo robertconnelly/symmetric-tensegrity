@@ -62,8 +62,8 @@
  (15234)     54  (15342) 55  (15)(34) 56  (15)(24)    57  (15243) 58  (15324) 59
                      a5z2 is a5 times 1 followed by times -1 = gn4 = element 60 */
 
-var numeric = require("./lib/numeric.js");
-var math = require("./lib/math.js");
+const numeric = require('numeric');
+const math = require('mathjs');
 
 // Initialize OOP structure and fill member variables
 // with relevant data (group names, structures, etc.).
