@@ -1,574 +1,380 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Highly Symmetric Tensegrity Structures</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <title>Highly Symmetric Tensegrity Structures</title>
 
-    <!-- Custom styles for this template -->
-    <link href="css/dashboard.css" rel="stylesheet">
-    <link href="css/jquery-ui.min.css" rel="stylesheet">
-    <link href="css/spectrum.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/dashboard.css" rel="stylesheet">
+  <link href="css/jquery-ui.min.css" rel="stylesheet">
+  <link href="css/spectrum.css" rel="stylesheet">
+  <style type='text/css'>
+      select.btn-mini {
+          height: auto;
+          line-height: 14px;
+      }
+      select.btn {
+          -webkit-appearance: button;
+          -moz-appearance: button;
+          appearance: button;
+          padding-right: 16px;
+      }
+      select.btn-mini + .caret {
+          margin-left: -20px;
+          margin-top: 9px;
+      }
+  </style>
+</head>
 
-    <style type='text/css'>
+<body>
 
-			select.btn-mini {
-					height: auto;
-					line-height: 14px;
-			}
-
-			/* this is optional (see below) */
-			select.btn {
-					-webkit-appearance: button;
-						 -moz-appearance: button;
-									appearance: button;
-					padding-right: 16px;
-			}
-
-			select.btn-mini + .caret {
-					margin-left: -20px;
-					margin-top: 9px;
-			}
-
-    </style>
-  </head>
-
-  <body>
-
-<!-- modal -->
-
-<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
+  <!-- options menu -->
+  <div class="modal fade" id="configModal" tabindex="-1" role="dialog"
+       aria-labelledby="configModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+  <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title" id="configModalLabel">Options</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+  <div class="modal-header">
+    <h5 class="modal-title" id="configModalLabel">Options</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class='row'>
+      <div class='col-sm-2'> Background </div>
+      <div class='col-sm-10'><input class='form-control' type='text' id='background_color_id'></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> C1 color </div>
+      <div class='col-sm-10'><input class='form-control' type='text' id='c1_color_id'></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> C2 color </div>
+      <div class='col-sm-10'><input class='form-control' type='text' id='c2_color_id'></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> S1 color </div>
+      <div class='col-sm-10'><input class='form-control' type='text' id='s1_color_id'></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> C1 Thickness </div>
+      <div class='col-sm-2' id="c1_thickness_slider_val_id"> val </div>
+      <div class='col-sm-8'><div id='c1_thickness_slider_id'></div></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> C2 Thickness </div>
+      <div class='col-sm-2' id="c2_thickness_slider_val_id"> val </div>
+      <div class='col-sm-8'><div id='c2_thickness_slider_id'></div></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> S1 Thickness </div>
+      <div class='col-sm-2' id="s1_thickness_slider_val_id"> val </div>
+      <div class='col-sm-8'><div id='s1_thickness_slider_id'></div></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> Vertex Radius </div>
+      <div class='col-sm-2' id="vertex_radius_slider_val_id"> val </div>
+      <div class='col-sm-8'><div id='vertex_radius_slider_id'></div></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-1'></div>
+      <div class='col-sm-2'>
+	<button type="button" class="btn btn-secondary" onclick='restore_defaults();'>
+	  Restore Defaults
+	</button>
+      </div>
+      <div class='col-sm-5'></div>
+      <div class='col-sm-2'>
+	<button type="button" class="btn btn-primary" data-dismiss="modal">
+	  Close
         </button>
       </div>
-
-      <div class="modal-body">
-
-        <div class='row'>
-          <div class='col-sm-2'> Background </div>
-          <div class='col-sm-10'> <input class='form-control' type='text' id='background_color_id'> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> C1 color </div>
-          <div class='col-sm-10'> <input class='form-control' type='text' id='c1_color_id'> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> C2 color </div>
-          <div class='col-sm-10'> <input class='form-control' type='text' id='c2_color_id'> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> S1 color </div>
-          <div class='col-sm-10'> <input class='form-control' type='text' id='s1_color_id'> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> C1 Thickness </div>
-          <div class='col-sm-2' id="c1_thickness_slider_val_id"> val </div>
-          <div class='col-sm-8'> <div id='c1_thickness_slider_id'> </div> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> C2 Thickness </div>
-          <div class='col-sm-2' id="c2_thickness_slider_val_id"> val </div>
-          <div class='col-sm-8'> <div id='c2_thickness_slider_id'> </div> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> S1 Thickness </div>
-          <div class='col-sm-2' id="s1_thickness_slider_val_id"> val </div>
-          <div class='col-sm-8'> <div id='s1_thickness_slider_id'> </div> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> Vertex Radius </div>
-          <div class='col-sm-2' id="vertex_radius_slider_val_id"> val </div>
-          <div class='col-sm-8'> <div id='vertex_radius_slider_id'> </div> </div>
-        </div>
-
-
-        <div class='row'> <hr /> </div>
-        <div class='row'>
-          <div class='col-sm-1'></div>
-          <div class='col-sm-2'> <button type="button" class="btn btn-secondary" onclick='restore_defaults();' >Restore Defaults</button> </div>
-          <div class='col-sm-5'> </div>
-          <div class='col-sm-2'> <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button> </div>
-          <div class='col-sm-1'></div>
-        </div>
-
-      </div>
-
+      <div class='col-sm-1'></div>
     </div>
   </div>
-</div>
 
-<!-- modal -->
-
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-12" href="#">Highly Symmetric Tensegrity Structures</a> 
-    </nav>
+  </div>
+  </div>
+  </div>
 
 
-    <div class="container-fluid">
+  <!-- header -->
+  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-12" href="#">Highly Symmetric Tensegrity Structures</a> 
+  </nav>
 
-      <div class="row">
 
-        <!-- 
-        firefox is having some rendering issues with choppin goff the first nav and hiding
-        it under the toolbar nav.  This is the hack to get around that for now.
-        -->
-        <nav class='nav flex-column'>
-          <div class="sidebar-sticky">
+  <!-- start main page -->
+  <div class="container-fluid">
+  <div class="row">
 
-            <div class='nav flex-column' id='myTab' role='tablist' aria-orientation='vertical'>
 
-							<a class="nav-link"
-								id='home-tab'
-								data-toggle='tab'
-								href="#home"
-								role='tab'
-								aria-controls='home'
-								aria-selected='false'
-								>
-								<span data-feather="home"></span>
-								Home
-							</a>
+  <!-- navbar -->
+  <nav class='nav flex-column'>
+  <div class="sidebar-sticky">
+  <div class='nav flex-column' id='myTab' role='tablist' aria-orientation='vertical'>
+    <a class="nav-link" id='home-tab' data-toggle='tab' href="#home" role='tab'
+       aria-controls='home' aria-selected='false'>
+      <span data-feather="home"></span>
+      Home
+    </a>
+    <a class="nav-link active" id='program-tab' data-toggle='tab' href="#program" role='tab'
+       aria-controls='program' aria-selected='true'>
+      <span data-feather="box"></span>
+      Program <span class="sr-only">(current)</span>
+    </a>
+    <a class="nav-link" id='faq-tab' data-toggle='tab' href="#faq" role='tab'
+       aria-controls='faq' aria-selected='false'>
+      <span data-feather="info"></span>
+      FAQ
+    </a>
+    <a class="nav-link" id='references-tab' data-toggle='tab' href="#references" role='tab'
+       aria-controls='references' aria-selected='false'>
+      <span data-feather="book"></span>
+      References
+    </a>
+    <a class="nav-link" id='pictures-tab' data-toggle='tab' href="#pictures" role='tab'
+       aria-controls='pictures' aria-selected='false'>
+      <span data-feather="image"></span>
+      Pictures
+    </a>						
+  </div>
+  </div>
+  </nav>
 
-							<a class="nav-link active"
-								id='program-tab'
-								data-toggle='tab'
-								href="#program"
-								role='tab'
-								aria-controls='program'
-								aria-selected='true'
-								>
-								<span data-feather="box"></span>
-								Program <span class="sr-only">(current)</span>
-							</a>
 
-							<a class="nav-link"
-								id='faq-tab'
-								data-toggle='tab'
-								href="#faq"
-								role='tab'
-								aria-controls='faq'
-								aria-selected='false'
-								>
-								<span data-feather="info"></span>
-								FAQ
-							</a>
+  <!-- start main window -->
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+  <div class="tab-content" id="myTabContent">
 
-							<a class="nav-link"
-								id='references-tab'
-								data-toggle='tab'
-								href="#references"
-								role='tab'
-								aria-controls='references'
-								aria-selected='false'
-								>
-								<span data-feather="book"></span>
-								References
-							</a>
 
-                <a class="nav-link"
-                  id='pictures-tab'
-                  data-toggle='tab'
-                  href="#pictures"
-                  role='tab'
-                  aria-controls='pictures'
-                  aria-selected='false'
-                  >
-                  <span data-feather="image"></span>
-                  Pictures
-                </a>
+  <!-- Home -->
+  <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <h3>Home</h3>
+    <hr />
+    <p>
+      This is access to a catalog of several hundred tensegrity structures that
+      are held rigidly together with incompressible struts and inextendable
+      cables connecting point nodes. These structures are
+      <i>highly symmetric</i> in the sense that there is a symmetry of the
+      structure that takes any node to any other, there is a symmetry of the
+      structure that takes any strut to any other, and there are two classes of
+      cables, where there is a symmetry of the structure that takes any cable to
+      any other in the same class.
+    </p>
+    <p align="center"><img src="img/b3.png" width="160" height="120" alt=""></p>
+    <p>The picture was made from output of the program.</p>
+    <p>For more details, see the links in the sidebar.</p>
+    <div align="center">
+      Any comments are welcome to <a href="mailto:connelly@math.cornell.edu">Bob Connelly</a> and
+      <a href="mailto:ret7@cornell.edu">Bob Terrell</a> © June 13, 2008<br>
+      Last Update: 21 June 2018.
+    </div>
+  </div>
 
-							
+
+  <!-- Program -->
+  <div class="tab-pane fade show active" id="program" role="tabpanel" aria-labelledby="program-tab">
+
+    <div class='row'>
+      <div class='col-sm-11'>
+        <h3>Highly Symmetric Tensegrity Structures</h3>
+      </div>
+      <div class='col-sm-1'>
+        <button type='button' class='btn btn-light' data-toggle='modal' data-target='#configModal'>
+          <span data-feather='settings'></span>
+        </button>
+      </div>
+    </div>
+    <hr />
+
+    <div class='container'>
+    <div class='row'>
+
+      <div id='canvas_div' class='col-sm-8'>
+        <canvas id='canvas_id' width="400" height="400"></canvas>
+        <p>
+        <div class='row'>
+          <div class='col-sm-2'>
+            <span class='badge badge-secondary' onClick='take_screenshot()' style='float:left;'>
+              <span data-feather='camera'></span>
+            </span>
+          </div>
+          <div class='col-sm-2'></div>
+          <div class='col-sm-1'></div>
+          <div class='col-sm-4'></div>
+          <div class='col-sm-1'></div>
+          <div class='col-sm-2'>
+            <span class='badge badge-secondary' onClick='go_fullscreen()' style='float:left;'>
+              <span data-feather='maximize-2'></span>
+            </span>
+          </div>
+        </div>
+        </p>
+      </div>
+
+      <div id='inputarea' class='col-sm-4'>
+        <div class='col-sm-12'>
+          <div class='row'>
+            <div class='col-sm-3'>group</div>
+            <div class='col-sm-9'>
+              <select id='group_select' class='custom-select' onchange='change_group_select();'>
+                <option selected>A4</option>
+                <option >A4Z2</option>
+                <option >S4</option>
+                <option >S4Z2</option>
+                <option >A5</option>
+                <option >A5Z2</option>
+              </select>
             </div>
-
           </div>
-        </nav>
-
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
-
-						<div class="tab-content" id="myTabContent">
-
-							<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-<h3>Home</h3>
-<hr />
-
-<p>
-This is access to a catalog of several hundred tensegrity
-structures that are held rigidly together with incompressible struts
-and inextendable cables connecting point nodes. These structures are
-<i>highly symmetric</i> in the sense that there is a symmetry of the structure
-that takes any node to any other, there is a symmetry of the structure
-that takes any strut to any other, and there are two classes of cables,
-where there is a symmetry of the structure that takes any cable to any
-other in the same class.
-</p>
-
-<p align="center">
- <img src="img/b3.png" width="160" height="120">
-</p>
-
-<p> The picture was made from output of the program. </p>
-
-<p> For more details, see the links in the sidebar. </p>
-
-							</div>
-
-							<div class="tab-pane fade show active" id="program" role="tabpanel" aria-labelledby="program-tab">
-
-                <div class='row'>
-                  <div class='col-sm-11'>
-                    <h3>Highly Symmetric Tensegrity Structures</h3>
-                  </div>
-
-                  <div class='col-sm-1'>
-                    <button type='button' class='btn btn-light' data-toggle='modal' data-target='#configModal'>
-                      <span data-feather='settings'></span>
-                    </button>
-
-
-                  </div>
-                </div>
-                <hr />
-
-                <div class='container'>
-                  <div class='row'>
-
-                    <div id='canvas_div' class='col-sm-8'>
-
-                      <canvas id='canvas_id' width="400" height="400"  ></canvas>
-                      <p>
-
-                      <div class='row'>
-
-                        <div class='col-sm-2'>
-
-                          <span class='badge badge-secondary' onClick='take_screenshot()' style='float:left;'>
-                            <span data-feather='camera'></span>
-                          </span>
-
-                        </div>
-
-                        <div class='col-sm-2'>
-                        </div>
-
-                        <div class='col-sm-1'>
-                        </div>
-
-                        <div class='col-sm-4'>
-                        </div>
-
-                        <div class='col-sm-1'> </div>
-
-                        <div class='col-sm-2'>
-                          <span class='badge badge-secondary' onClick='go_fullscreen()' style='float:left;'>
-                            <span data-feather='maximize-2'></span>
-                          </span>
-
-                        </div>
-
-
-
-                      </div>
-
-                      </p>
-
-                    </div>
-
-                    <div id='inputarea' class='col-sm-4'>
-
-                      <div class='col-sm-12'>
-                        <div class='row'>
-                          <div class='col-sm-3'>group</div>
-                          <div class='col-sm-9'>
-                            <select id='group_select' class='custom-select' onchange='change_group_select();'>
-                              <option selected>A4</option>
-                              <option >A4Z2</option>
-                              <option >S4</option>
-                              <option >S4Z2</option>
-                              <option >A5</option>
-                              <option >A5Z2</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class='col-sm-12'>
-                        <div class='row'>
-                          <div class='col-sm-3'>cables</div>
-                          <div class='col-sm-9'>
-                            <select id='cable_select' class='custom-select' onchange='change_cable_select();'>
-                              <option selected>...</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class='col-sm-12'>
-                        <div class='row'>
-                          <div class='col-sm-3'>struts</div>
-                          <div class='col-sm-9'>
-                            <select id='strut_select' class='custom-select' onchange='change_strut_select();'>
-                              <option selected>...</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <br />
-
-                      <div class='col-sm-12'>
-                        <div id='detgraph'></div>
-                      </div>
-
-                    </div>
-
-                  </div> <!-- row div -->
-                </div> <!-- program container -->
-
-							</div>
-
-              <div class="tab-pane fade" id="references" role="tabpanel" aria-labelledby="references-tab">
-
-		<h3>References</h3>
-		<hr />
-
-
-    <p>
-     The mathematics is based on the book in progress
-     "Frameworks Tensegrities and Symmetry: 
-       Understanding Stable Structures"
-     by R.Connelly and S.D.Guest. 
-		</p>
-
-    <p>
-     This is an update of an older catalogue by Allen Back
-     and Bob Connelly. Many of the choices of cable classes
-     and struts were taken from the earlier work.
-		</p>
-
-    <p>
-      This project was carried out by
-      <a href="http://www.math.cornell.edu/~bterrell">Bob Terrell</a> 
-       closely collaborating with 
-      <a href="http://www.math.cornell.edu/~connelly">Bob Connelly</a> 
-         of Cornell University. 
-		</p>
-
-    <p>
-      The design of this web page was boldly copied from that of
-      <a href="http://www.tensegrity.aistructure.com/prismatic/"
-         target="_blank">Simon Guest</a> and Jingyao Zhang.
-		</p>
-
-    <p> 
-      This work was partially supported by NSF grant number DMS 0510625.
-		</p>
-
-              </div>
-
-
-              <div class="tab-pane fade" id="pictures" role="tabpanel" aria-labelledby="pictures-tab">
-
-      <h3>Pictures of Highly Symmetric Tensegrity Structures</h3>
-			<hr />
-               
-      <h5> Photographs of real models </h5>
-               
-      <p>
-         <img src="img/p49.jpg" width="330">
-         Group A_4, Cables: (124), (14)(23); Strut: (13)(24).  The stress is about half.
-      </p>
-        
-      <p>
-        <img src="img/p19.jpg" width="330">
-      </p>
-       
-      <h5> Some photographs of objects not in the catalogue: </h5>
-               
-      <p><a href="3134c.jpg" target="_blank"> <img src="img/3134s.jpg">
-  </a> Description TBA here.       </p>
-       
-      <p> And here. <a href="9180c.jpg" target="_blank"> <img src="img/9180s.jpg">
-  </a>        </p>
-       
-      <p><a href="9182c.jpg" target="_blank"> <img src="img/9182s.jpg">
-  </a> TBA.       </p>
-       
-      <p> Etc. <a href="9185c.jpg" target="_blank"> <img src="img/9185s.jpg">
-  </a>        </p>
-       
-      <p><a href="9187c.jpg" target="_blank"> <img src="img/9187s.jpg">
-  </a>        </p>
-       
-      <p><a href="9190c.jpg" target="_blank"> <img src="img/9190s.jpg">
-  </a>        </p>
-       
-      <p><a href="9191c.jpg" target="_blank"> <img src="img/9191s.jpg">
-  </a>        </p>
-       
-      <p><a href="9192c.jpg" target="_blank"> <img src="img/9192s.jpg">
-  </a>        </p>
-       
-      <p><a href="9193c.jpg" target="_blank"> <img src="img/9193s.jpg">
-  </a>        </p>
-       
-      <p><a href="9194c.jpg" target="_blank"> <img src="img/9194s.jpg">
-  </a>               </p>
-       
-      <h5> More photographs of catalogued objects: </h5>
-               
-      <p><a href="9195c.jpg" target="_blank"> <img src="img/9195s.jpg">
-  </a>        </p>
-       
-      <p><a href="9199c.jpg" target="_blank"> <img src="img/9199s.jpg">
-  </a>        </p>
-       
-      <p><a href="9201c.jpg" target="_blank"> <img src="img/9201s.jpg">
-  </a>        </p>
-       
-      <p><a href="9203c.jpg" target="_blank"> <img src="img/9203s.jpg">
-  </a>        </p>
-       
-      <p><a href="9204c.jpg" target="_blank"> <img src="img/9204s.jpg">
-  </a>        </p>
-       
-      <p><a href="9205c.jpg" target="_blank"> <img src="img/9205s.jpg">
-  </a>        </p>
-       
-      <p><a href="9206c.jpg" target="_blank"> <img src="img/9206s.jpg">
-  </a>        </p>
-       
-      <p><a href="9208c.jpg" target="_blank"> <img src="img/9208s.jpg">
-  </a>        </p>
-       
-      <p><a href="9210c.jpg" target="_blank"> <img src="img/9210s.jpg">
-  </a>        </p>
-       
-      <p><a href="p1010019c.jpg" target="_blank"> <img src="img/p1010019s.jpg">
-  </a>        </p>
-       
-      <p><a href="p1010020c.jpg" target="_blank"> <img src="img/p1010020s.jpg">
-  </a>        </p>
-       
-      <p><a href="p1010031c.jpg" target="_blank"> <img src="img/p1010031s.jpg">
-  </a>        </p>
-       
-      <p><a href="prismatic1c.jpg" target="_blank"> <img src="img/prismatic1s.jpg">
-  </a>        </p>
-       
-      <p><a href="tetra1c.jpg" target="_blank"> <img src="img/tetra1s.jpg">
-  </a>         </p>
-       
-      <h5> And a furniture project: </h5>
-               
-      <p><a href="dsc00855.jpg" target="_blank"> <img src="img/dsc00855s.jpg">
-  </a>        </p>
-       
-      <p><a href="dsc00863.jpg" target="_blank"> <img src="img/dsc00863s.jpg">
-  </a>        </p>
-       
-      <p><a href="dsc00864.jpg" target="_blank"> <img src="img/dsc00864s.jpg">
-  </a>        </p>
-       
-      <p><a href="dsc00874.jpg" target="_blank"> <img src="img/dsc00874s.jpg">
-  </a>        </p>
-       
-      <p><a href="dsc00877.jpg" target="_blank"> <img src="img/dsc00877s.jpg">
-  </a>        </p>
-       
-      <p><a href="sitting.jpg" target="_blank"> <img src="img/sittings.jpg">
-  </a>        </p>
-       
-      <p><a href="structuralconcepttable.jpg" target="_blank"> <img src="img/structuralconcepttables.jpg">
-  </a>        </p>
-       
-      <p><a href="tempdrawing.jpg" target="_blank"> <img src="img/tempdrawings.jpg">
-  </a>             </p>
-       
-      <h5> A compound tensegrity: </h5>
-                
-      <p> Also a <a href="lnk.html" target="_blank"> compound </a>       
-    tensegrity built from four of the S4 examples. It is displayed      
-     as a rotatable applet.      </p>
-       </td>
-      </tr>
-      <tr>
-       <td colspan="2" bgcolor="#ccccbb">              
-      <div align="center"> Any comments are welcome to <a
- href="mailto:connelly@math.cornell.edu">Bob Connelly</a> and <a
- href="mailto:ret7@cornell.edu">Bob Terrell</a> © June 13, 2008<br>
-  Last Update: 21st July 2008.
-  </div>
-              </div>
-
-						</div>
-
-
-
+        </div>
+        <div class='col-sm-12'>
+          <div class='row'>
+            <div class='col-sm-3'>cables</div>
+            <div class='col-sm-9'>
+              <select id='cable_select' class='custom-select' onchange='change_cable_select();'>
+                <option selected>...</option>
+              </select>
+            </div>
           </div>
-        </main>
+        </div>
+        <div class='col-sm-12'>
+          <div class='row'>
+            <div class='col-sm-3'>struts</div>
+            <div class='col-sm-9'>
+              <select id='strut_select' class='custom-select' onchange='change_strut_select();'>
+                <option selected>...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class='col-sm-12'><div id='detgraph'></div></div>
       </div>
+	
+    </div>
     </div>
 
-    <iframe id="dlfile_iframe" style="display:none;"></iframe>
+  </div>
 
-    <!-- Icons -->
-    <script src="js/feather.min.js"></script>
-    <script> feather.replace() </script>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="js/symtensWeb.js"></script>
+  <!-- References -->
+  <div class="tab-pane fade" id="references" role="tabpanel" aria-labelledby="references-tab">
+    <h3>References</h3>
+    <hr />
+    <p>
+      The mathematics is based on the book in progress "Frameworks Tensegrities and
+      Symmetry: Understanding Stable Structures" by R. Connelly and S. D. Guest.
+    </p>
+    <p>
+      This is an update of an older catalogue by Allen Back and Bob Connelly. Many
+      of the choices of cable classes and struts were taken from the earlier work.
+    </p>
+    <p>
+      This project was carried out by Bob Terrell closely collaborating with
+      <a href="http://www.math.cornell.edu/~connelly">Bob Connelly</a> of Cornell University.
+    </p>
+    <p>
+      The design of this web page was boldly copied from that of Simon Guest and Jingyao Zhang.
+    </p>
+    <p>This work was partially supported by NSF grant number DMS 0510625.</p>
+  </div>
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/three.min.js"></script>
-    <script src="js/OrbitControls.js"></script>
-    <script src="js/symtens-display.js"></script>
 
-    <script src="js/popper.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
+  <!-- Pictures -->
+  <div class="tab-pane fade" id="pictures" role="tabpanel" aria-labelledby="pictures-tab">
+    <h3>Pictures of Highly Symmetric Tensegrity Structures</h3>
+    <hr />
+    <h5> Photographs of real models </h5>
+      <p>
+        <img src="img/p49.jpg" width="330" alt="">
+        Group A_4, Cables: (124), (14)(23); Strut: (13)(24). The stress is about half.
+      </p>
+      <p><img src="img/p19.jpg" width="330" alt=""></p>
+    <h5> Some photographs of objects not in the catalogue: </h5>
+      <p><img src="img/3134s.jpg" alt=""></p>
+      <p><img src="img/9180s.jpg" alt=""></p>
+      <p><img src="img/9182s.jpg" alt=""></p>
+      <p><img src="img/9185s.jpg" alt=""></p>
+      <p><img src="img/9187s.jpg" alt=""></p>
+      <p><img src="img/9190s.jpg" alt=""></p>
+      <p><img src="img/9191s.jpg" alt=""></p>
+      <p><img src="img/9192s.jpg" alt=""></p>
+      <p><img src="img/9193s.jpg" alt=""></p>
+      <p><img src="img/9194s.jpg" alt=""></p>
+    <h5> More photographs of catalogued objects: </h5>
+      <p><img src="img/9195s.jpg" alt=""></p>
+      <p><img src="img/9199s.jpg" alt=""></p>
+      <p><img src="img/9201s.jpg" alt=""></p>
+      <p><img src="img/9203s.jpg" alt=""></p>
+      <p><img src="img/9204s.jpg" alt=""></p>
+      <p><img src="img/9205s.jpg" alt=""></p>
+      <p><img src="img/9206s.jpg" alt=""></p>
+      <p><img src="img/9208s.jpg" alt=""></p>
+      <p><img src="img/9210s.jpg" alt=""></p>
+      <p><img src="img/p1010019s.jpg" alt=""></p>
+      <p><img src="img/p1010020s.jpg" alt=""></p>
+      <p><img src="img/p1010031s.jpg" alt=""></p>
+      <p><img src="img/prismatic1s.jpg" alt=""></p>
+      <p><img src="img/tetra1s.jpg" alt=""></p>
+    <h5> And a furniture project: </h5>
+      <p><img src="img/dsc00855s.jpg" alt=""></p>
+      <p><img src="img/dsc00863s.jpg" alt=""></p>
+      <p><img src="img/dsc00864s.jpg" alt=""></p>
+      <p><img src="img/dsc00874s.jpg" alt=""></p>
+      <p><img src="img/dsc00877s.jpg" alt=""></p>
+      <p><img src="img/sittings.jpg" alt=""></p>
+      <p><img src="img/structuralconcepttables.jpg" alt=""></p>
+      <p><img src="img/tempdrawings.jpg" alt=""></p>
+  </div>
 
-    <script src="js/two.min.js"></script>
-    <script src="js/THREEx.FullScreen.js"></script>
 
-    <script src="js/spectrum.js"></script>
+  <!-- end main window -->
+  </div>
+  </div>
+  </main>
 
-    <script> init() </script>
 
-  </body>
+  <!-- end main page -->
+  </div>
+  </div>
+
+
+  <!-- icons -->
+  <script src="js/feather.min.js"></script>
+  <script> feather.replace() </script>
+
+
+  <!-- program -->
+  <script src="js/symtensWeb.js"></script>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/three.min.js"></script>
+  <script src="js/OrbitControls.js"></script>
+  <script src="js/symtens-display.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/two.min.js"></script>
+  <script src="js/THREEx.FullScreen.js"></script>
+  <script src="js/spectrum.js"></script>
+  <script> init() </script>
+
+</body>
+
 </html>
