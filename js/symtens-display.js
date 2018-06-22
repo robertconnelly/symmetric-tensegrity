@@ -294,6 +294,20 @@ function render_update(tenz) {
     g_render["geom_v"][ii].position.z = tenz.V[ii][2];
   }
 
+    // display lengths of cables and struts
+    if (tenz.C1.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.C1[0][0], tenz.C1[0][2]));
+	$("#c1_length").text(len.toString().substr(0,6));
+    }
+    if (tenz.C2.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.C2[0][0], tenz.C2[0][2]));
+	$("#c2_length").text(len.toString().substr(0,6));
+    }
+    if (tenz.S1.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.S1[0][0], tenz.S1[0][2]));
+	$("#s1_length").text(len.toString().substr(0,6));
+    }
+
 }
 
 //----------------------------------------
@@ -443,6 +457,19 @@ function render(tenz) {
     g_render["geom_v"].push(sphere);
   }
 
+    // display lengths of cables and struts
+    if (tenz.C1.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.C1[0][0], tenz.C1[0][2]));
+	$("#c1_length").text(len.toString().substr(0,6));
+    }
+    if (tenz.C2.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.C2[0][0], tenz.C2[0][2]));
+	$("#c2_length").text(len.toString().substr(0,6));
+    }
+    if (tenz.S1.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.S1[0][0], tenz.S1[0][2]));
+	$("#s1_length").text(len.toString().substr(0,6));
+    }
 }
 
 function take_screenshot() {
