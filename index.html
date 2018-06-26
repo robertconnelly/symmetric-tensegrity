@@ -1,1072 +1,689 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Highly Symmetric Tensegrity Structures</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <title>Highly Symmetric Tensegrity Structures</title>
 
-    <!-- Custom styles for this template -->
-    <link href="css/dashboard.css" rel="stylesheet">
-    <link href="css/jquery-ui.min.css" rel="stylesheet">
-    <link href="css/spectrum.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/dashboard.css" rel="stylesheet">
+  <link href="css/jquery-ui.min.css" rel="stylesheet">
+  <link href="css/spectrum.css" rel="stylesheet">
+  <style type='text/css'>
+      select.btn-mini {
+          height: auto;
+          line-height: 14px;
+      }
+      select.btn {
+          -webkit-appearance: button;
+          -moz-appearance: button;
+          appearance: button;
+          padding-right: 16px;
+      }
+      select.btn-mini + .caret {
+          margin-left: -20px;
+          margin-top: 9px;
+      }
+  </style>
+</head>
 
-    <style type='text/css'>
+<body>
 
-			select.btn-mini {
-					height: auto;
-					line-height: 14px;
-			}
-
-			/* this is optional (see below) */
-			select.btn {
-					-webkit-appearance: button;
-						 -moz-appearance: button;
-									appearance: button;
-					padding-right: 16px;
-			}
-
-			select.btn-mini + .caret {
-					margin-left: -20px;
-					margin-top: 9px;
-			}
-
-    </style>
-  </head>
-
-  <body>
-
-<!-- modal -->
-
-<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
+  <!-- options menu -->
+  <div class="modal fade" id="configModal" tabindex="-1" role="dialog"
+       aria-labelledby="configModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+  <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title" id="configModalLabel">Options</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+  <div class="modal-header">
+    <h5 class="modal-title" id="configModalLabel">Options</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class='row'>
+      <div class='col-sm-2'> Background </div>
+      <div class='col-sm-10'><input class='form-control' type='text' id='background_color_id'></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> C1 color </div>
+      <div class='col-sm-10'><input class='form-control' type='text' id='c1_color_id'></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> C2 color </div>
+      <div class='col-sm-10'><input class='form-control' type='text' id='c2_color_id'></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> S1 color </div>
+      <div class='col-sm-10'><input class='form-control' type='text' id='s1_color_id'></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> C1 Thickness </div>
+      <div class='col-sm-2' id="c1_thickness_slider_val_id"> val </div>
+      <div class='col-sm-8'><div id='c1_thickness_slider_id'></div></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> C2 Thickness </div>
+      <div class='col-sm-2' id="c2_thickness_slider_val_id"> val </div>
+      <div class='col-sm-8'><div id='c2_thickness_slider_id'></div></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> S1 Thickness </div>
+      <div class='col-sm-2' id="s1_thickness_slider_val_id"> val </div>
+      <div class='col-sm-8'><div id='s1_thickness_slider_id'></div></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-2'> Vertex Radius </div>
+      <div class='col-sm-2' id="vertex_radius_slider_val_id"> val </div>
+      <div class='col-sm-8'><div id='vertex_radius_slider_id'></div></div>
+    </div>
+    <div class='row'><hr /></div>
+    <div class='row'>
+      <div class='col-sm-1'></div>
+      <div class='col-sm-2'>
+	<button type="button" class="btn btn-secondary" onclick='restore_defaults();'>
+	  Restore Defaults
+	</button>
+      </div>
+      <div class='col-sm-5'></div>
+      <div class='col-sm-2'>
+	<button type="button" class="btn btn-primary" data-dismiss="modal">
+	  Close
         </button>
       </div>
-
-      <div class="modal-body">
-
-        <div class='row'>
-          <div class='col-sm-2'> Background </div>
-          <div class='col-sm-10'> <input class='form-control' type='text' id='background_color_id'> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> C1 color </div>
-          <div class='col-sm-10'> <input class='form-control' type='text' id='c1_color_id'> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> C2 color </div>
-          <div class='col-sm-10'> <input class='form-control' type='text' id='c2_color_id'> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> S1 color </div>
-          <div class='col-sm-10'> <input class='form-control' type='text' id='s1_color_id'> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> C1 Thickness </div>
-          <div class='col-sm-2' id="c1_thickness_slider_val_id"> val </div>
-          <div class='col-sm-8'> <div id='c1_thickness_slider_id'> </div> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> C2 Thickness </div>
-          <div class='col-sm-2' id="c2_thickness_slider_val_id"> val </div>
-          <div class='col-sm-8'> <div id='c2_thickness_slider_id'> </div> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> S1 Thickness </div>
-          <div class='col-sm-2' id="s1_thickness_slider_val_id"> val </div>
-          <div class='col-sm-8'> <div id='s1_thickness_slider_id'> </div> </div>
-        </div>
-
-        <div class='row'> <hr /> </div>
-
-        <div class='row'>
-          <div class='col-sm-2'> Vertex Radius </div>
-          <div class='col-sm-2' id="vertex_radius_slider_val_id"> val </div>
-          <div class='col-sm-8'> <div id='vertex_radius_slider_id'> </div> </div>
-        </div>
-
-
-        <div class='row'> <hr /> </div>
-        <div class='row'>
-          <div class='col-sm-1'></div>
-          <div class='col-sm-2'> <button type="button" class="btn btn-secondary" onclick='restore_defaults();' >Restore Defaults</button> </div>
-          <div class='col-sm-5'> </div>
-          <div class='col-sm-2'> <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button> </div>
-          <div class='col-sm-1'></div>
-        </div>
-
-      </div>
-
+      <div class='col-sm-1'></div>
     </div>
   </div>
-</div>
 
-<!-- modal -->
-
-    <!-- <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0"> -->
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-12" href="#">Highly Symmetric Tensegrity Structures</a> 
-    </nav>
+  </div>
+  </div>
+  </div>
 
 
-    <div class="container-fluid">
+  <!-- header -->
+  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-12" href="#">Highly Symmetric Tensegrity Structures</a> 
+  </nav>
 
-      <div class="row">
 
-        <!-- 
-        firefox is having some rendering issues with choppin goff the first nav and hiding
-        it under the toolbar nav.  This is the hack to get around that for now.
-        -->
-        <!-- <nav class="col-md-2 d-none d-md-block bg-light sidebar"> -->
-        <!-- <nav class='col-md-2 d-none d-md-block bg-light'> -->
-        <nav class='nav flex-column'>
-          <div class="sidebar-sticky">
+  <!-- start main page -->
+  <div class="container-fluid">
+  <div class="row">
 
-            <!-- <div class='nav flex-column nav-tabs' id='myTab' role='tablist' aria-orientation='vertical'> -->
-            <div class='nav flex-column' id='myTab' role='tablist' aria-orientation='vertical'>
 
-							<a class="nav-link"
-								id='home-tab'
-								data-toggle='tab'
-								href="#home"
-								role='tab'
-								aria-controls='home'
-								aria-selected='false'
-								>
-								<span data-feather="home"></span>
-								Home
-							</a>
+  <!-- navbar -->
+  <nav class='nav flex-column'>
+  <div class="sidebar-sticky">
+  <div class='nav flex-column' id='myTab' role='tablist' aria-orientation='vertical'>
+    <a class="nav-link" id='home-tab' data-toggle='tab' href="#home" role='tab'
+       aria-controls='home' aria-selected='false'>
+      <span data-feather="home"></span>
+      Home
+    </a>
+    <a class="nav-link active" id='program-tab' data-toggle='tab' href="#program" role='tab'
+       aria-controls='program' aria-selected='true'>
+      <span data-feather="box"></span>
+      Program <span class="sr-only">(current)</span>
+    </a>
+    <a class="nav-link" id='faq-tab' data-toggle='tab' href="#faq" role='tab'
+       aria-controls='faq' aria-selected='false'>
+      <span data-feather="info"></span>
+      FAQ
+    </a>
+    <a class="nav-link" id='references-tab' data-toggle='tab' href="#references" role='tab'
+       aria-controls='references' aria-selected='false'>
+      <span data-feather="book"></span>
+      References
+    </a>
+    <a class="nav-link" id='pictures-tab' data-toggle='tab' href="#pictures" role='tab'
+       aria-controls='pictures' aria-selected='false'>
+      <span data-feather="image"></span>
+      Pictures
+    </a>						
+  </div>
+  </div>
+  </nav>
 
-							<a class="nav-link active"
-								id='program-tab'
-								data-toggle='tab'
-								href="#program"
-								role='tab'
-								aria-controls='program'
-								aria-selected='true'
-								>
-								<span data-feather="box"></span>
-								Program <span class="sr-only">(current)</span>
-							</a>
 
-							<a class="nav-link"
-								id='faq-tab'
-								data-toggle='tab'
-								href="#faq"
-								role='tab'
-								aria-controls='faq'
-								aria-selected='false'
-								>
-								<span data-feather="info"></span>
-								FAQ
-							</a>
+  <!-- start main window -->
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+  <div class="tab-content" id="myTabContent">
 
-							<a class="nav-link"
-								id='references-tab'
-								data-toggle='tab'
-								href="#references"
-								role='tab'
-								aria-controls='references'
-								aria-selected='false'
-								>
-								<span data-feather="book"></span>
-								References
-							</a>
 
-                <a class="nav-link"
-                  id='pictures-tab'
-                  data-toggle='tab'
-                  href="#pictures"
-                  role='tab'
-                  aria-controls='pictures'
-                  aria-selected='false'
-                  >
-                  <span data-feather="image"></span>
-                  Pictures
-                </a>
+  <!-- Home -->
+  <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <h3>Home</h3>
+    <hr />
+    <p>
+      This is access to a catalog of several hundred tensegrity structures that
+      are held rigidly together with incompressible struts and inextendable
+      cables connecting point nodes. These structures are
+      <i>highly symmetric</i> in the sense that there is a symmetry of the
+      structure that takes any node to any other, there is a symmetry of the
+      structure that takes any strut to any other, and there are two classes of
+      cables, where there is a symmetry of the structure that takes any cable to
+      any other in the same class.
+    </p>
+    <p align="center"><img src="img/b3.png" width="160" height="120" alt=""></p>
+    <p>The picture was made from output of the program.</p>
+    <p>For more details, see the links in the sidebar.</p>
+    <div align="center">
+      Any comments are welcome to <a href="mailto:connelly@math.cornell.edu">Bob Connelly</a> and
+      <a href="mailto:ret7@cornell.edu">Bob Terrell</a> © June 13, 2008<br>
+      Last Update: 21 June 2018.
+    </div>
+  </div>
 
-							
+
+  <!-- Program -->
+  <div class="tab-pane fade show active" id="program" role="tabpanel" aria-labelledby="program-tab">
+
+    <div class='row'>
+      <div class='col-sm-11'>
+        <h3>Highly Symmetric Tensegrity Structures</h3>
+      </div>
+      <div class='col-sm-1'>
+        <button type='button' class='btn btn-light' data-toggle='modal' data-target='#configModal'>
+          <span data-feather='settings'></span>
+        </button>
+      </div>
+    </div>
+    <hr />
+
+    <div class='container'>
+    <div class='row'>
+
+      <div id='canvas_div' class='col-sm-8'>
+        <canvas id='canvas_id' width="400" height="400"></canvas>
+        <p>
+        <div class='row'>
+          <div class='col-sm-2'>
+            <span class='badge badge-secondary' onClick='take_screenshot()' style='float:left;'>
+              <span data-feather='camera'></span>
+            </span>
+          </div>
+          <div class='col-sm-2'></div>
+          <div class='col-sm-1'></div>
+          <div class='col-sm-4'></div>
+          <div class='col-sm-1'></div>
+          <div class='col-sm-2'>
+            <span class='badge badge-secondary' onClick='go_fullscreen()' style='float:left;'>
+              <span data-feather='maximize-2'></span>
+            </span>
+          </div>
+        </div>
+        </p>
+      </div>
+
+      <div id='inputarea' class='col-sm-4'>
+        <div class='col-sm-12'>
+          <div class='row'>
+            <div class='col-sm-3'>group</div>
+            <div class='col-sm-9'>
+              <select id='group_select' class='custom-select' onchange='change_group_select();'>
+                <option selected>A4</option>
+                <option >A4Z2</option>
+                <option >S4</option>
+                <option >S4Z2</option>
+                <option >A5</option>
+                <option >A5Z2</option>
+              </select>
             </div>
-
           </div>
-        </nav>
-
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-
-          <!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom"> -->
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
-
-						<div class="tab-content" id="myTabContent">
-
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
-
-							<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-<h3>Home</h3>
-<hr />
-
-<p>
-This is access to a catalog of several hundred tensegrity
-structures that are held rigidly together with incompressible struts
-and inextendable cables connecting point nodes. These structures are
-<i>highly symmetric</i> in the sense that there is a symmetry of the structure
-that takes any node to any other, there is a symmetry of the structure
-that takes any strut to any other, and there are two classes of cables,
-where there is a symmetry of the structure that takes any cable to any
-other in the same class.
-</p>
-
-<p> The picture on the left shows an example you can rotate. </p>
-
-<p align="center">
-	<applet code="tiny.class" archive="render.jar, Jama.jar" width="120" height="120">
-    <param name="grp" value="4">
-	  <param name="winr" value="3">
-    <param name="c1" value="57">
-	  <param name="c2" value="18">
-    <param name="s1" value="1">
-    <param name="omeg1" value="0.3055555555555556">
-	  <param name="omeg_1" value="-0.12288583510073314">
-    <param name="thk" value="1.1">
-  </applet>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
- <img src="img/b3.png" width="160" height="120">
-</p>
-
-<p> The picture on the right, which does not rotate, was also made from output of the program. </p>
-
-<p>
-To go to the catalog, click <a href="pro.html" target="_blank">Run Program</a>,
-and follow the prompts which will appear in the text area in the lower right hand corner.
-</p>
-
-<p> For more details, see the links in the sidebar. </p>
-
-							</div>
-
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
-
-              <!--
-								 _ __  _ __ ___   __ _ _ __ __ _ _ __ ___  
-								| '_ \| '__/ _ \ / _` | '__/ _` | '_ ` _ \ 
-								| |_) | | | (_) | (_| | | | (_| | | | | | |
-								| .__/|_|  \___/ \__, |_|  \__,_|_| |_| |_|
-								|_|              |___/                     
-
-              -->
-
-							<div class="tab-pane fade show active" id="program" role="tabpanel" aria-labelledby="program-tab">
-
-                <div class='row'>
-                  <div class='col-sm-11'>
-                    <h3>Highly Symmetric Tensegrity Structures</h3>
-                  </div>
-
-                  <div class='col-sm-1'>
-                    <button type='button' class='btn btn-light' data-toggle='modal' data-target='#configModal'>
-                      <span data-feather='settings'></span>
-                    </button>
-
-
-                  </div>
-                </div>
-                <hr />
-
-                <!-- <a id="download"><button type="button" onClick="take_screenshot()">Download</button></a> -->
-
-                <div class='container'>
-                  <div class='row'>
-
-                    <div id='canvas_div' class='col-sm-8'>
-                      <!-- <canvas id='canvas_id' width="400" height="400" style="width: 398px; height: 398px;"></canvas> -->
-                      <!-- <canvas id='canvas_id'  style="width: 400px; height: 400px;"></canvas> -->
-                      <canvas id='canvas_id' width="400" height="400"  ></canvas>
-                      <p>
-
-                      <div class='row'>
-
-                        <div class='col-sm-2'>
-
-                          <span class='badge badge-secondary' onClick='take_screenshot()' style='float:left;'>
-                            <span data-feather='camera'></span>
-                          </span>
-
-                        </div>
-
-                        <div class='col-sm-2'>
-                        </div>
-
-                        <div class='col-sm-1'>
-                        </div>
-
-                        <div class='col-sm-4'>
-                        </div>
-
-                        <div class='col-sm-1'> </div>
-
-                        <div class='col-sm-2'>
-                          <span class='badge badge-secondary' onClick='go_fullscreen()' style='float:left;'>
-                            <span data-feather='maximize-2'></span>
-                          </span>
-
-                        </div>
-
-
-
-                      </div>
-
-                      </p>
-
-                    </div>
-
-                    <div id='inputarea' class='col-sm-4'>
-
-                      <div class='col-sm-12'>
-                        <div class='row'>
-                          <div class='col-sm-3'>group</div>
-                          <div class='col-sm-9'>
-                            <select id='group_select' class='custom-select' onchange='change_group_select();'>
-                              <option selected>A4</option>
-                              <option >A4Z2</option>
-                              <option >S4</option>
-                              <option >S4Z2</option>
-                              <option >A5</option>
-                              <option >A5Z2</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class='col-sm-12'>
-                        <div class='row'>
-                          <div class='col-sm-3'>cables</div>
-                          <div class='col-sm-9'>
-                            <select id='cable_select' class='custom-select' onchange='change_cable_select();'>
-                              <option selected>...</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class='col-sm-12'>
-                        <div class='row'>
-                          <div class='col-sm-3'>struts</div>
-                          <div class='col-sm-9'>
-                            <select id='strut_select' class='custom-select' onchange='change_strut_select();'>
-                              <option selected>...</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <br />
-
-                      <div class='col-sm-12'>
-                        <div id='detgraph'></div>
-                      </div>
-
-                    </div>
-
-                  </div> <!-- row div -->
-                </div> <!-- program container -->
-
-							</div>
-
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
-
-
-
-              <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="faq-tab">
-
-		<h3>Frequently Asked Questions (F.A.Q.)</h3>
-		<hr />
-
-<h5>1. What is a tensegrity? </h5>
-<p>
- It is a structure that joins nodes (points) with inextendibile
-cables and incompressible struts. The cable can be made from string,
-wire, or rope, and struts can be made from tubes, dowel rods, or just sticks.
-See <a href="http://en.wikipedia.org/wiki/Tensegrity" target="_blank">wikipedia</a>
-for a reasonable definition.
-</p>
-
-<h5>2.&nbsp; What is the mathematical definition of a tensegrity?</h5>
-<p>
-It is a finite configuration of points, the nodes, in space or
-the plane where some pairs of the nodes are designated cables,
-constrained not to get further apart, and some pairs are designated
-struts, constrained
-not to get closer together.&nbsp; Note with this definition cables and
-struts are allowed to intersect and cross.
-</p>
-
-<h5>3.&nbsp; Who first created a tensegrity?</h5>
-<p>
-If you don't count spider webs and constructions in nature, an
-artist Kenneth Snelson is usually credited with the first
-creations.&nbsp; He has an
-interesting website <a href="http://www.kennethsnelson.net/">here</a>.
-</p>
-
-<h5>4.&nbsp; Who thought of the name tensegrity?</h5>
-<p>
-Buckminster Fuller.&nbsp; It combines the notion of "tension"
-with "integrity", creating "tensional integrity.&nbsp; You can see Bucky's musings
-<a href="http://www.rwgrayprojects.com/rbfnotes/fpapers/tensegrity/tenseg01.html">here</a>.
-
-<h5>5. &nbsp;Where can I read more about this catalog and tensegrities?</h5>
-
-<p>
-<ul>
-  <li>Allen Back and Bob Connelly have an article
-	  <a href="http://www.math.cornell.edu/%7Econnelly/tensegrity.copy.pdf">here</a>
-		in the March-April 1998 issue of the American Scientist that explains a
-		lot of what goes into this catalog. &nbsp;</li>
-  <li>There is the paper by Bob Connelly and Walter Whiteley
-	  <a href="http://www.math.cornell.edu/%7Econnelly/second.order.pdf">here</a>
-		that that discusses some of the basic geometric principles for the
-		stability of tensegrity structure.</li>
-  <li>Bob Connelly and Maria Terrell have a paper, 1995.
-		Globally rigid symmetric tensegrities. Structural Topology, 21, 59--78,
-		that classifies a collection of super stable symmetric tensegrities.
-		&nbsp;It is available
-		 <a href="http://www-iri.upc.es/people/ros/StructuralTopology/">here</a>.</li>
-  <li>For engineering background see "Theory of Structures" by
-		Timoshenko and Young. &nbsp;</li>
-</ul>
-</p>
-
-<h5>6. &nbsp;What are some links to other sites that show tensegrities?</h5>
-
-<p>
-<ul>
-  <li>There is the older catalog created by Allen Back and Bob
-		Connelly <a href="http://mathlab.cit.cornell.edu/visualization/tenseg/in_progress/short_top.html">here</a>.</li>
-  <li>There is a catalog created by Jingyao Zhang and Simon Guest
-		of symmetric prismatic tensegrity structures
-		 <a href="http://tensegrity.aistructure.com/prismatic/">here</a>. &nbsp;</li>
-  <li>There is a site
-		<a href="http://complexity.xozzox.de/tensegrity.html">here</a>, where a
-		few symmetric and non-symmetric tensegrities can be viewed and rotated.
-		&nbsp;This seems to be a kind virtual tensegrity, where the configuration
-		minimizes an energy functional on the cables.<br>
-  </li>
-</ul>
-</p>
-
-<h5>7. &nbsp;Can I build these tensegrities?</h5>
-
-<p>
-Why not? &nbsp;Once you have chosen a particular example, you
-can read off the lengths of the cable relative to the strut lengths in the lower
-right window. &nbsp;The picture should help you thread the cables and struts.
-&nbsp;There is only one way to make the structure with those lengths if everything
-is hooked up right. &nbsp;There are various materials that you can use.
-&nbsp;Dowl rods with nails in them are popular as in
-<a href="http://www.amazon.com/Introduction-Tensegrity-Anthony-Pugh/dp/0520030559">Pugh's book</a>
-or George Hart's <a href="http://www.georgehart.com/virtual-polyhedra/straw-tensegrity.html">page</a>,
-or Hugh Kenner, Geodesic Math and How to Use It, Univ. Cal Pr., 1976,
-&nbsp;or René Motro's book
-"<a href="http://www.amazon.com/Tensegrity-Structural-Systems-Ren%E9-Motro/dp/1903996376">Tensegrity: Structural Systems for the Future</a>".
-</p>
-
-<h5>8. Can I look at the source code for the applet? </h5>
-<p>
-Yes. It is <a href="ap.java"> here </a>. If you want to modify
-the program and recompile, then you will also need to get the <i>render</i>
-and <i>jama</i> packages listed in the references, or at least grab
-the <a href="render.jar">render.jar</a> and <a href="Jama.jar">Jama.jar</a>
-archives.
-</p>
-
-<p>
-There is also a modified version of the applet which is used
-to make the rotatable icons. For this you will need the source
-<a href="tiny.java"> code </a>. For each rotatable icon you want to
-make, run the main applet until you find an example you like, then read
-the required parameters from the applet and its source code, copying
-the example from
-our Home page.
-</p>
-
-<h5>9. What is the "tracecode" button? </h5>
-<p>
-It has two uses: a) If you want the coordinates of all the
-vertices of the tensegrity currently displayed, those show up as the
-centers of the "sphere" commands. You might need those if you are
-planning to build it
-three stories high, for example. b) If you want to make a really sharp
-raytraced picture of the displayed tensegrity, copy and paste the
-displayed code into a file. (This works best on some platforms if you
-click at the bottom and drag upward.) Edit the file if you want to
-change the colors and textures, and run
-<a href="http://www.povray.org" target="_blank">povray</a> on it.
-The nonrotatable picture on the Home page was made in this manner.
-</p>
-
-<h5>10.&nbsp; Will the structures shown in this catalog hold together?</h5>
-<p>
-Yes.&nbsp; They are all rigid, but not all choices give
-interesting tensegrities.&nbsp; Some are very degenerate.&nbsp;
-</p>
-
-<h5>11.&nbsp; How are the structures chosen?</h5>
-<p>
-They must satisfy the following list of criteria:&nbsp; They
-must have the <span style="font-style: italic;">symmetries</span> of one of the
-six <span style="font-style: italic;">groups</span> A<sub>4</sub>, S<sub>4</sub>,
-A<sub>5</sub>, A<sub>4</sub> x Z<sub>2</sub>, S<sub>4</sub> x Z<sub>2</sub>,
-A<sub>5</sub> x Z<sub>2</sub>;&nbsp; There are two classes (each class
-is designated by its own color, usually red and blue) of cables such that there is a
-symmetry of the structure that takes takes any cable of one class to any other
-cable of the same class;&nbsp; For any two struts (colored brown or green),
-there is a symmetry of the structure that takes any strut onto any other;&nbsp;
-The cables are connected as a set; The whole tensegrity structure must be <span
- style="font-style: italic;">super stable</span>.<br>
-</p>
-
-<h5>12. &nbsp;What does it mean that a tensegrity is super stable?</h5>
-<p>
-This is a very strong condition on the geometry of the
-structure.  &nbsp; There is a particular calculation that can be made in terms of
-the stress that exists in the structure. &nbsp;Certain numbers, called eigen
-values, calculated.  &nbsp;If they are positive with altogether only 4 of them being 0, the
-structure will be super stable. &nbsp;A consequence of this is that the structure
-is <i>globally rigid</i> in all dimensions. &nbsp;This means that if there is any
-other placement of the nodes satisfying the cable and strut conditions, then this
-placement will be congruent to the original. &nbsp;It will be the same
-configuration, possibly rotated or reflected and then rotated. &nbsp;Another consequence is
-that if you build this structure it will stay stable and rigid, even when the
-stress is increased relative to the stiffness. &nbsp;This is very handy for
-these tensegrities, since the stiffness of the cables especially tends to be very soft.
-&nbsp;
-</p>
-
-<h5>13. &nbsp;If I have a tensegrity where all the nodes are the same,
-and it holds together, will it be in this catalog? </h5>
-
-<p>
-Not necessarily. &nbsp;It could be rigid, but not super
-stable. &nbsp;Or it could have a different symmetry than one of the one of the six groups
-in this catalog. &nbsp;For example, the symmetric tensegrids described <a
- href="http://tensegrity.aistructure.com/prismatic/">here</a> have a
-symmetry group isomorphic a dihedral group.<br>
-</p>
-
-<h5>14.&nbsp; What is a group?</h5>
-
-<p>
-It is a set where any two elements g<sub>1</sub> and g<sub>2</sub>
-of the set can be multiplied together to get another element g<sub>2</sub>g<sub>1</sub>of
-the set.&nbsp; The multiplication operation (or group operation) must
-satisfy the rules of associativity, inverses, and identity.&nbsp; See <a
- href="http://en.wikipedia.org/wiki/Group_mathematics">wikipedia</a>
-for more details.&nbsp; Presented this way, this is a definition of an
-abstract group.&nbsp; There are tons and tons of many different kinds
-of examples of groups.&nbsp; Here
-we concentrate on, permutation groups, symmetry groups, and groups of
-matrices.  (You can look at a book such as "Introduction to Modern Algebra" by
-Birkhoff and Maclane for a nice introduction.)&nbsp; This approach greatly
-simplifies the cataloging of the tensegrities we consider.
-</p>
-
-<h5>15. &nbsp;What is a permutation group?</h5>
-
-<p>
-This is a set of functions, called <i>permutations</i>, that
-permute the elements of some set. &nbsp;To be a group, any composition
-of these permutations in the group is another permutation in the group.
-&nbsp;We use the disjoint cycle
-notation for permutation groups considered here. &nbsp;Our groups
-permute the symbols 1, 2, 3, ..., n. &nbsp;The symbol (a, b, c, ..., d) means a
--&gt; b -&gt;c -&gt; ... -&gt; d -&gt; a. &nbsp;In other words these symbols are
-permuted cyclicly.  &nbsp;The product of these cycles means the composition of the
-corresponding cycles. &nbsp;It is easy to see that any permutation can be written as
-the product of such disjoint cycles. &nbsp;For example, (12)(345) means 1 and 2 are
-switched, and 3 goes to 4, which goes to 5, which goes to three.
-</p>
-
-<h5>16. &nbsp;What are the groups A<sub>4</sub> and A<sub>5</sub>?</h5>
-
-<p>
-These are the alternating groups on 4 symbols and 5 symbols,
-respectively. &nbsp;These are all the even permutations of 4 symbols
-and 5 symbols, respectively. &nbsp;A permutation is <i>even</i> if
-when it is written in disjoint cycle notation,
-there are an even number of cycles of even length. &nbsp;For example,
-(12) is not even, but (12)(34) and (123) are even permutations. &nbsp;The group
-A<sub>4</sub> has 12 elements, and the group A<sub>5</sub> has 60 elements.</p>
-
-<h5>17. &nbsp;What is the group S<sub>4</sub>?</h5>
-
-<p>
-This is the group of all permutations of 4 symbols and has 24 elements.
-</p>
-
-<h5>18. &nbsp;What are the groups A<sub>4</sub> x Z<sub>2</sub>,
-  S<sub>4</sub> x Z<sub>2</sub>, A<sub>5</sub> x Z<sub>2</sub>?</h5>
-
-<p>
-The G x Z<sub>2</sub> notation denotes the <i>cross product</i>
-which means that you take two copies of the group G, where one copy has
-a - sign attached. &nbsp;The group operation on the - acts like
-multiplication by -1. &nbsp;For example, -(12) times -(34) in S<sub>4</sub>
-x Z<sub>2</sub> is (12)(34). &nbsp;The G x Z<sub>2</sub> groups have twice as many groups
-elements as G. &nbsp;So A<sub>4</sub> x Z<sub>2</sub> has 24 elements, S<sub>4</sub>
-x Z<sub>2</sub> has 48 elements, and A<sub>5</sub> x Z<sub>2</sub> has 120 elements.
-</p>
-
-<h5>19. &nbsp;Why are these groups chosen?</h5>
-
-<p>
-These are isomorphic to groups of symmetries of the cube, regular
-tetrahedron, and dodecahedron. A<sub>4</sub> is isomorphic to the
-rotations of regular tetrahedron. &nbsp;S<sub>4</sub> is isomorphic to
-the rotations of a cube. &nbsp; A<sub>5</sub> is isomorphic to the rotations of the regular
-dodecahedron. &nbsp;The groups A<sub>4</sub> x Z<sub>2</sub>, S<sub>4</sub>
-x Z<sub>2</sub>, A<sub>5</sub> x Z<sub>2</sub> are the full group of
-symmetries, including reflections, of the regular tetrahedron, cube and
-regular dodecahedron, respectively. &nbsp;In the choices for the Java output in our program
-subscripts and the cross "x" are suppressed.
-</p>
-
-
-<h5>20. &nbsp;What does isomorphic mean?</h5>
-
-<p>
-  If G<sub>1</sub> and G<sub>2</sub> are two groups, an <i>isomorphism</i>
-is a <i>one-to-one</i> function f &nbsp;(when g is not h, f(g) is not
-f(h)) defined on all the elements of &nbsp;G<sub>1</sub> with values in G<sub>2</sub>
-such that for every g, h in&nbsp;G<sub>1</sub>, f(g)f(h)=f(gh), and every
-element of G<sub>2</sub> is the image of some element in G<sub>1</sub>.
-&nbsp;This means that from the point of view of formal group operations, G<sub>1</sub>
-and G<sub>2</sub> are the same. &nbsp;If two groups are isomorphic they
-must have the same number of &nbsp;elements, but, for example, A<sub>4</sub>
-x Z<sub>2</sub> and S<sub>4</sub> both have 24 elements, yet they are not isomorphic.
-</p>
-
-<h5>21. &nbsp;What is a symmetry group?</h5>
-
-<p>
-It is a collection of rigid distance preserving functions of
-all of space, where each function transforms some set to itself.
-&nbsp;The group operation is the composition of these functions, and so
-to be a group, the composition of any two such functions in the group
-is also in the group.&nbsp; For example the rotations of regular
-tetrahedron, cube or regular dodecahedron are symmetry groups.
-</p>
-
-<h5>22.&nbsp; Does the tensegrity always have a group of
-symmetries isomorphic to the group in the group window?</h5>
-
-<p>
-Yes, but the tensegrity itself may have other larger groups of symmetries.
-</p>
-
-<h5>23. &nbsp;What is the order of a group element?</h5>
-
-<p>
-If g is a group element, then g<sup>n</sup> is g multiplied by
-itself n times. &nbsp;The order of g is the smallest n = 1, 2, ... such
-that g<sup>n</sup> = e the identity element. &nbsp;For example, the
-permutation (12)(34) has order
-is 2, and the element -(12345) in A<sub>4</sub> x Z<sub>2</sub>, has
-order
-is 10. &nbsp;It is particularly easy to figure the order of a
-permutation when
-it is written in disjoint cycle notation.<br>
-</p>
-
-<h5>24. &nbsp;What does the group inverse mean?</h5>
-
-<p>
-One of the defining properties of a group is that if g is a
-group element, then there is a group element g<sup>-1</sup>, where gg<sup>-1</sup>
-= g<sup>-1</sup>g = e, the identity element. &nbsp;g<sup>-1</sup> is
-the inverse of g. &nbsp;For example, the inverse of (123) is (321).
-&nbsp;If g is of order 2, then
-g = g<sup>-1</sup>.
-</p>
-
-<h5>25. &nbsp;When I choose a group elements in the cable and
-strut windows, what does that mean?</h5>
-
-<p>
-When the situation is not degenerate, there is a one-to-one
-correspondence between the nodes of the tensegrity and the group
-elements. &nbsp;Any node can
-be identified with the identity element of the group, and the two group
-elements in the cable window and the group element in the strut window are
-identified with cables and struts that are connected to the identity node.
-&nbsp;Note that if g is a group element corresponding to a strut or cable, then the
-inverse element g<sup>-1</sup> also corresponds to the same cable or strut.
-</p>
-
-<h5>26. &nbsp;I want the struts not to touch each other.
-&nbsp;How can I find examples where that happens?</h5>
-
-<p>
-If the order of a strut is greater than 2, then there are two
-struts connected to each node. &nbsp;So you at least have to choose a
-group element in the strut window that is of order 2. &nbsp;But it
-still may happen that the
-struts will cross somewhere in their middle. &nbsp;This tends to happen
-for the groups with a Z<sub>2</sub> factor. &nbsp;(They have mirror reflection
-symmetries, and the struts will intersect their mirror image, if the mirror
-intersects the struts obliquely.) &nbsp;But in any case, you can look at the
-picture and see if they intersect. &nbsp;If you try a different stress ratio in the
-last window, that might pull some of the struts apart. In some cases, you might need
-to use the "thinner" button and "zoom in" to decide whether there is
-really an intersection or not.
-</p>
-
-<h5>27. &nbsp;What do those funny lines in the window on the
-right in the program mean?</h5>
-
-<p>
- Each curved line, or lines, of a given color corresponds to a
-particular representation of the group chosen. &nbsp;When you click in
-the right hand window, a vertical line appears through the point you clicked on. &nbsp;The
-horizontal axis corresponds to the ratio between the stresses on the two cables
-you have chosen in the cable window. &nbsp;The vertical axis corresponds to
-the stress on the strut. &nbsp;When the strut stress is below the top horizontal
-line, it is negative. &nbsp;When the strut stress crosses one of the curved
-lines, the tensegrity becomes unstable, but right at that the point on the first
-curved line, it corresponds to an equilibrium that it needs for its stability,
-but the representation that corresponds to that line. &nbsp;We call that
-first representation
-the <i>winner</i>.
-</p>
-
-<h5>28. &nbsp;What is a representation of a group?</h5>
-
-<p>
-It is a function that assigns to each element g in the group G a
-symmetry of some Euclidean space. But the Euclidean space may be of
-dimension greater than 3. &nbsp;(This can happen for A<sub>5</sub> and A<sub>5</sub>
-x Z<sub>2</sub>.) Suppose g goes to f(g), and h in G goes to f(h).
-&nbsp;Then we insist that f(g)f(h)=f(gh). &nbsp;f is called a group <i>homomorphism</i>.
-&nbsp;This is the same property as being an isomorphism, except that f may not be one-to-one
-or onto. &nbsp;The representation f(g) may be the identity, for some g not
-equal to e, the identity. If f is one-to-one, then we say f is <i>faithful</i>.
-&nbsp;The faithful three-dimensional representations are labeled in the
-right hand picture, and correspond to the black lines. &nbsp;If the winning
-representation is faithful and three-dimensional, then you should get a
-picture where the number of nodes is equal to the number of elements of
-the group you chose in the first window.
-</p>
-
-              </div>
-
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
-
-
-              <div class="tab-pane fade" id="references" role="tabpanel" aria-labelledby="references-tab">
-
-		<h3>References</h3>
-		<hr />
-
-
-    <p>
-     The mathematics is based on the book in progress
-     "Frameworks Tensegrities and Symmetry: 
-       Understanding Stable Structures"
-     by R.Connelly and S.D.Guest. 
-		</p>
-
-    <p>
-     The program uses the <a href="http://mrl.nyu.edu/~perlin"> render </a> 
-     package from
-     <br>
-        <i>http://mrl.nyu.edu/~perlin </i>
-     <br>
-     to display the tensegrities in a rotatable form.
-		</p>
-
-    <p> 
-     The <a href="http://math.nist.gov/javanumerics/jama">JAMA</a> 
-     matrix package from
-     <br>
-        <i>http://math.nist.gov/javanumerics/jama </i>
-     <br>
-     is used for calculations with matrix representations.
-		</p>
-
-    <p>
-     This is an update of an older catalogue by Allen Back
-     and Bob Connelly. Many of the choices of cable classes
-     and struts were taken from the earlier work.
-		</p>
-
-    <p>
-      This project was carried out by
-      <a href="http://www.math.cornell.edu/~bterrell">Bob Terrell</a> 
-       closely collaborating with 
-      <a href="http://www.math.cornell.edu/~connelly">Bob Connelly</a> 
-         of Cornell University. 
-		</p>
-
-    <p>
-      The design of this web page was boldly copied from that of
-      <a href="http://www.tensegrity.aistructure.com/prismatic/"
-         target="_blank">Simon Guest</a> and Jingyao Zhang.
-		</p>
-
-    <p> 
-      This work was partially supported by NSF grant number DMS 0510625.
-		</p>
-
-              </div>
-
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
-
-
-              <div class="tab-pane fade" id="pictures" role="tabpanel" aria-labelledby="pictures-tab">
-
-      <h3>Pictures of Highly Symmetric Tensegrity Structures</h3>
-			<hr />
-               
-      <h5> Photographs of real models </h5>
-               
-      <p> Two examples are shown beside a rotatable version from the applet. </p>
-       
-      <p>
-         <img src="img/p49.jpg" width="330">
-          <applet code="tiny.class" archive="render.jar, Jama.jar" width="300" height="300">
-						<param name="grp" value="0">        
-					  <param name="winr" value="4">
-            <param name="c1" value="8">   
-       			<param name="c2" value="9">
-            <param name="s1" value="6">
-            <param name="omeg1" value="0.6111111111111112">
-            <param name="omeg_1" value="-0.26840581141705516">
-            <param name="thk" value="1.1">
-         </applet>
-         Group A_4, Cables: (124), (14)(23); Strut: (13)(24).  The stress is about half.
-      </p>
-        
-      <p>
-        <img src="img/p19.jpg" width="330">
-          <applet code="tiny.class" archive="render.jar, Jama.jar" width="300" height="300">
-            <param name="grp" value="2">        
-            <param name="winr" value="4">
-            <param name="c1" value="1">   
-            <param name="c2" value="19">
-            <param name="s1" value="3">
-            <param name="omeg1" value="0.5055555555555555">
-            <param name="omeg_1" value="-0.20960878838311064">
-            <param name="thk" value="1.1">
-        </applet>
-      </p>
-       
-      <h5> Some photographs of objects not in the catalogue: </h5>
-               
-      <p><a href="3134c.jpg" target="_blank"> <img src="img/3134s.jpg">
-  </a> Description TBA here.       </p>
-       
-      <p> And here. <a href="9180c.jpg" target="_blank"> <img src="img/9180s.jpg">
-  </a>        </p>
-       
-      <p><a href="9182c.jpg" target="_blank"> <img src="img/9182s.jpg">
-  </a> TBA.       </p>
-       
-      <p> Etc. <a href="9185c.jpg" target="_blank"> <img src="img/9185s.jpg">
-  </a>        </p>
-       
-      <p><a href="9187c.jpg" target="_blank"> <img src="img/9187s.jpg">
-  </a>        </p>
-       
-      <p><a href="9190c.jpg" target="_blank"> <img src="img/9190s.jpg">
-  </a>        </p>
-       
-      <p><a href="9191c.jpg" target="_blank"> <img src="img/9191s.jpg">
-  </a>        </p>
-       
-      <p><a href="9192c.jpg" target="_blank"> <img src="img/9192s.jpg">
-  </a>        </p>
-       
-      <p><a href="9193c.jpg" target="_blank"> <img src="img/9193s.jpg">
-  </a>        </p>
-       
-      <p><a href="9194c.jpg" target="_blank"> <img src="img/9194s.jpg">
-  </a>               </p>
-       
-      <h5> More photographs of catalogued objects: </h5>
-               
-      <p><a href="9195c.jpg" target="_blank"> <img src="img/9195s.jpg">
-  </a>        </p>
-       
-      <p><a href="9199c.jpg" target="_blank"> <img src="img/9199s.jpg">
-  </a>        </p>
-       
-      <p><a href="9201c.jpg" target="_blank"> <img src="img/9201s.jpg">
-  </a>        </p>
-       
-      <p><a href="9203c.jpg" target="_blank"> <img src="img/9203s.jpg">
-  </a>        </p>
-       
-      <p><a href="9204c.jpg" target="_blank"> <img src="img/9204s.jpg">
-  </a>        </p>
-       
-      <p><a href="9205c.jpg" target="_blank"> <img src="img/9205s.jpg">
-  </a>        </p>
-       
-      <p><a href="9206c.jpg" target="_blank"> <img src="img/9206s.jpg">
-  </a>        </p>
-       
-      <p><a href="9208c.jpg" target="_blank"> <img src="img/9208s.jpg">
-  </a>        </p>
-       
-      <p><a href="9210c.jpg" target="_blank"> <img src="img/9210s.jpg">
-  </a>        </p>
-       
-      <p><a href="p1010019c.jpg" target="_blank"> <img src="img/p1010019s.jpg">
-  </a>        </p>
-       
-      <p><a href="p1010020c.jpg" target="_blank"> <img src="img/p1010020s.jpg">
-  </a>        </p>
-       
-      <p><a href="p1010031c.jpg" target="_blank"> <img src="img/p1010031s.jpg">
-  </a>        </p>
-       
-      <p><a href="prismatic1c.jpg" target="_blank"> <img src="img/prismatic1s.jpg">
-  </a>        </p>
-       
-      <p><a href="tetra1c.jpg" target="_blank"> <img src="img/tetra1s.jpg">
-  </a>         </p>
-       
-      <h5> And a furniture project: </h5>
-               
-      <p><a href="dsc00855.jpg" target="_blank"> <img src="img/dsc00855s.jpg">
-  </a>        </p>
-       
-      <p><a href="dsc00863.jpg" target="_blank"> <img src="img/dsc00863s.jpg">
-  </a>        </p>
-       
-      <p><a href="dsc00864.jpg" target="_blank"> <img src="img/dsc00864s.jpg">
-  </a>        </p>
-       
-      <p><a href="dsc00874.jpg" target="_blank"> <img src="img/dsc00874s.jpg">
-  </a>        </p>
-       
-      <p><a href="dsc00877.jpg" target="_blank"> <img src="img/dsc00877s.jpg">
-  </a>        </p>
-       
-      <p><a href="sitting.jpg" target="_blank"> <img src="img/sittings.jpg">
-  </a>        </p>
-       
-      <p><a href="structuralconcepttable.jpg" target="_blank"> <img src="img/structuralconcepttables.jpg">
-  </a>        </p>
-       
-      <p><a href="tempdrawing.jpg" target="_blank"> <img src="img/tempdrawings.jpg">
-  </a>             </p>
-       
-      <h5> A compound tensegrity: </h5>
-                
-      <p> Also a <a href="lnk.html" target="_blank"> compound </a>       
-    tensegrity built from four of the S4 examples. It is displayed      
-     as a rotatable applet.      </p>
-       </td>
-      </tr>
-      <tr>
-       <td colspan="2" bgcolor="#ccccbb">              
-      <div align="center"> Any comments are welcome to <a
- href="mailto:connelly@math.cornell.edu">Bob Connelly</a> and <a
- href="mailto:ret7@cornell.edu">Bob Terrell</a> © June 13, 2008<br>
-  Last Update: 21st July 2008.
-  </div>
-              </div>
-
-              <!--
-              ***********************************
-              ***********************************
-              ***********************************
-              -->
-
-
-						</div>
-
-
-
+        </div>
+        <div class='col-sm-12'>
+          <div class='row'>
+            <div class='col-sm-3'>cables</div>
+            <div class='col-sm-9'>
+              <select id='cable_select' class='custom-select' onchange='change_cable_select();'>
+                <option selected>...</option>
+              </select>
+            </div>
           </div>
-        </main>
+        </div>
+        <div class='col-sm-12'>
+          <div class='row'>
+            <div class='col-sm-3'>struts</div>
+            <div class='col-sm-9'>
+              <select id='strut_select' class='custom-select' onchange='change_strut_select();'>
+                <option selected>...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class='col-sm-12'>
+	  <div id='detgraph'></div>
+	  <div class='row'>
+            <div class='col-sm-6'> C1 Length: </div>
+            <div class='col-sm-6' id="c1_length"></div>
+	  </div>
+	  <div class='row'>
+            <div class='col-sm-6'> C2 Length: </div>
+            <div class='col-sm-6' id="c2_length"></div>
+	  </div>
+	  <div class='row'>
+            <div class='col-sm-6'> S1 Length: </div>
+            <div class='col-sm-6' id="s1_length"></div>
+	  </div>
+	</div>
       </div>
+	
+    </div>
     </div>
 
-    <iframe id="dlfile_iframe" style="display:none;"></iframe>
+  </div>
 
-    <!-- Icons -->
-    <script src="js/feather.min.js"></script>
-    <script> feather.replace() </script>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="js/symtensWeb.js"></script>
+  <!-- FAQ -->
+  <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+    <h3>Frequently Asked Questions (F.A.Q.)</h3>
+    <hr />
+    <ol>
+      <li>What is a tensegrity?</li>
+      <p>
+        It is a structure that joins nodes (points) with inextendibile cables and
+        incompressible struts. The cable can be made from string, wire, or rope, and
+        struts can be made from tubes, dowel rods, or just sticks.  See
+        <a href="http://en.wikipedia.org/wiki/Tensegrity">Wikipedia</a> for a reasonable
+	definition.
+      </p>
+      <li>What is the mathematical definition of a tensegrity?</li>
+      <p>
+        It is a finite configuration of points, the nodes, in space or the plane where
+        some pairs of the nodes are designated cables, constrained not to get further
+        apart, and some pairs are designated struts, constrained not to get closer
+        together. Note with this definition cables and struts are allowed to intersect and
+        cross.
+      </p>
+      <li>Who first created a tensegrity?</li>
+      <p>
+        If you don't count spider webs and constructions in nature, an artist Kenneth
+        Snelson is usually credited with the first creations. He has an interesting
+        <a href="http://www.kennethsnelson.net/">website</a>.
+      </p>
+      <li>Who thought of the name tensegrity?</li>
+      <p>
+        Buckminster Fuller. It combines the notion of "tension" with "integrity", creating
+        "tensional integrity". You can see Bucky's musings
+        <a href="http://www.rwgrayprojects.com/rbfnotes/fpapers/tensegrity/tenseg01.html">here</a>.
+      </p>
+      <li>Where can I read more about this catalog and tensegrities?</li>
+      <p>
+        <ul>
+	  <li>
+	    Allen Back and Bob Connelly have an
+	    <a href="http://pi.math.cornell.edu/~connelly/tensegrity.copy.pdf">article</a>
+            in the March-April 1998 issue of the American Scientist that explains a lot of
+            what goes into this catalog.
+	  </li>
+	  <li>
+            There is the
+	    <a href="http://pi.math.cornell.edu/~connelly/second.order.pdf">paper</a>
+	    by Bob Connelly and Walter Whiteley that discusses some of the basic geometric
+	    principles for the stability of tensegrity structure.
+	  </li>
+	  <li>
+	    Bob Connelly and Maria Terrell have a 1995 paper, Globally rigid symmetric tensegrities,
+            <a href="http://www-iri.upc.es/people/ros/StructuralTopology/">Structural Topology</a>,
+	    21, 59--78 that classifies a collection of super stable symmetric tensegrities.
+	  </li>
+	  <li>
+	    For engineering background see "Theory of Structures" by Timoshenko and Young.
+	  </li>
+	</ul>
+      </p>
+      <li>What are some links to other sites that show tensegrities?</li>
+      <p>
+        <ul>
+	  <li>
+	    There is the older 
+	    <a href="http://mathlab.cit.cornell.edu/visualization/tenseg/in_progress/short_top.html">
+	      catalog
+	    </a> created by Allen Back and Bob Connelly.
+	  </li>
+	  <li>
+            There is a <a href="http://complexity.xozzox.de/tensegrity.html">site</a>
+            where a few symmetric and non-symmetric tensegrities can be viewed and
+            rotated. This seems to be a kind virtual tensegrity, where the configuration
+            minimizes an energy functional on the cables.
+	  </li>
+	</ul>
+      </p>
+      <li>Can I build these tensegrities?</li>
+      <p>
+        Why not? Once you have chosen a particular example, you can read off the lengths
+        of the cable relative to the strut lengths in the lower right window. The picture
+        should help you thread the cables and struts. There is only one way to make the
+        structure with those lengths if everything is hooked up right. There are various
+        materials that you can use. Dowel rods with nails in them are popular as in Pugh's
+	<a href="http://www.amazon.com/Introduction-Tensegrity-Anthony-Pugh/dp/0520030559">book</a>,
+	George Hart's
+	<a href="http://www.georgehart.com/virtual-polyhedra/straw-tensegrity.html">page</a>,
+	Hugh Kenner's
+	<a href="https://www.amazon.com/Geodesic-Math-How-Hugh-Kenner/dp/0520239318">book</a>,
+	or René Motro's
+	<a href="http://www.amazon.com/Tensegrity-Structural-Systems-Ren%E9-Motro/dp/1903996376">book</a>.
+      </p>
+      <li>Can I look at the source code for the program?</li>
+      <p>
+	Yes. It is available on
+	<a href="https://github.com/robertconnelly/symmetric-tensegrity">GitHub</a>.
+      </p>
+      <li>Will the structures shown in this catalog hold together?</li>
+      <p>
+        Yes. They are all rigid, but not all choices give interesting tensegrities. Some
+        are very degenerate.
+      </p>
+      <li>How are the structures chosen?</li>
+      <p>
+        They must satisfy the following list of criteria: They must have
+        the <em>symmetries</em> of one of the six <em>groups</em> A<sub>4</sub>,
+        S<sub>4</sub>, A<sub>5</sub>, A<sub>4</sub> x Z<sub>2</sub>, S<sub>4</sub> x
+        Z<sub>2</sub>, A<sub>5</sub> x Z<sub>2</sub>; There are two classes (each class is
+        designated by its own color, usually red and blue) of cables such that there is a
+        symmetry of the structure that takes takes any cable of one class to any other
+        cable of the same class; For any two struts (colored brown or green), there is a
+        symmetry of the structure that takes any strut onto any other; The cables are
+        connected as a set; The whole tensegrity structure must be <em>super stable</em>.
+      </p>
+      <li>What does it mean that a tensegrity is super stable?</li>
+      <p>
+        This is a very strong condition on the geometry of the structure. There is a
+        particular calculation that can be made in terms of the stress that exists in the
+        structure. Certain numbers, called eigen values, are calculated. If they are positive
+        with altogether only 4 of them being 0, the structure will be super stable. A
+        consequence of this is that the structure is <em>globally rigid</em> in all
+        dimensions. This means that if there is any other placement of the nodes
+        satisfying the cable and strut conditions, then this placement will be congruent
+        to the original. It will be the same configuration, possibly rotated or reflected
+        and then rotated. Another consequence is that if you build this structure it will
+        stay stable and rigid, even when the stress is increased relative to the
+        stiffness. This is very handy for these tensegrities, since the stiffness of the
+        cables especially tends to be very soft.
+      </p>
+      <li>
+	If I have a tensegrity where all the nodes are the same, and it holds together,
+	will it be in this catalog?
+      </li>
+      <p>
+        Not necessarily. It could be rigid, but not super stable. Or it could have a
+        different symmetry than one of the one of the six groups in this catalog. For
+        example, the symmetric tensegrids described
+	<a href="http://www-g.eng.cam.ac.uk/advancedstructures/files/pdf/2009GuestD.pdf">here</a>
+        have a symmetry group isomorphic a dihedral group.
+      </p>
+      <li>What is a group?</li>
+      <p>
+        It is a set where any two elements g<sub>1</sub> and g<sub>2</sub> of the set can
+        be multiplied together to get another element g<sub>2</sub>g<sub>1</sub>of the
+        set. The multiplication operation (or group operation) must satisfy the rules of
+        associativity, inverses, and identity. See
+        <a href="http://en.wikipedia.org/wiki/Group_mathematics">Wikipedia</a> for more
+        details. Presented this way, this is a definition of an abstract group. There are
+        tons and tons of many different kinds of examples of groups. Here we concentrate
+        on permutation groups, symmetry groups, and groups of matrices. (You can look at
+        a book such as <em>Introduction to Modern Algebra</em> by Birkhoff and Maclane for
+        a nice introduction.) This approach greatly simplifies the cataloging of the
+        tensegrities we consider.
+      </p>
+      <li>What is a permutation group?</li>
+      <p>
+        This is a set of functions, called <em>permutations</em>, that permute the
+        elements of some set. To be a group, any composition of these permutations in the
+        group is another permutation in the group. We use the disjoint cycle notation for
+        permutation groups considered here. Our groups permute the symbols 1, 2, 3, ...,
+        n. The symbol (a, b, c, ..., d) means a -> b -> c > ... -> d -> a. In other words
+        these symbols are permuted cyclicly. The product of these cycles means the
+        composition of the corresponding cycles. It is easy to see that any permutation
+        can be written as the product of such disjoint cycles. For example, (12)(345)
+        means 1 and 2 are switched, and 3 goes to 4, which goes to 5, which goes to 3.
+      </p>
+      <li>What are the groups A<sub>4</sub> and A<sub>5</sub>?</li>
+      <p>
+        These are the alternating groups on 4 symbols and 5 symbols, respectively. These
+        are all the even permutations of 4 symbols and 5 symbols, respectively. A
+        permutation is <em>even</em> if when it is written in disjoint cycle notation, there
+        are an even number of cycles of even length. For example, (12) is not even, but
+        (12)(34) and (123) are even permutations. The group A<sub>4</sub> has 12 elements,
+        and the group A<sub>5</sub> has 60 elements.
+      </p>
+      <li>What is the group S<sub>4</sub>?</li>
+      <p>
+	This is the group of all permutations of 4 symbols and has 24 elements.
+      </p>
+      <li>
+	What are the groups A<sub>4</sub> x Z<sub>2</sub>, S<sub>4</sub> x Z<sub>2</sub>,
+	A<sub>5</sub> x Z<sub>2</sub>?
+      </li>
+      <p>
+        The G x Z<sub>2</sub> notation denotes the <em>cross product</em> which means that
+        you take two copies of the group G, where one copy has a - sign attached. The
+        group operation on the - acts like multiplication by -1. For example, -(12) times
+        -(34) in S<sub>4</sub> x Z<sub>2</sub> is (12)(34). The G x Z<sub>2</sub> groups
+        have twice as many groups elements as G. So A<sub>4</sub> x Z<sub>2</sub> has 24
+        elements, S<sub>4</sub> x Z<sub>2</sub> has 48 elements, and A<sub>5</sub> x
+        Z<sub>2</sub> has 120 elements.
+      </p>
+      <li>Why are these groups chosen?</li>
+      <p>
+        These are isomorphic to groups of symmetries of the cube, regular tetrahedron, and
+        dodecahedron. A<sub>4</sub> is isomorphic to the rotations of the regular
+        tetrahedron. S<sub>4</sub> is isomorphic to the rotations of the cube.
+        A<sub>5</sub> is isomorphic to the rotations of the regular dodecahedron. The
+        groups A<sub>4</sub> x Z<sub>2</sub>, S<sub>4</sub> x Z<sub>2</sub>, A<sub>5</sub>
+        x Z<sub>2</sub> are the full group of symmetries, including reflections, of the
+        regular tetrahedron, cube and regular dodecahedron, respectively.
+      </p>
+      <li>What does isomorphic mean?</li>
+      <p>
+        If G<sub>1</sub> and G<sub>2</sub> are two groups, an <em>isomorphism</em> is
+        a <em>one-to-one</em> function f (when g is not h, f(g) is not f(h)) defined on all
+        the elements of G<sub>1</sub> with values in G<sub>2</sub> such that for every g,
+        h in G<sub>1</sub>, f(g)f(h)=f(gh), and every element of G<sub>2</sub> is the image
+        of some element in G<sub>1</sub>. This means that from the point of view of
+        formal group operations, G<sub>1</sub> and G<sub>2</sub> are the same. If two
+        groups are isomorphic they must have the same number of elements, but, for
+        example, A<sub>4</sub> x Z<sub>2</sub> and S<sub>4</sub> both have 24 elements,
+        yet they are not isomorphic.
+      </p>
+      <li>What is a symmetry group?</li>
+      <p>
+        It is a collection of rigid distance preserving functions of all of space, where
+        each function transforms some set to itself. The group operation is the
+        composition of these functions, and so to be a group, the composition of any two
+        such functions in the group is also in the group. For example the rotations of
+        regular tetrahedron, cube or regular dodecahedron are symmetry groups.
+      </p>
+      <li>
+	Does the tensegrity always have a group of symmetries isomorphic to the group in
+	the group window?
+      </li>
+      <p>
+	Yes, but the tensegrity itself may have other larger groups of symmetries.
+      </p>
+      <li>What is the order of a group element?</li>
+      <p>
+        If g is a group element, then g<sup>n</sup> is g multiplied by itself n times. The
+        order of g is the smallest n = 1, 2, ... such that g<sup>n</sup> = e the identity
+        element. For example, the permutation (12)(34) has order 2, and the element
+        -(12345) in A<sub>4</sub> x Z<sub>2</sub> has order 10. It is particularly
+        easy to figure the order of a permutation when it is written in disjoint cycle
+        notation.
+      </p>
+      <li>What does the group inverse mean?</li>
+      <p>
+        One of the defining properties of a group is that if g is a group element, then
+        there is a group element g<sup>-1</sup>, where gg<sup>-1</sup> = g<sup>-1</sup>g =
+        e, the identity element. g<sup>-1</sup> is the inverse of g. For example, the
+        inverse of (123) is (321).  If g is of order 2, then g = g<sup>-1</sup>.
+      </p>
+      <lI>When I choose a group elements in the cable and strut windows, what does that mean?</li>
+      <p>
+        When the situation is not degenerate, there is a one-to-one correspondence between
+        the nodes of the tensegrity and the group elements. Any node can be identified
+        with the identity element of the group, and the two group elements in the cable
+        window and the group element in the strut window are identified with cables and
+        struts that are connected to the identity node.  Note that if g is a group element
+        corresponding to a strut or cable, then the inverse element g<sup>-1</sup> also
+        corresponds to the same cable or strut.
+      </p>
+      <li>I want the struts not to touch each other. How can I find examples where that happens?</li>
+      <p>
+        If the order of a strut is greater than 2, then there are two struts connected to
+        each node. So you at least have to choose a group element in the strut window that
+        is of order 2. But it still may happen that the struts will cross somewhere in
+        their middle. This tends to happen for the groups with a Z<sub>2</sub>
+        factor. (They have mirror reflection symmetries, and the struts will intersect
+        their mirror image if the mirror intersects the struts obliquely.) But in any
+        case, you can look at the picture and see if they intersect. If you try a
+        different stress ratio in the last window, that might pull some of the struts
+        apart. In some cases, you might need to adjust the thickness and zoom in to
+        decide whether there is really an intersection or not.
+      </p>
+      <lI>What do those funny lines in the window on the right in the program mean?</li>
+      <p>
+	Each line corresponds to a particular representation of the group chosen. When you
+        click in the right hand window, a vertical line appears through the point you
+        clicked on. The horizontal axis corresponds to the ratio between the stresses on
+        the two cables you have chosen in the cable window. The vertical axis corresponds
+        to the stress on the strut. When the strut stress is below the top horizontal
+        line, it is negative. When the strut stress crosses one of the curved lines, the
+        tensegrity becomes unstable, but right at the line that it crosses, it corresponds
+        to an equilibrium that it needs for its stability. We call the representation that
+        correspondes to that line the <em>winner</em>.
+      </p>
+      <li>What is a representation of a group?</li>
+      <p>
+        It is a function that assigns to each element g in the group G a symmetry of some
+        Euclidean space. But the Euclidean space may be of dimension greater than 3. (This
+        can happen for A<sub>5</sub> and A<sub>5</sub> x Z<sub>2</sub>.) Suppose g goes to
+        f(g), and h in G goes to f(h). Then we insist that f(g)f(h)=f(gh). f is called a
+        group <em>homomorphism</em>. This is the same property as being an isomorphism,
+        except that f may not be one-to-one or onto. The representation f(g) may be the
+        identity for some g not equal to e, the identity. If f is one-to-one, then we say
+        f is <em>faithful</em>. If the winning representation is faithful and
+        three-dimensional, then you should get a picture where the number of nodes is
+        equal to the number of elements of the group you chose in the first window.
+      </p>
+    </ol>
+  </div>
 
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/three.js/three.js"></script>
-    <script src="js/three.js/OrbitControls.js"></script>
-    <script src="js/symtens-display.js"></script>
 
-    <script src="js/popper.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
+  <!-- References -->
+  <div class="tab-pane fade" id="references" role="tabpanel" aria-labelledby="references-tab">
+    <h3>References</h3>
+    <hr />
+    <p>
+      The mathematics is based on the book in progress "Frameworks Tensegrities and
+      Symmetry: Understanding Stable Structures" by R. Connelly and S. D. Guest.
+    </p>
+    <p>
+      This is an update of an older catalogue by Allen Back and Bob Connelly. Many
+      of the choices of cable classes and struts were taken from the earlier work.
+    </p>
+    <p>
+      This project was carried out by Bob Terrell closely collaborating with
+      <a href="http://www.math.cornell.edu/~connelly">Bob Connelly</a> of Cornell University.
+    </p>
+    <p>
+      The design of this web page was boldly copied from that of Simon Guest and Jingyao Zhang.
+    </p>
+    <p>This work was partially supported by NSF grant number DMS 0510625.</p>
+  </div>
 
-    <script src="js/two.min.js"></script>
-    <script src="js/THREEx.FullScreen.js"></script>
 
-    <script src="js/spectrum.js"></script>
+  <!-- Pictures -->
+  <div class="tab-pane fade" id="pictures" role="tabpanel" aria-labelledby="pictures-tab">
+    <h3>Pictures of Highly Symmetric Tensegrity Structures</h3>
+    <hr />
+    <h5> Photographs of real models </h5>
+      <p>
+        <img src="img/p49.jpg" width="330" alt="">
+        Group A_4, Cables: (124), (14)(23); Strut: (13)(24). The stress is about half.
+      </p>
+      <p><img src="img/p19.jpg" width="330" alt=""></p>
+    <h5> Some photographs of objects not in the catalogue: </h5>
+      <p><img src="img/3134s.jpg" alt=""></p>
+      <p><img src="img/9180s.jpg" alt=""></p>
+      <p><img src="img/9182s.jpg" alt=""></p>
+      <p><img src="img/9185s.jpg" alt=""></p>
+      <p><img src="img/9187s.jpg" alt=""></p>
+      <p><img src="img/9190s.jpg" alt=""></p>
+      <p><img src="img/9191s.jpg" alt=""></p>
+      <p><img src="img/9192s.jpg" alt=""></p>
+      <p><img src="img/9193s.jpg" alt=""></p>
+      <p><img src="img/9194s.jpg" alt=""></p>
+    <h5> More photographs of catalogued objects: </h5>
+      <p><img src="img/9195s.jpg" alt=""></p>
+      <p><img src="img/9199s.jpg" alt=""></p>
+      <p><img src="img/9201s.jpg" alt=""></p>
+      <p><img src="img/9203s.jpg" alt=""></p>
+      <p><img src="img/9204s.jpg" alt=""></p>
+      <p><img src="img/9205s.jpg" alt=""></p>
+      <p><img src="img/9206s.jpg" alt=""></p>
+      <p><img src="img/9208s.jpg" alt=""></p>
+      <p><img src="img/9210s.jpg" alt=""></p>
+      <p><img src="img/p1010019s.jpg" alt=""></p>
+      <p><img src="img/p1010020s.jpg" alt=""></p>
+      <p><img src="img/p1010031s.jpg" alt=""></p>
+      <p><img src="img/prismatic1s.jpg" alt=""></p>
+      <p><img src="img/tetra1s.jpg" alt=""></p>
+    <h5> And a furniture project: </h5>
+      <p><img src="img/dsc00855s.jpg" alt=""></p>
+      <p><img src="img/dsc00863s.jpg" alt=""></p>
+      <p><img src="img/dsc00864s.jpg" alt=""></p>
+      <p><img src="img/dsc00874s.jpg" alt=""></p>
+      <p><img src="img/dsc00877s.jpg" alt=""></p>
+      <p><img src="img/sittings.jpg" alt=""></p>
+      <p><img src="img/structuralconcepttables.jpg" alt=""></p>
+      <p><img src="img/tempdrawings.jpg" alt=""></p>
+  </div>
 
-    <script> init() </script>
 
-  </body>
+  <!-- end main window -->
+  </div>
+  </div>
+  </main>
+
+
+  <!-- end main page -->
+  </div>
+  </div>
+
+
+  <!-- icons -->
+  <script src="js/feather.min.js"></script>
+  <script> feather.replace() </script>
+
+
+  <!-- program -->
+  <script src="js/symtensWeb.js"></script>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/three.min.js"></script>
+  <script src="js/OrbitControls.js"></script>
+  <script src="js/symtens-display.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/two.min.js"></script>
+  <script src="js/THREEx.FullScreen.js"></script>
+  <script src="js/spectrum.js"></script>
+  <script> init() </script>
+
+</body>
+
 </html>

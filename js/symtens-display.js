@@ -55,7 +55,6 @@ var g_render = {
     "line" : 0.025
   },
 
-  //"vertex_thickness": [ 0.025, 0.05 ],
   "cylinder_thickness": 0.025,
   "default_cylinder_thickness": 0.025,
 
@@ -139,7 +138,6 @@ function display_init() {
   g_render.camera = camera;
   g_render.controls = controls;
 
-  //g_render.scene.background = new THREE.Color( 0xffffff );
   g_render.scene.background = new THREE.Color( g_render.default_color.background );
 
   var tens = new symtensWeb.symtens;
@@ -184,16 +182,7 @@ function clear_scene() {
   }
 }
 
-function render(tenz) {
-  g_render.scene.background = new THREE.Color( g_render.color.background );
-  render_cylinder_symmetric_tensegrity(tenz);
-}
-
 function render_update(tenz) {
-  render_cylinder_symmetric_tensegrity_update(tenz);
-}
-
-function render_cylinder_symmetric_tensegrity_update(tenz) {
 
   for (var ii=0; ii<tenz.C1.length; ii++) {
 
@@ -305,6 +294,20 @@ function render_cylinder_symmetric_tensegrity_update(tenz) {
     g_render["geom_v"][ii].position.z = tenz.V[ii][2];
   }
 
+    // display lengths of cables and struts
+    if (tenz.C1.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.C1[0][0], tenz.C1[0][2]));
+	$("#c1_length").text(len.toString().substr(0,6));
+    }
+    if (tenz.C2.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.C2[0][0], tenz.C2[0][2]));
+	$("#c2_length").text(len.toString().substr(0,6));
+    }
+    if (tenz.S1.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.S1[0][0], tenz.S1[0][2]));
+	$("#s1_length").text(len.toString().substr(0,6));
+    }
+
 }
 
 //----------------------------------------
@@ -315,7 +318,8 @@ function render_cylinder_symmetric_tensegrity_update(tenz) {
 //----------------------------------------
 //----------------------------------------
 
-function render_cylinder_symmetric_tensegrity(tenz) {
+function render(tenz) {
+  g_render.scene.background = new THREE.Color( g_render.color.background );
   var light = new THREE.PointLight( 0xffffff, 2 );
   g_render.camera.add( light );
   g_render.scene.add( g_render.camera );
@@ -349,7 +353,6 @@ function render_cylinder_symmetric_tensegrity(tenz) {
 
     len = numeric.norm2(numeric.sub(tenz.C1[ii][p], tenz.C1[ii][0]));
 
-    //var cgeom = new THREE.CylinderGeometry( cthk, cthk, len, 10 );
     var cgeom = new THREE.CylinderGeometry( cthk, cthk, 1, 10 );
     cgeom.computeFaceNormals();
     cgeom.mergeVertices();
@@ -388,7 +391,6 @@ function render_cylinder_symmetric_tensegrity(tenz) {
 
     len = numeric.norm2(numeric.sub(tenz.C2[ii][p], tenz.C2[ii][0]));
 
-    //var cgeom = new THREE.CylinderGeometry( cthk, cthk, len, 10 );
     var cgeom = new THREE.CylinderGeometry( cthk, cthk, 1, 10 );
     var v_material = new THREE.MeshPhongMaterial( {color: c2_color, specular: 0, shininess: 0, flatShading: false } );
     var mesh = new THREE.Mesh( cgeom, v_material );
@@ -421,7 +423,6 @@ function render_cylinder_symmetric_tensegrity(tenz) {
 
     len = numeric.norm2(numeric.sub(tenz.S1[ii][p], tenz.S1[ii][0]));
 
-    //var cgeom = new THREE.CylinderGeometry( cthk, cthk, len, 10 );
     var cgeom = new THREE.CylinderGeometry( cthk, cthk, 1, 10 );
     var v_material = new THREE.MeshPhongMaterial( {color: s1_color, specular: 0, shininess: 0, flatShading: false } );
     var mesh = new THREE.Mesh( cgeom, v_material );
@@ -442,8 +443,6 @@ function render_cylinder_symmetric_tensegrity(tenz) {
 
   }
 
-  //var vert_rad = 0.025;
-  //var vert_rad = g_render.vertex_thickness[1];
   var vert_rad = g_render.vertex_radius.cylinder;
 
   for (var ii=0; ii<tenz.V.length; ii++) {
@@ -458,6 +457,19 @@ function render_cylinder_symmetric_tensegrity(tenz) {
     g_render["geom_v"].push(sphere);
   }
 
+    // display lengths of cables and struts
+    if (tenz.C1.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.C1[0][0], tenz.C1[0][2]));
+	$("#c1_length").text(len.toString().substr(0,6));
+    }
+    if (tenz.C2.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.C2[0][0], tenz.C2[0][2]));
+	$("#c2_length").text(len.toString().substr(0,6));
+    }
+    if (tenz.S1.length > 0) {
+	var len = numeric.norm2(numeric.sub(tenz.S1[0][0], tenz.S1[0][2]));
+	$("#s1_length").text(len.toString().substr(0,6));
+    }
 }
 
 function take_screenshot() {
