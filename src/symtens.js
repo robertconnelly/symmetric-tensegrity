@@ -80,7 +80,6 @@ function symtens() {
     this.grp = 0;  // which group we are using
     this.nsaved = 0;
     this.lines = [];
-    this.txt = "";
     this.thk = 0.65;  // thickness coefficient
     this.omeg1 = .35; 
     this.omeg_1 = 0;
@@ -89,13 +88,11 @@ function symtens() {
     this.s1 = 0;
     this.c = 0;
     this.winr = 0;
-    this.S = 0;
     this.rk = 0;
     this.Jp1 = [];
     this.JOM = [];
     this.Jom = [];
     this.Jg  = [];
-    this.Jmx = [];
     this.eps = 0.00001;
 
     // group information
@@ -1232,43 +1229,31 @@ function symtens() {
 }
 
 /**
- * Initialize the collections of matrices Jom, Jg, Jmx. These
+ * Initialize the collections of matrices Jom and Jg. These
  * represent:
  *     Jom[G][rep][g] = local stress matrix for g in G under rep
  *     Jg[G][rep][g] = image of g in G under rep
- *     Jmx[G][rep][g] = image of generator under rep (not filled for all g)
  */
 symtens.prototype.init = function() {
 
     // initialize empty matrices
     this.Jom = new Array(this.many);
     this.Jg  = new Array(this.many);
-    this.Jmx = new Array(this.many);
     for (var G = 0; G < this.many; G++) {
         this.Jom[G] = new Array(this.reps[G]);
         this.Jg[G]  = new Array(this.reps[G]);
-        this.Jmx[G] = new Array(this.reps[G]);
         for (var ii = 0; ii < this.reps[G]; ii++) {
 	    this.Jom[G][ii] = new Array(this.order[G]);
 	    this.Jg[G][ii]  = new Array(this.order[G]);
-	    this.Jmx[G][ii] = new Array(this.order[G]);
-        }
-
-        // make Jmx = copy of representation matrices for generators
-        for (var gn = 0; gn < this.gens[G]; gn++) {
-            for (var rp = 0; rp < this.reps[G]; rp++) {
-                this.Jmx[G][rp][gn] = math.pow(this.mx[G][rp][gn], 1);  // easy copy
-            }
         }
 
 	// make Jg = representation matrices for each group element
 	for (var j = 0; j < this.order[G]; j++) {
 	    for (var rp = 0; rp < this.reps[G]; rp++) {
-	        this.Jg[G][rp][j] = math.pow(this.Jmx[G][rp][0], this.to[G][j][0]);
-
+	        this.Jg[G][rp][j] = math.pow(this.mx[G][rp][0], this.to[G][j][0]);
 	        for (var ngen = 1; ngen < this.gens[G]; ngen++) {
 	            this.Jg[G][rp][j] = numeric.dot(this.Jg[G][rp][j],
-				                    math.pow(this.Jmx[G][rp][ngen],
+				                    math.pow(this.mx[G][rp][ngen],
 							     this.to[G][j][ngen]));
 	        }
 	    }
