@@ -1,3 +1,20 @@
+//
+//  Copyright (C) 2018 Robert Connelly and Simon D. Guest
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+
 var g_detgraph = {
   "two" : {},
   "vert_line" : {},
@@ -210,6 +227,8 @@ function render_update(tenz) {
     mesh.scale.x = g_render.cylinder_values.c1_scale_thick;
     mesh.scale.z = g_render.cylinder_values.c1_scale_thick;
 
+    mesh.material.color.setHex( g_render.color.c1 );
+
     mesh.translateX( midpoint[0] );
     mesh.translateY( midpoint[1] );
     mesh.translateZ( midpoint[2] );
@@ -244,9 +263,12 @@ function render_update(tenz) {
     mesh.scale.x = g_render.cylinder_values.c2_scale_thick;
     mesh.scale.z = g_render.cylinder_values.c2_scale_thick;
 
+    mesh.material.color.setHex( g_render.color.c2 );
+
     mesh.translateX( midpoint[0] );
     mesh.translateY( midpoint[1] );
     mesh.translateZ( midpoint[2] );
+
 
     mesh.quaternion.setFromUnitVectors(axis, lvec.clone().normalize());
   }
@@ -277,6 +299,8 @@ function render_update(tenz) {
     mesh.scale.x = g_render.cylinder_values.s1_scale_thick;
     mesh.scale.z = g_render.cylinder_values.s1_scale_thick;
 
+    mesh.material.color.setHex( g_render.color.s1 );
+
     mesh.translateX( midpoint[0] );
     mesh.translateY( midpoint[1] );
     mesh.translateZ( midpoint[2] );
@@ -294,19 +318,19 @@ function render_update(tenz) {
     g_render["geom_v"][ii].position.z = tenz.V[ii][2];
   }
 
-    // display lengths of cables and struts
-    if (tenz.C1.length > 0) {
-	var len = numeric.norm2(numeric.sub(tenz.C1[0][0], tenz.C1[0][2]));
-	$("#c1_length").text(len.toString().substr(0,6));
-    }
-    if (tenz.C2.length > 0) {
-	var len = numeric.norm2(numeric.sub(tenz.C2[0][0], tenz.C2[0][2]));
-	$("#c2_length").text(len.toString().substr(0,6));
-    }
-    if (tenz.S1.length > 0) {
-	var len = numeric.norm2(numeric.sub(tenz.S1[0][0], tenz.S1[0][2]));
-	$("#s1_length").text(len.toString().substr(0,6));
-    }
+  // display lengths of cables and struts
+  if (tenz.C1.length > 0) {
+    var len = numeric.norm2(numeric.sub(tenz.C1[0][0], tenz.C1[0][2]));
+    $("#c1_length").text(len.toString().substr(0,6));
+  }
+  if (tenz.C2.length > 0) {
+    var len = numeric.norm2(numeric.sub(tenz.C2[0][0], tenz.C2[0][2]));
+    $("#c2_length").text(len.toString().substr(0,6));
+  }
+  if (tenz.S1.length > 0) {
+    var len = numeric.norm2(numeric.sub(tenz.S1[0][0], tenz.S1[0][2]));
+    $("#s1_length").text(len.toString().substr(0,6));
+  }
 
 }
 
@@ -335,10 +359,10 @@ function render(tenz) {
   //cthk = 0.025;
   var cthk = g_render.cylinder_thickness;
 
-  c1_color = g_render.default_color.c1;
-  c2_color = g_render.default_color.c2;
-  s1_color = g_render.default_color.s1;
-  v_color  = g_render.default_color.v;
+  c1_color = g_render.color.c1;
+  c2_color = g_render.color.c2;
+  s1_color = g_render.color.s1;
+  v_color  = g_render.color.v;
 
   for (var ii=0; ii<tenz.C1.length; ii++) {
 
@@ -457,19 +481,19 @@ function render(tenz) {
     g_render["geom_v"].push(sphere);
   }
 
-    // display lengths of cables and struts
-    if (tenz.C1.length > 0) {
-	var len = numeric.norm2(numeric.sub(tenz.C1[0][0], tenz.C1[0][2]));
-	$("#c1_length").text(len.toString().substr(0,6));
-    }
-    if (tenz.C2.length > 0) {
-	var len = numeric.norm2(numeric.sub(tenz.C2[0][0], tenz.C2[0][2]));
-	$("#c2_length").text(len.toString().substr(0,6));
-    }
-    if (tenz.S1.length > 0) {
-	var len = numeric.norm2(numeric.sub(tenz.S1[0][0], tenz.S1[0][2]));
-	$("#s1_length").text(len.toString().substr(0,6));
-    }
+  // display lengths of cables and struts
+  if (tenz.C1.length > 0) {
+    var len = numeric.norm2(numeric.sub(tenz.C1[0][0], tenz.C1[0][2]));
+    $("#c1_length").text(len.toString().substr(0,6));
+  }
+  if (tenz.C2.length > 0) {
+    var len = numeric.norm2(numeric.sub(tenz.C2[0][0], tenz.C2[0][2]));
+    $("#c2_length").text(len.toString().substr(0,6));
+  }
+  if (tenz.S1.length > 0) {
+    var len = numeric.norm2(numeric.sub(tenz.S1[0][0], tenz.S1[0][2]));
+    $("#s1_length").text(len.toString().substr(0,6));
+  }
 }
 
 function take_screenshot() {
@@ -856,25 +880,31 @@ function bg_color_change(e,c) {
 function c1_color_change(e,c) {
   g_render.color.c1 = parseInt("0x" + c.toHex());
 
-  for (var ii=0; ii<g_render.geom_c1.length; ii++) {
-    g_render.geom_c1[ii].material.color.setHex( g_render.color.c1 );
-  }
+  //for (var ii=0; ii<g_render.geom_c1.length; ii++) {
+  //  g_render.geom_c1[ii].material.color.setHex( g_render.color.c1 );
+  //}
+
+  render_update(g_render.prev_tenz);
 }
 
 function c2_color_change(e,c) {
   g_render.color.c2 = parseInt("0x" + c.toHex());
 
-  for (var ii=0; ii<g_render.geom_c2.length; ii++) {
-    g_render.geom_c2[ii].material.color.setHex( g_render.color.c2 );
-  }
+  //for (var ii=0; ii<g_render.geom_c2.length; ii++) {
+  //  g_render.geom_c2[ii].material.color.setHex( g_render.color.c2 );
+  //}
+
+  render_update(g_render.prev_tenz);
 }
 
 function s1_color_change(e,c) {
   g_render.color.s1 = parseInt("0x" + c.toHex());
 
-  for (var ii=0; ii<g_render.geom_s1.length; ii++) {
-    g_render.geom_c2[ii].material.color.setHex( g_render.color.s1 );
-  }
+  //for (var ii=0; ii<g_render.geom_s1.length; ii++) {
+  //  g_render.geom_c2[ii].material.color.setHex( g_render.color.s1 );
+  //}
+
+  render_update(g_render.prev_tenz);
 }
 
 function c1_thickness_change(v) {
@@ -954,22 +984,20 @@ function restore_defaults() {
   g_render.scene.background = new THREE.Color(c);
   $("#background_color_id").spectrum("set", c.toString(16));
 
-  for (var ii=0; ii<g_render.geom_c1.length; ii++) {
+  // restore strut and cables colors along with corresponding
+  // color picker html element.
+  //
+
   c = g_render.default_color.c1;
-    g_render.geom_c1[ii].material.color.setHex( c );
-  }
+  g_render.color.c1 = c;
   $("#c1_color_id").spectrum("set", c.toString(16));
 
   c = g_render.default_color.c2;
-  for (var ii=0; ii<g_render.geom_c2.length; ii++) {
-    g_render.geom_c2[ii].material.color.setHex( c );
-  }
+  g_render.color.c2 = c;
   $("#c2_color_id").spectrum("set", c.toString(16));
 
   c = g_render.default_color.s1;
-  for (var ii=0; ii<g_render.geom_s1.length; ii++) {
-    g_render.geom_s1[ii].material.color.setHex( c );
-  }
+  g_render.color.s1 = c;
   $("#s1_color_id").spectrum("set", c.toString(16));
 
   $("#thickness_slider_id").slider("value", g_render.cylinder_values.scale_default );
