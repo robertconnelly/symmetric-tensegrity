@@ -685,7 +685,7 @@ function draw_det_axis(_two) {
 
     _cy = (_y*(coords[1][1] - coords[1][0])/(y_max - y_min)) + coords[1][0];
 
-    var _txt = new Two.Text( _cy.toFixed(1).replace(/0\./, '.'), x_pos + dtxt_x, _y + 4, { "class":"noselect" });
+    var _txt = new Two.Text( _cy.toFixed(1).replace(/0\./, '.'), x_pos + dtxt_x, _y + 4);
     _txt.opacity = opacity;
     _txt.size = textsize;
     _txt.className= "noselect";
