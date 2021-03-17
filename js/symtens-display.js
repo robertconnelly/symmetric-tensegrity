@@ -176,6 +176,7 @@ function display_init() {
   render(tenz);
 
   animate();
+
 }
 
 //----------------------------------------
@@ -638,6 +639,63 @@ function change_strut_select() {
 //----------------------------------------
 //----------------------------------------
 
+function draw_det_axis(_two) {
+  var opacity = 0.25;
+  var textsize = 8;
+  var two = _two;
+
+  var x_min = 0, y_min = 0,
+      x_max = 200, y_max = 200;
+
+  var x_pos = 0, y_pos = 0;
+  var n_xtic = 6, n_ytic = 6;
+
+  var dtic = 3, dtxt_x = 10, dtxt_y = 10;
+
+  var x_axis = new Two.Line(x_min, y_pos, x_max, y_pos);
+  x_axis.opacity = opacity;
+
+  var y_axis = new Two.Line(x_pos, y_min, x_pos, y_max);
+  y_axis.opacity = opacity;
+
+  var coords = [[0.0, 1.0], [0.0, -1.0]];
+  var _x, _y;
+  var _cx, _cy;
+
+  for (var idx=0; idx<n_xtic; idx++) {
+    _x = (idx/(n_xtic-1))*(x_max - x_min) + x_min;
+    var _tic = new Two.Line(_x, y_pos+dtic, _x, y_pos-dtic);
+    _tic.opacity = opacity;
+    two.add(_tic);
+
+    _cx = (_x*(coords[0][1] - coords[0][0])/(x_max - x_min)) + coords[0][0];
+
+    var _txt = new Two.Text( _cx.toFixed(1), _x, y_pos + dtxt_y);
+    _txt.opacity = opacity;
+    _txt.size = textsize;
+    two.add(_txt);
+  }
+
+  for (var idx=0; idx<n_ytic; idx++) {
+    _y = (idx/(n_ytic-1))*(y_max - y_min) + y_min;
+    var _tic = new Two.Line(x_pos-dtic, _y, x_pos+dtic, _y);
+    _tic.opacity = opacity;
+    two.add(_tic);
+
+    _cy = (_y*(coords[1][1] - coords[1][0])/(y_max - y_min)) + coords[1][0];
+
+    var _txt = new Two.Text( _cy.toFixed(1).replace(/0\./, '.'), x_pos + dtxt_x, _y + 4);
+    _txt.opacity = opacity;
+    _txt.size = textsize;
+    two.add(_txt);
+
+  }
+
+  two.add(x_axis);
+  two.add(y_axis);
+
+}
+
 // We get 'raw' mouse x/y position relative to
 // element that we're drawing into.
 //
@@ -668,9 +726,18 @@ function process_detgraph_update() {
 
   for (var path_idx=0; path_idx<lines.length; path_idx++) {
 
+    // The last entry in the lines array is not a y-coordinate,
+    // so rescale the x amount by the number of actual x,y
+    // coordinates (len-2)
+    // Clamp x_n to be >=1 to not worry about division by 0
+    // or negative numbers.
+    //
+    var x_n = lines[path_idx].length-2;
+    if (x_n<1) { x_n=1; }
+
     var two_path = [];
     for (var x_idx=0; x_idx<(lines[path_idx].length-1); x_idx++) {
-      var tx = x_idx / lines[path_idx].length;
+      var tx = x_idx / x_n;
       var ty = lines[path_idx][x_idx];
 
       var w_x = ((tx * gv.dx) - gv.x[0]) * win_w;
@@ -689,9 +756,14 @@ function process_detgraph_update() {
     // can delete it later
     //
     var p = two.makePath(two_path, true);
+
     p.fill = "rgba(0,0,0,0.0)";
+
     dg.paths.push(p);
   }
+
+  
+  draw_det_axis(two);
 
   two.update();
 }
@@ -1071,11 +1143,30 @@ function setup_config() {
 }
 
 function init() {
+
+  //DEBUG
+  console.log("setting up display_init()");
+
   display_init();
 
+  //DEBUG
+  console.log("setting up setup_detgraph()");
+
   setup_detgraph();
+
+  //DEBUG
+  console.log("setting up process_detgraph_update()");
+
   process_detgraph_update();
+
+  //DEBUG
+  console.log("setting up update_detgraph_intercept(...)()");
+
+
   update_detgraph_intercept(g_render.detgraph.two.width/2, g_render.detgraph.two.height/2);
+
+  //DEBUG
+  console.log("setting up change_group_select()");
 
   change_group_select();
 
@@ -1083,7 +1174,15 @@ function init() {
       $('#myInput').trigger('focus')
   });
 
+  //DEBUG
+  console.log("setting up setup_fullscreen()");
+
   setup_fullscreen();
+
+  //DEBUG
+  console.log("setting up setup_color_picker()");
+
+
   setup_color_picker();
 
   setup_config();
