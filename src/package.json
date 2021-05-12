@@ -9,7 +9,7 @@
   "author": "Dylan Peifer",
   "license": "AGPL-3.0",
   "dependencies": {
-    "mathjs": "^5.0.0",
+    "mathjs": "^7.5.1",
     "numeric": "^1.2.6"
   }
 }
